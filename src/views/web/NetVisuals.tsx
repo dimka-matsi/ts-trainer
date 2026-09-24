@@ -72,7 +72,7 @@ export function NetworkPanel({ requests }: { requests: NetRequest[] }) {
           <span role="columnheader">Время</span><span role="columnheader">Водопад</span>
         </div>
         {requests.map((q, i) => (
-          <button key={q.name} type="button" role="row" className={`net-row${i === sel ? " sel" : ""}`} aria-pressed={i === sel} onClick={() => setSel(i)}>
+          <button key={i} type="button" role="row" className={`net-row${i === sel ? " sel" : ""}`} aria-pressed={i === sel} onClick={() => setSel(i)}>
             <span role="cell" className="net-name">{q.name}</span>
             <span role="cell">{q.response.line.split(" ")[1]}</span>
             <span role="cell">{q.type}</span>

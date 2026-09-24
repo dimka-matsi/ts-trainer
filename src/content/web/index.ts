@@ -1,10 +1,11 @@
 import type { Flashcard } from "../flashcards";
 import { lessons as dns } from "./lessons/dns";
+import { lessons as http } from "./lessons/http";
 import { lessons as net } from "./lessons/net";
 import type { WebLesson, WebRegion } from "./types";
 
 /** Уроки по регионам: индекс в массиве = индекс региона в WEB_REGIONS. */
-const REGION_LESSONS: WebLesson[][] = [net, dns];
+const REGION_LESSONS: WebLesson[][] = [net, dns, http];
 
 /** Уроки раздела «Браузер» в порядке прохождения. */
 export const WEB_LESSONS: WebLesson[] = REGION_LESSONS.flat();
@@ -18,15 +19,7 @@ export const WEB_LESSON_BY_ID: Record<string, WebLesson> = Object.fromEntries(WE
 export const WEB_REGIONS: WebRegion[] = [
   { name: "Как работает интернет", kind: "lessons", desc: "IP-адреса и порты, уровни сети, TCP и UDP, путь запроса от URL до страницы." },
   { name: "DNS", kind: "lessons", desc: "Как имя сайта превращается в IP-адрес: путь запроса, записи, TTL, подмена и шифрование." },
-  { name: "HTTP", kind: "soon", desc: "Запрос и ответ, методы, коды, заголовки, соединения, версии протокола.", topics: [
-    { t: "Устройство запроса и ответа", q: "Из чего состоит HTTP-запрос и HTTP-ответ?" },
-    { t: "Методы", q: "Чем GET отличается от POST? Какие методы безопасные, а какие идемпотентные?" },
-    { t: "Коды ответа", q: "Чем 401 отличается от 403, 301 от 302 и 307, а 502 от 504?" },
-    { t: "Заголовки", q: "Зачем `Content-Type`, `Accept`, `Authorization`, `Location`, `User-Agent`?" },
-    { t: "Соединения и keep-alive", q: "Почему браузер не открывает новое соединение на каждый запрос?" },
-    { t: "REST, GraphQL, gRPC", q: "Что такое REST? Когда выбирают GraphQL или gRPC?" },
-    { t: "HTTP/1.1, HTTP/2, HTTP/3", q: "Что изменилось в HTTP/2 и HTTP/3 и зачем?" },
-  ] },
+  { name: "HTTP", kind: "lessons", desc: "Запрос и ответ, методы, коды, заголовки, соединения, стили API и версии протокола." },
   { name: "HTTPS и TLS", kind: "soon", desc: "Шифрование, сертификаты, рукопожатие TLS.", topics: [
     { t: "Зачем HTTPS", q: "От чего защищает HTTPS и чем он отличается от HTTP?" },
     { t: "Симметричное и асимметричное шифрование", q: "Почему TLS использует оба вида шифрования?" },

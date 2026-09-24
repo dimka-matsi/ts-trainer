@@ -29,6 +29,10 @@ const CONCEPTS: { name: string; re: RegExp; at: string }[] = [
   { name: "TTL", re: /\bTTL\b/, at: "dns1" },
   { name: "CNAME", re: /\bCNAME\b/, at: "dns2" },
   { name: "DNSSEC и DoH", re: /\bDNSSEC\b|\bDoH\b|DNS over/, at: "dns4" },
+  { name: "идемпотентность", re: /идемпотент/i, at: "http2" },
+  { name: "keep-alive", re: /keep-alive/i, at: "http5" },
+  { name: "REST и GraphQL", re: /\bREST\b|GraphQL|gRPC/, at: "http6" },
+  { name: "мультиплексирование", re: /мультиплекс|HPACK/i, at: "http7" },
 ];
 
 /** Признаки JavaScript: в «Браузере» его быть не должно. */
@@ -80,6 +84,14 @@ function checkRequest(r: NetRequest, tag: string, fail: (msg: string) => void) {
     else if (!legacy && reason) fail(`${tag}: в HTTP/${version} нет фразы после кода`);
     if ((code === "304" || code === "204") && r.response.body) fail(`${tag}: у ответа ${code} не бывает тела`);
   }
+  for (const [side, m] of [["запрос", r.request], ["ответ", r.response]] as const) {
+    const len = header(m, "Content-Length")[0];
+    // Тело с «…» показано не целиком, его длину не сверяем.
+    if (len && m.body && !m.body.includes("…") && Number(len) !== Buffer.byteLength(m.body)) {
+      fail(`${tag}: ${side}: Content-Length ${len}, а в теле ${Buffer.byteLength(m.body)} байт`);
+    }
+  }
+  if (r.request.body && !header(r.request, "Content-Type").length) fail(`${tag}: у запроса с телом нет Content-Type`);
   for (const c of header(r.response, "Set-Cookie")) {
     if (/samesite=none/i.test(c) && !/;\s*secure\b/i.test(c)) fail(`${tag}: cookie с SameSite=None без Secure браузер отклонит`);
   }
