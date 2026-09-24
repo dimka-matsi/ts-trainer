@@ -4,7 +4,7 @@ import { LESSONS } from "../content/lessons";
 import { REGIONS } from "../content/regions";
 import { useProgress } from "../state/progress";
 import { shuffle } from "../state/random";
-import { navigate } from "../state/route";
+import { navigate, type Route } from "../state/route";
 import { CodeBlock, Md } from "../ui/Code";
 
 interface Question {
@@ -21,8 +21,31 @@ interface Run {
   done: boolean;
 }
 
-function draw(region: number): Run {
-  const questions = shuffle(examPool(region)).slice(0, EXAM_SIZE)
+/** Что нужно экзамену: название региона, вопросы и куда вести кнопки. Общий для всех направлений. */
+export interface ExamConfig {
+  name: string;
+  regionNo: number;
+  pool: ExamTask[];
+  /** Ключ результата в progress.exams. */
+  examKey: number;
+  fromLessons: boolean;
+  back: Route;
+  cards: Route;
+}
+
+/** Экзамен региона TypeScript. */
+export const tsExam = (region: number): ExamConfig => ({
+  name: REGIONS[region]!.name,
+  regionNo: region + 1,
+  pool: examPool(region),
+  examKey: region,
+  fromLessons: LESSONS.some((l) => l.region === region),
+  back: { view: "map" },
+  cards: { view: "cards" },
+});
+
+function draw(pool: ExamTask[]): Run {
+  const questions = shuffle(pool).slice(0, EXAM_SIZE)
     .map((task) => ({ task, order: shuffle(task.opts.map((_, i) => i)) }));
   return { questions, chosen: [], index: 0, done: false };
 }
@@ -30,25 +53,24 @@ function draw(region: number): Run {
 const isRight = (run: Run, j: number) => run.chosen[j] === run.questions[j]!.task.a;
 
 /** Итоговый экзамен по региону: случайные вопросы, одна попытка на вопрос, разбор ошибок в конце. */
-export function ExamView({ region }: { region: number }) {
+export function ExamView({ cfg }: { cfg: ExamConfig }) {
   const { progress, setExam } = useProgress();
   const [run, setRun] = useState<Run | null>(null);
-  const r = REGIONS[region]!;
-  const pool = examPool(region);
-  const best = progress.exams[region];
-  const crumb = <p className="crumb">Итоговый экзамен · регион {region + 1}</p>;
+  const pool = cfg.pool;
+  const best = progress.exams[cfg.examKey];
+  const crumb = <p className="crumb">Итоговый экзамен · регион {cfg.regionNo}</p>;
 
   if (!run) {
     return (
       <section className="intro exam">
         {crumb}
-        <h1>{r.name}</h1>
+        <h1>{cfg.name}</h1>
         <p>{Math.min(EXAM_SIZE, pool.length)} случайных вопросов по темам региона. На каждый вопрос одна попытка, объяснение появляется сразу после ответа. Чтобы сдать, нужно {EXAM_PASS}% правильных.</p>
-        <p className="how">{LESSONS.some((l) => l.region === region) ? "Вопросы берутся из упражнений уроков и из отдельного банка экзамена" : "Вопросы берутся из банка экзамена"}, всего {pool.length}. Каждая попытка — новый набор и новый порядок вариантов.</p>
+        <p className="how">{cfg.fromLessons ? "Вопросы берутся из упражнений уроков и из отдельного банка экзамена" : "Вопросы берутся из банка экзамена"}, всего {pool.length}. Каждая попытка — новый набор и новый порядок вариантов.</p>
         {best != null && <p className="how">Лучший результат: <b>{best}%</b>{best >= EXAM_PASS ? ", экзамен сдан" : ""}.</p>}
         <div className="actions">
-          <button type="button" className="btn" onClick={() => setRun(draw(region))}>Начать экзамен</button>
-          <button type="button" className="btn ghost" onClick={() => navigate({ view: "map" })}>К карте</button>
+          <button type="button" className="btn" onClick={() => setRun(draw(pool))}>Начать экзамен</button>
+          <button type="button" className="btn ghost" onClick={() => navigate(cfg.back)}>К карте</button>
         </div>
       </section>
     );
@@ -86,9 +108,9 @@ export function ExamView({ region }: { region: number }) {
           </div>
         ) : <p className="okline">Ни одной ошибки.</p>}
         <div className="actions">
-          <button type="button" className="btn" onClick={() => setRun(draw(region))}>Новая попытка</button>
-          <button type="button" className="btn ghost" onClick={() => navigate({ view: "cards" })}>Повторить по карточкам</button>
-          <button type="button" className="btn ghost" onClick={() => navigate({ view: "map" })}>К карте</button>
+          <button type="button" className="btn" onClick={() => setRun(draw(pool))}>Новая попытка</button>
+          <button type="button" className="btn ghost" onClick={() => navigate(cfg.cards)}>Повторить по карточкам</button>
+          <button type="button" className="btn ghost" onClick={() => navigate(cfg.back)}>К карте</button>
         </div>
       </section>
     );
@@ -105,13 +127,13 @@ export function ExamView({ region }: { region: number }) {
     setRun(next);
     if (next.chosen.length === total) {
       const right = next.questions.filter((_, j) => isRight(next, j)).length;
-      setExam(region, Math.round((right / total) * 100));
+      setExam(cfg.examKey, Math.round((right / total) * 100));
     }
   };
 
   return (
     <section className="intro exam">
-      <p className="crumb">Экзамен «{r.name}» · вопрос {run.index + 1} из {total}</p>
+      <p className="crumb">Экзамен «{cfg.name}» · вопрос {run.index + 1} из {total}</p>
       <ExamBar run={run} />
       <article className="task exam-q">
         {q.task.type === "predict" && <CodeBlock code={q.task.code} />}

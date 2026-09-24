@@ -3,25 +3,35 @@ import { FLASHCARDS, LEVEL_NAME, type CardLevel, type Flashcard } from "../conte
 import { REGIONS } from "../content/regions";
 import { cardDue, cardKnown, useProgress, type Progress } from "../state/progress";
 import { shuffle } from "../state/random";
-import { navigate } from "../state/route";
+import { navigate, type Route } from "../state/route";
 import { CodeBlock, Md } from "../ui/Code";
 
 type Mode = "deck" | "list";
 const LEVELS: CardLevel[] = ["junior", "middle", "senior"];
-const regionsWithCards = REGIONS.map((r, i) => ({ r, i })).filter(({ i }) => FLASHCARDS.some((c) => c.region === i));
 
 /** Карточка в колоде на сегодня: новая или с подошедшим сроком повтора. */
 const forToday = (p: Progress, c: Flashcard) => !p.cards[c.id] || cardDue(p, c.id);
 
+/** Карточки TypeScript. */
+export const tsCards = { cards: FLASHCARDS, regionNames: REGIONS.map((r) => r.name), interview: { view: "interview" } as Route };
+
+interface CardsProps {
+  cards: Flashcard[];
+  regionNames: string[];
+  /** Куда ведёт кнопка «Пробное собеседование»; нет — кнопки нет. */
+  interview?: Route;
+}
+
 /** Флеш-карточки с интервальным повторением: колода на сегодня и список всех вопросов. */
-export function CardsView() {
+export function CardsView({ cards: all, regionNames, interview }: CardsProps) {
+  const regionsWithCards = regionNames.map((name, i) => ({ name, i })).filter(({ i }) => all.some((c) => c.region === i));
   const { progress, reviewCard, resetCards } = useProgress();
   const [region, setRegion] = useState<number | null>(null);
   const [level, setLevel] = useState<CardLevel | null>(null);
   const [mode, setMode] = useState<Mode>("deck");
   const [extra, setExtra] = useState(false);
 
-  const filtered = FLASHCARDS.filter((c) => (region == null || c.region === region) && (level == null || c.level === level));
+  const filtered = all.filter((c) => (region == null || c.region === region) && (level == null || c.level === level));
   const known = filtered.filter((c) => cardKnown(progress, c.id)).length;
   const today = filtered.filter((c) => forToday(progress, c));
   const dueCount = filtered.filter((c) => cardDue(progress, c.id)).length;
@@ -40,8 +50,8 @@ export function CardsView() {
       <div className="filters">
         <div className="frow" role="group" aria-label="Регион">
           <button type="button" className="chip" aria-pressed={region == null} onClick={() => setRegion(null)}>Все темы</button>
-          {regionsWithCards.map(({ r, i }) => (
-            <button key={i} type="button" className="chip" aria-pressed={region === i} onClick={() => setRegion(i)}>{i + 1}. {r.name}</button>
+          {regionsWithCards.map(({ name, i }) => (
+            <button key={i} type="button" className="chip" aria-pressed={region === i} onClick={() => setRegion(i)}>{i + 1}. {name}</button>
           ))}
         </div>
         <div className="frow" role="group" aria-label="Уровень">
@@ -53,31 +63,33 @@ export function CardsView() {
           <button type="button" className="chip" aria-pressed={mode === "list"} onClick={() => setMode(mode === "deck" ? "list" : "deck")}>
             {mode === "deck" ? "Показать списком" : "Вернуться к колоде"}
           </button>
-          <button type="button" className="chip" onClick={() => navigate({ view: "interview" })}>Пробное собеседование</button>
+          {interview && <button type="button" className="chip" onClick={() => navigate(interview)}>Пробное собеседование</button>}
         </div>
       </div>
 
       {mode === "deck"
-        ? <Deck key={`${region}-${level}-${extra}`} cards={extra ? filtered : today}
+        ? <Deck key={`${region}-${level}-${extra}`} cards={extra ? filtered : today} all={all} regionNames={regionNames}
             onAnswer={reviewCard} onRepeatAll={() => setExtra(true)} emptyToday={!extra && today.length === 0 && filtered.length > 0} />
-        : <CardList cards={filtered} progress={progress} onReset={(id) => resetCards([id])} />}
+        : <CardList cards={filtered} progress={progress} regionNames={regionNames} onReset={(id) => resetCards([id])} />}
     </section>
   );
 }
 
 interface DeckProps {
   cards: Flashcard[];
+  all: Flashcard[];
+  regionNames: string[];
   onAnswer(id: string, known: boolean): void;
   onRepeatAll(): void;
   emptyToday: boolean;
 }
 
-function Deck({ cards, onAnswer, onRepeatAll, emptyToday }: DeckProps) {
+function Deck({ cards, all, regionNames, onAnswer, onRepeatAll, emptyToday }: DeckProps) {
   // Колода замораживается при смене фильтра: «не знал» уходит в конец, «знал» — из колоды.
   const [queue, setQueue] = useState(() => shuffle(cards.map((c) => c.id)));
   const [open, setOpen] = useState(false);
   const [passed, setPassed] = useState(0);
-  const byId = useMemo(() => new Map(FLASHCARDS.map((c) => [c.id, c])), []);
+  const byId = useMemo(() => new Map(all.map((c) => [c.id, c])), [all]);
   const card = queue[0] ? byId.get(queue[0]) : undefined;
 
   const answer = (k: boolean) => {
@@ -120,7 +132,7 @@ function Deck({ cards, onAnswer, onRepeatAll, emptyToday }: DeckProps) {
     <>
       <p className="fc-count">Карточка {passed + 1} · в колоде {queue.length}</p>
       <article className={`fc${open ? " open" : ""}`}>
-        <CardMeta card={card} />
+        <CardMeta card={card} regionNames={regionNames} />
         <p className="fc-q"><Md text={card.q} /></p>
         {!open ? (
           <div className="actions">
@@ -142,10 +154,10 @@ function Deck({ cards, onAnswer, onRepeatAll, emptyToday }: DeckProps) {
   );
 }
 
-function CardMeta({ card, status }: { card: Flashcard; status?: string }) {
+function CardMeta({ card, status, regionNames }: { card: Flashcard; status?: string; regionNames: string[] }) {
   return (
     <p className="fc-meta">
-      <span>{card.region + 1}. {REGIONS[card.region]!.name}</span>
+      <span>{card.region + 1}. {regionNames[card.region]}</span>
       <span className={`lvl ${card.level}`}>{LEVEL_NAME[card.level]}</span>
       {status && <span>{status}</span>}
     </p>
@@ -161,14 +173,14 @@ function statusOf(p: Progress, id: string): string {
   return `✓ повтор через ${days} дн.`;
 }
 
-function CardList({ cards, progress, onReset }: { cards: Flashcard[]; progress: Progress; onReset(id: string): void }) {
+function CardList({ cards, progress, regionNames, onReset }: { cards: Flashcard[]; progress: Progress; regionNames: string[]; onReset(id: string): void }) {
   if (!cards.length) return <p className="muted">В подборке нет карточек.</p>;
   return (
     <div className="fc-list">
       {cards.map((c) => (
         <details key={c.id} className="theory fc-item">
           <summary><Md text={c.q} /></summary>
-          <CardMeta card={c} status={statusOf(progress, c.id)} />
+          <CardMeta card={c} status={statusOf(progress, c.id)} regionNames={regionNames} />
           <div className="tbody">
             <p><Md text={c.a} /></p>
             {c.code && <CodeBlock code={c.code} />}

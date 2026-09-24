@@ -17,6 +17,10 @@ interface Props {
   onChange: (value: string) => void;
   label?: string;
   marks?: EditorMark[];
+  /** Имя файла в заголовке окна. */
+  fileName?: string;
+  /** Подсказки компилятора (тип при наведении и автодополнение). Для HTML выключают. */
+  assist?: boolean;
 }
 
 /** Отступы внутри области кода, как в styles.css (.ed-hl, .ed textarea). */
@@ -49,8 +53,9 @@ const offsetOf = (lines: string[], line: number, col: number) =>
  * Редактор: прозрачная textarea поверх подсвеченного кода и слоя с подчёркнутыми ошибками.
  * Наведение показывает текст ошибки или тип, ввод — автодополнение от компилятора. Tab вставляет два пробела.
  */
-export function CodeEditor({ value, onChange, label = "Редактор кода", marks = [] }: Props) {
-  const { engine } = useEngine();
+export function CodeEditor({ value, onChange, label = "Редактор кода", marks = [], fileName = "main.ts", assist = true }: Props) {
+  const { engine: tsEngine } = useEngine();
+  const engine = assist ? tsEngine : null;
   const layers = useRef<HTMLDivElement>(null);
   const area = useRef<HTMLTextAreaElement>(null);
   const measure = useRef<HTMLSpanElement>(null);
@@ -156,7 +161,7 @@ export function CodeEditor({ value, onChange, label = "Редактор кода
     <div className="ed">
       <div className="ed-bar" aria-hidden="true">
         <i className="ed-dots" />
-        <span>main.ts</span>
+        <span>{fileName}</span>
         {marks.length > 0 && <span className="ed-count">{marks.length} {plural(marks.length)}</span>}
       </div>
       <div className="ed-main">
