@@ -69,6 +69,9 @@ const CONCEPTS: { name: string; re: RegExp; at: string }[] = [
   { name: "слои и composite", re: /will-change|layout thrashing/i, at: "rnd3" },
   { name: "FOIT и FOUT", re: /\bFOIT\b|\bFOUT\b|font-display/i, at: "rnd4" },
   { name: "SSR и гидратация", re: /\bSSR\b|\bSSG\b|\bCSR\b|гидратац/i, at: "rnd5" },
+  { name: "long polling", re: /long polling/i, at: "rt1" },
+  { name: "SSE", re: /\bSSE\b|Server-Sent|event-stream/i, at: "rt2" },
+  { name: "WebRTC", re: /\bSTUN\b|\bTURN\b|\bSFU\b|\bICE\b/, at: "rt4" },
 ];
 
 /** Признаки JavaScript: в «Браузере» его быть не должно. */

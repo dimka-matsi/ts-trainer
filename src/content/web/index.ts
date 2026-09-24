@@ -7,13 +7,14 @@ import { lessons as cors } from "./lessons/cors";
 import { lessons as dns } from "./lessons/dns";
 import { lessons as http } from "./lessons/http";
 import { lessons as net } from "./lessons/net";
+import { lessons as realtime } from "./lessons/realtime";
 import { lessons as render } from "./lessons/render";
 import { lessons as security } from "./lessons/security";
 import { lessons as tls } from "./lessons/tls";
 import type { WebLesson, WebRegion } from "./types";
 
 /** Уроки по регионам: индекс в массиве = индекс региона в WEB_REGIONS. */
-const REGION_LESSONS: WebLesson[][] = [net, dns, http, tls, cookies, cache, cdn, cors, security, browser, render];
+const REGION_LESSONS: WebLesson[][] = [net, dns, http, tls, cookies, cache, cdn, cors, security, browser, render, realtime];
 
 /** Уроки раздела «Браузер» в порядке прохождения. */
 export const WEB_LESSONS: WebLesson[] = REGION_LESSONS.flat();
@@ -36,12 +37,7 @@ export const WEB_REGIONS: WebRegion[] = [
   { name: "Безопасность", kind: "lessons", desc: "Атаки на сайт и защита от них: XSS, CSRF, CSP, clickjacking, чужой код, заголовки, изоляция." },
   { name: "Устройство браузера", kind: "lessons", desc: "Из каких процессов состоит браузер, как он изолирует сайты и чем отличаются движки." },
   { name: "Рендеринг страницы", kind: "lessons", desc: "Путь от байтов HTML до пикселей, блокирующие ресурсы, шрифты и способы рендеринга сайта." },
-  { name: "Реальное время", kind: "soon", desc: "Как сервер отправляет данные сам: polling, SSE, WebSocket, WebRTC.", topics: [
-    { t: "Polling и long polling", q: "Как получать обновления от сервера без WebSocket?" },
-    { t: "Server-Sent Events", q: "Когда хватит SSE?" },
-    { t: "WebSocket", q: "Как открывается WebSocket и чем он отличается от HTTP?" },
-    { t: "WebRTC", q: "Как два браузера связываются напрямую и зачем серверы STUN и TURN?" },
-  ] },
+  { name: "Реальное время", kind: "lessons", desc: "Как сервер отправляет данные сам: polling, Server-Sent Events, WebSocket, WebRTC." },
   { name: "Скорость загрузки", kind: "soon", desc: "Меньше байтов, меньше кругов туда-обратно, быстрее первый кадр.", topics: [
     { t: "Сжатие", q: "Как работают gzip и Brotli и что сжимать не стоит?" },
     { t: "Подсказки браузеру", q: "Чем отличаются `preload`, `prefetch`, `preconnect` и `dns-prefetch`?" },
