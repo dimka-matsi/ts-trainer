@@ -1102,6 +1102,11 @@ function longest<T extends { length: number }>(a: T, b: T): T {
   return a.length >= b.length ? a : b;
 }
 longest(1, 2); // ошибка: у number нет length`,
+  g1: `type User = { id: number; name: string };
+type Keys = keyof User;          // "id" | "name"
+type Name = User["name"];        // string
+type Tag = string[][number];     // string
+const k: Keys = "email";         // ошибка: такого поля нет`,
   f4: `type Button = { label: string; onClick(this: Button): void };
 declare const btn: Button;
 btn.onClick();

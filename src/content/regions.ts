@@ -43,14 +43,7 @@ export const REGIONS: Region[] = [
     { t: "Generic object types", q: "Зачем дженерик-интерфейсы вроде `Box<T>`?" },
     { t: "Кортежи и variadic tuples", q: "Чем кортеж отличается от массива? Что такое `[...T, U]`?" },
   ] },
-  { name: "Кузница дженериков", kind: "soon", desc: "Generics, `keyof`, `typeof`, indexed access.", topics: [
-    { t: "Generics и constraints", q: "Зачем нужны дженерики и что значит `extends` в них?" },
-    { t: "keyof и T[K]", q: "Как типизировать `getValue<T, K extends keyof T>(obj, key)`?" },
-    { t: "typeof в типах", q: "Как получить тип из объекта-константы?" },
-    { t: "Дефолты и несколько параметров", q: "Зачем `<T, E = Error>` и как TS выводит несколько параметров?" },
-    { t: "Дженерик-классы и интерфейсы", q: "Как типизировать дженерик-репозиторий или кэш?" },
-    { t: "const type parameters", q: "Что даёт `<const T>`?" },
-  ] },
+  { name: "Кузница дженериков", kind: "lessons", desc: "`keyof` и `T[K]`, параметр-ключ, `typeof` в типах, параметры по умолчанию, дженерик-классы, `<const T>`." },
   { name: "Мастерская утилит", kind: "lessons", desc: "Все 22 утилиты из справочника Utility Types: применение и как написать свои." },
   { name: "Башня условий", kind: "soon", desc: "Conditional, mapped и template literal types — программирование на уровне типов.", topics: [
     { t: "Conditional types и extends", q: "Что такое conditional types?" },

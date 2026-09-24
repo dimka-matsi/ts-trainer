@@ -22,7 +22,7 @@ export interface Progress {
 const KEY = "ts-trainer-v1";
 
 /** Достижение за все уроки региона. */
-const REGION_ACHIEVEMENT: Partial<Record<number, AchievementId>> = { 0: "basics", 1: "narrow", 2: "funcs", 5: "utils" };
+const REGION_ACHIEVEMENT: Partial<Record<number, AchievementId>> = { 0: "basics", 1: "narrow", 2: "funcs", 4: "generics", 5: "utils" };
 
 /** Файл прогресса в проекте (.local/progress.json), его отдаёт dev-сервер: см. scripts/progress-file.ts. */
 const FILE_URL = "/__progress";

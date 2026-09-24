@@ -23,7 +23,7 @@
 | 2 | Болото союзов | [Narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html) | Готово: 6 уровней и 4 урока |
 | 3 | Функции | [More on Functions](https://www.typescriptlang.org/docs/handbook/2/functions.html) | Готово: 9 уроков |
 | 4 | Объекты | [Object Types](https://www.typescriptlang.org/docs/handbook/2/objects.html) | План |
-| 5 | Кузница дженериков | [Generics](https://www.typescriptlang.org/docs/handbook/2/generics.html), [Keyof](https://www.typescriptlang.org/docs/handbook/2/keyof-types.html), [Typeof](https://www.typescriptlang.org/docs/handbook/2/typeof-types.html), [Indexed Access](https://www.typescriptlang.org/docs/handbook/2/indexed-access-types.html) | План |
+| 5 | Кузница дженериков | [Generics](https://www.typescriptlang.org/docs/handbook/2/generics.html), [Keyof](https://www.typescriptlang.org/docs/handbook/2/keyof-types.html), [Typeof](https://www.typescriptlang.org/docs/handbook/2/typeof-types.html), [Indexed Access](https://www.typescriptlang.org/docs/handbook/2/indexed-access-types.html) | Готово: 6 уроков |
 | 6 | Мастерская утилит | [Utility Types](https://www.typescriptlang.org/docs/handbook/utility-types.html) | Готово: 8 уроков |
 | 7 | Башня условий | [Conditional Types](https://www.typescriptlang.org/docs/handbook/2/conditional-types.html), [Mapped Types](https://www.typescriptlang.org/docs/handbook/2/mapped-types.html), [Template Literal Types](https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html) | План |
 | 8 | Классы и модули | [Classes](https://www.typescriptlang.org/docs/handbook/2/classes.html), [Modules](https://www.typescriptlang.org/docs/handbook/2/modules.html), [Enums](https://www.typescriptlang.org/docs/handbook/enums.html), [Declaration Merging](https://www.typescriptlang.org/docs/handbook/declaration-merging.html), [Decorators](https://www.typescriptlang.org/docs/handbook/decorators.html) | План |
@@ -104,7 +104,20 @@ Utility Types стоят раньше Mapped и Conditional Types намерен
 | `ReadonlyArray` | `readonly T[]` | Как запретить мутацию массива в пропсах? |
 | Кортежи | Опциональные и rest-элементы, `readonly`, имена, variadic `[...T, U]` | Чем кортеж отличается от массива? |
 
-## Регионы 5 и 7. Type Manipulation — план
+## Регион 5. Кузница дженериков — готово, 6 уроков
+
+Основы (`<T>`, вывод из аргументов, `extends`) даёт урок «Дженерик-функции» в регионе 3. Здесь — то, на чём держатся утилиты.
+
+| # | Урок (id) | Что знать | Вопрос на собесе | Подвохи |
+| --- | --- | --- | --- | --- |
+| 1 | keyof и тип поля T[K] (g1) | `keyof T` — union имён, `T["k"]` — тип поля, `T[number]` — тип элемента | Что делают `keyof` и `T["name"]`? | Union имён в скобках даёт union типов |
+| 2 | Параметр-ключ (g2) | `K extends keyof T`, результат `T[K]` | Как типизировать `getValue(obj, key)`? | С `key: keyof T` результат — union всех полей |
+| 3 | typeof в позиции типа (g3) | Тип из значения, `(typeof ARR)[number]` | Как получить тип из значения? | Без `as const` значения расширяются |
+| 4 | Параметры по умолчанию (g4) | `<T, E = Error>`, вывод нескольких параметров | Зачем значение по умолчанию у параметра типа? | Указать явно только часть параметров нельзя |
+| 5 | Дженерик-интерфейсы и классы (g5) | `class C<K, V>`, ограничения параметров класса | Как типизировать дженерик-кэш? | Статика не видит параметры класса |
+| 6 | const у параметра типа (g6) | `<const T>` выводит как `as const` (TS 5.0) | Что даёт `<const T>`? | Для массивов ограничение `readonly ...[]` |
+
+## Регион 7. Type Manipulation — план
 
 | Регион | Тема | Что знать | Вопрос или задача |
 | --- | --- | --- | --- |
@@ -260,7 +273,7 @@ Utility Types стоят раньше Mapped и Conditional Types намерен
 
 - [x] Регион 1: урок `satisfies`
 - [x] Регион 2: equality narrowing, type predicates, assertion functions, состояния loading / success / error
-- [ ] Регион 5: Generics, `keyof`, `typeof`, indexed access
+- [x] Регион 5: Generics, `keyof`, `typeof`, indexed access
 - [ ] Регион 10: TS и React
 - [ ] Регион 7: conditional, mapped, template literal, рекурсивные типы и задачи для лайв-кодинга
 - [x] Регион 3: функции

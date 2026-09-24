@@ -248,6 +248,77 @@ function label(s: Status): string {
 }`,
     },
   ],
+  4: [
+    {
+      type: "predict",
+      q: "Во что раскроется тип `V`?",
+      code: `type User = { id: number; name: string; admin: boolean };
+type V = User["id" | "admin"];`,
+      probe: "V",
+      opts: ["number | boolean", "number", "{ id: number; admin: boolean; }", "string | number | boolean"],
+      a: 0,
+      why: "Если в квадратных скобках union имён, получается union типов этих полей: `number` и `boolean`.",
+    },
+    {
+      type: "predict",
+      q: "Какой тип TypeScript выведет для переменной `n`?",
+      code: `function getValue<T, K extends keyof T>(obj: T, key: K): T[K] {
+  return obj[key];
+}
+const n = getValue({ title: "TS", pages: 300 }, "pages");`,
+      probe: "n",
+      opts: ["number", "string | number", "300", "unknown"],
+      a: 0,
+      why: "`K` выведен как литерал `\"pages\"`, поэтому результат `T[K]` — тип именно этого поля.",
+    },
+    {
+      type: "predict",
+      q: "Во что раскроется тип `Size`?",
+      code: `const SIZES = ["s", "m", "l"] as const;
+type Size = (typeof SIZES)[number];`,
+      opts: ["\"s\" | \"m\" | \"l\"", "string", "readonly [\"s\", \"m\", \"l\"]", "string[]"],
+      probe: "Size",
+      a: 0,
+      why: "`as const` сохранил точные значения, а `[number]` берёт тип элемента на любой позиции.",
+    },
+    {
+      type: "predict",
+      q: "Какой тип TypeScript выведет для переменной `e`?",
+      code: `type Result<T, E = Error> = { ok: true; value: T } | { ok: false; error: E };
+declare const r: Result<string>;
+const e = r.ok ? null : r.error;`,
+      probe: "e",
+      opts: ["Error | null", "string | null", "unknown", "E | null"],
+      a: 0,
+      why: "Второй параметр не указан, поэтому взято значение по умолчанию `Error`. В ветке `!r.ok` у `r` есть поле `error` этого типа.",
+    },
+    {
+      type: "quiz",
+      q: "Чем `getValue<T, K extends keyof T>(obj: T, key: K): T[K]` лучше `getValue<T>(obj: T, key: keyof T)`?",
+      opts: [
+        "Результат имеет тип конкретного поля, а не union всех полей",
+        "Можно передать несуществующий ключ",
+        "Функция работает быстрее",
+        "Разницы нет",
+      ],
+      a: 0,
+      why: "Отдельный параметр `K` запоминает, какой ключ передан. Без него результат — `T[keyof T]`, union типов всех полей.",
+      example: `const user = { name: "Ann", age: 30 };
+function loose<T>(obj: T, key: keyof T) { return obj[key]; }
+function exact<T, K extends keyof T>(obj: T, key: K): T[K] { return obj[key]; }
+const a = loose(user, "age"); // string | number
+const b = exact(user, "age"); // number`,
+    },
+    {
+      type: "quiz",
+      q: "Что выведет TypeScript для `T` при вызове `f([\"a\", \"b\"])`, если функция объявлена как `function f<const T extends readonly string[]>(x: T)`?",
+      opts: ["`readonly [\"a\", \"b\"]`", "`string[]`", "`readonly string[]`", "`(\"a\" | \"b\")[]`"],
+      a: 0,
+      why: "`const` у параметра типа выводит аргумент так, как будто он написан с `as const`: кортеж с точными значениями.",
+      example: `function f<const T extends readonly string[]>(x: T) { return x; }
+const r = f(["a", "b"]); // readonly ["a", "b"]`,
+    },
+  ],
   5: [
     {
       type: "predict",
