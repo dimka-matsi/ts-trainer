@@ -1,4 +1,5 @@
 import type { Flashcard } from "../flashcards";
+import { lessons as cache } from "./lessons/cache";
 import { lessons as cookies } from "./lessons/cookies";
 import { lessons as dns } from "./lessons/dns";
 import { lessons as http } from "./lessons/http";
@@ -7,7 +8,7 @@ import { lessons as tls } from "./lessons/tls";
 import type { WebLesson, WebRegion } from "./types";
 
 /** Уроки по регионам: индекс в массиве = индекс региона в WEB_REGIONS. */
-const REGION_LESSONS: WebLesson[][] = [net, dns, http, tls, cookies];
+const REGION_LESSONS: WebLesson[][] = [net, dns, http, tls, cookies, cache];
 
 /** Уроки раздела «Браузер» в порядке прохождения. */
 export const WEB_LESSONS: WebLesson[] = REGION_LESSONS.flat();
@@ -24,14 +25,7 @@ export const WEB_REGIONS: WebRegion[] = [
   { name: "HTTP", kind: "lessons", desc: "Запрос и ответ, методы, коды, заголовки, соединения, стили API и версии протокола." },
   { name: "HTTPS и TLS", kind: "lessons", desc: "Зачем HTTPS, шифрование, сертификаты, рукопожатие TLS 1.3 и HSTS." },
   { name: "Cookies, сессии и вход", kind: "lessons", desc: "Как сервер узнаёт пользователя: cookies и их флаги, сторонние cookies, сессии и токены, OAuth." },
-  { name: "Кэширование", kind: "soon", desc: "HTTP-кэш браузера: свежесть, проверка, 304, кэш при переходах.", topics: [
-    { t: "Cache-Control", q: "Чем `no-cache` отличается от `no-store`? Что значит `max-age`?" },
-    { t: "ETag и 304", q: "Как браузер проверяет, изменился ли файл, не скачивая его заново?" },
-    { t: "Статика с хэшем в имени", q: "Как кэшировать файлы сборки на год и при этом отдавать новую версию?" },
-    { t: "Приватный и общий кэш", q: "Зачем `private` и `public` в `Cache-Control`?" },
-    { t: "Vary и stale-while-revalidate", q: "Зачем заголовок `Vary` и что даёт `stale-while-revalidate`?" },
-    { t: "Кэш «назад-вперёд»", q: "Почему кнопка «Назад» иногда показывает страницу мгновенно (bfcache)?" },
-  ] },
+  { name: "Кэширование", kind: "lessons", desc: "HTTP-кэш браузера и общие кэши: свежесть, проверка и 304, файлы с хэшем, Vary, bfcache." },
   { name: "CDN, прокси и балансировка", kind: "soon", desc: "Серверы между пользователем и приложением.", topics: [
     { t: "Как работает CDN", q: "Что такое CDN и почему с ним сайт открывается быстрее?" },
     { t: "Кэш на границе", q: "Как CDN решает, что хранить и когда обновить?" },

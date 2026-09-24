@@ -45,6 +45,10 @@ const CONCEPTS: { name: string; re: RegExp; at: string }[] = [
   { name: "JWT", re: /\bJWT\b/, at: "ck5" },
   { name: "refresh-токен", re: /refresh/i, at: "ck6" },
   { name: "OAuth", re: /OAuth|PKCE|OpenID/, at: "ck7" },
+  { name: "Cache-Control", re: /Cache-Control|\bno-store\b|\bno-cache\b/, at: "cache1" },
+  { name: "ETag", re: /\bETag\b|If-None-Match/i, at: "cache2" },
+  { name: "CDN", re: /\bCDN\b/, at: "cache4" },
+  { name: "bfcache", re: /bfcache/i, at: "cache6" },
 ];
 
 /** Признаки JavaScript: в «Браузере» его быть не должно. */
@@ -72,10 +76,16 @@ const taskText = (t: WebTask) =>
 
 const messageText = (m: HttpMessage) => [m.line, ...m.headers.map(([k, v]) => `${k}: ${v}`), m.body ?? ""];
 
-function lessonText(l: WebLesson): string[] {
+/** Текст урока, который читает ученик: теория, схема и задания. */
+function proseText(l: WebLesson): string[] {
   const flow = l.theory.flow ? [...l.theory.flow.actors, ...l.theory.flow.steps.flatMap((s) => [s.label, s.note ?? ""])] : [];
+  return [l.title, l.q, l.answer, ...l.theory.p, ...l.theory.keys, ...flow, ...l.tasks.flatMap(taskText)];
+}
+
+/** Весь текст урока вместе с HTTP-сообщениями вкладки «Сеть». */
+function lessonText(l: WebLesson): string[] {
   const reqs = (l.theory.requests ?? []).flatMap((r) => [r.name, ...messageText(r.request), ...messageText(r.response)]);
-  return [l.title, l.q, l.answer, ...l.theory.p, ...l.theory.keys, ...flow, ...reqs, ...l.tasks.flatMap(taskText)];
+  return [...proseText(l), ...reqs];
 }
 
 const header = (m: HttpMessage, name: string) => m.headers.filter(([k]) => k.toLowerCase() === name.toLowerCase()).map(([, v]) => v);
@@ -164,10 +174,12 @@ export function checkWeb(fail: (msg: string) => void) {
       const m = JS.exec(text);
       if (m) fail(`${tag}: в «Браузере» не должно быть JavaScript: …${text.slice(Math.max(0, m.index - 30), m.index + 30)}…`);
     }
+    // Порядок тем проверяем по тексту урока. Заголовки в запросах вкладки «Сеть» — снимок настоящего обмена,
+    // в нём могут быть ещё не пройденные заголовки, и это нормально.
     const pos = order.indexOf(lesson.id);
     for (const c of CONCEPTS) {
       if (order.indexOf(c.at) <= pos) continue;
-      for (const text of texts) {
+      for (const text of proseText(lesson)) {
         const m = c.re.exec(text);
         if (m) { fail(`${tag}: «${c.name}» встречается раньше урока ${c.at}: …${text.slice(Math.max(0, m.index - 30), m.index + 30).replace(/\s+/g, " ")}…`); break; }
       }
