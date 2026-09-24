@@ -55,6 +55,12 @@ const CONCEPTS: { name: string; re: RegExp; at: string }[] = [
   { name: "балансировщик", re: /round robin|least connections|sticky/i, at: "cdn4" },
   { name: "CORS", re: /\bCORS\b|Access-Control-|same-origin|одного источника/i, at: "cors1" },
   { name: "preflight", re: /preflight/i, at: "cors3" },
+  { name: "CSP", re: /\bCSP\b|Content-Security-Policy|Content Security Policy/i, at: "sec2" },
+  { name: "nonce", re: /\bnonce\b|strict-dynamic/i, at: "sec4" },
+  { name: "clickjacking", re: /clickjacking|X-Frame-Options/i, at: "sec5" },
+  { name: "SRI", re: /\bSRI\b|Subresource Integrity|integrity=/i, at: "sec6" },
+  { name: "nosniff", re: /nosniff|Referrer-Policy|Permissions-Policy/i, at: "sec7" },
+  { name: "COOP и COEP", re: /\bCOOP\b|\bCOEP\b|\bCORP\b|Spectre|SharedArrayBuffer/, at: "sec8" },
 ];
 
 /** Признаки JavaScript: в «Браузере» его быть не должно. */

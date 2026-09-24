@@ -6,11 +6,12 @@ import { lessons as cors } from "./lessons/cors";
 import { lessons as dns } from "./lessons/dns";
 import { lessons as http } from "./lessons/http";
 import { lessons as net } from "./lessons/net";
+import { lessons as security } from "./lessons/security";
 import { lessons as tls } from "./lessons/tls";
 import type { WebLesson, WebRegion } from "./types";
 
 /** Уроки по регионам: индекс в массиве = индекс региона в WEB_REGIONS. */
-const REGION_LESSONS: WebLesson[][] = [net, dns, http, tls, cookies, cache, cdn, cors];
+const REGION_LESSONS: WebLesson[][] = [net, dns, http, tls, cookies, cache, cdn, cors, security];
 
 /** Уроки раздела «Браузер» в порядке прохождения. */
 export const WEB_LESSONS: WebLesson[] = REGION_LESSONS.flat();
@@ -30,17 +31,7 @@ export const WEB_REGIONS: WebRegion[] = [
   { name: "Кэширование", kind: "lessons", desc: "HTTP-кэш браузера и общие кэши: свежесть, проверка и 304, файлы с хэшем, Vary, bfcache." },
   { name: "CDN, прокси и балансировка", kind: "lessons", desc: "Серверы между пользователем и приложением: CDN и его кэш, прокси, балансировщики." },
   { name: "CORS", kind: "lessons", desc: "Политика одного источника и как сервер разрешает чтение с других источников." },
-  { name: "Безопасность", kind: "soon", desc: "Атаки на сайт и заголовки, которые от них защищают.", topics: [
-    { t: "XSS: виды", q: "Что такое XSS? Чем хранимый XSS отличается от отражённого и DOM-based?" },
-    { t: "Защита от XSS", q: "Как защищаются от XSS: экранирование, санитизация, `HttpOnly`, CSP?" },
-    { t: "CSRF", q: "Что такое CSRF и как защищают `SameSite` и CSRF-токен?" },
-    { t: "Content Security Policy", q: "Что делает заголовок `Content-Security-Policy`? Зачем nonce и `strict-dynamic`?" },
-    { t: "Clickjacking", q: "Как запретить показывать сайт в чужом iframe: `frame-ancestors` и `X-Frame-Options`?" },
-    { t: "Subresource Integrity", q: "Как убедиться, что скрипт с CDN не подменили?" },
-    { t: "Заголовки защиты", q: "Зачем `X-Content-Type-Options: nosniff`, `Referrer-Policy`, `Permissions-Policy`?" },
-    { t: "Изоляция источников", q: "Что такое COOP, COEP и CORP и зачем cross-origin isolation?" },
-    { t: "Open redirect и атаки на зависимости", q: "Чем опасен открытый редирект и подменённый npm-пакет?" },
-  ] },
+  { name: "Безопасность", kind: "lessons", desc: "Атаки на сайт и защита от них: XSS, CSRF, CSP, clickjacking, чужой код, заголовки, изоляция." },
   { name: "Устройство браузера", kind: "soon", desc: "Из каких частей состоит браузер и как он изолирует сайты.", topics: [
     { t: "Процессы браузера", q: "Зачем браузеру отдельные процессы: главный, вкладок, GPU, сети?" },
     { t: "Изоляция сайтов и песочница", q: "Почему одна вкладка не может прочитать память другой?" },
