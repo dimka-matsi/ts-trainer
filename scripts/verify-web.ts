@@ -33,6 +33,11 @@ const CONCEPTS: { name: string; re: RegExp; at: string }[] = [
   { name: "keep-alive", re: /keep-alive/i, at: "http5" },
   { name: "REST и GraphQL", re: /\bREST\b|GraphQL|gRPC/, at: "http6" },
   { name: "мультиплексирование", re: /мультиплекс|HPACK/i, at: "http7" },
+  { name: "MITM и SNI", re: /\bMITM\b|посередине|\bSNI\b/, at: "tls1" },
+  { name: "обмен ключами", re: /ECDHE|Диффи|прямая секретность|forward secrecy/i, at: "tls2" },
+  { name: "центр сертификации", re: /центр сертификации|Let's Encrypt|Certificate Transparency|промежуточн\S* (центр|сертификат)/i, at: "tls3" },
+  { name: "0-RTT", re: /0-RTT|ClientHello/, at: "tls4" },
+  { name: "HSTS", re: /\bHSTS\b|Strict-Transport-Security/i, at: "tls5" },
 ];
 
 /** Признаки JavaScript: в «Браузере» его быть не должно. */

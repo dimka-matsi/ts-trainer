@@ -2,10 +2,11 @@ import type { Flashcard } from "../flashcards";
 import { lessons as dns } from "./lessons/dns";
 import { lessons as http } from "./lessons/http";
 import { lessons as net } from "./lessons/net";
+import { lessons as tls } from "./lessons/tls";
 import type { WebLesson, WebRegion } from "./types";
 
 /** Уроки по регионам: индекс в массиве = индекс региона в WEB_REGIONS. */
-const REGION_LESSONS: WebLesson[][] = [net, dns, http];
+const REGION_LESSONS: WebLesson[][] = [net, dns, http, tls];
 
 /** Уроки раздела «Браузер» в порядке прохождения. */
 export const WEB_LESSONS: WebLesson[] = REGION_LESSONS.flat();
@@ -20,14 +21,7 @@ export const WEB_REGIONS: WebRegion[] = [
   { name: "Как работает интернет", kind: "lessons", desc: "IP-адреса и порты, уровни сети, TCP и UDP, путь запроса от URL до страницы." },
   { name: "DNS", kind: "lessons", desc: "Как имя сайта превращается в IP-адрес: путь запроса, записи, TTL, подмена и шифрование." },
   { name: "HTTP", kind: "lessons", desc: "Запрос и ответ, методы, коды, заголовки, соединения, стили API и версии протокола." },
-  { name: "HTTPS и TLS", kind: "soon", desc: "Шифрование, сертификаты, рукопожатие TLS.", topics: [
-    { t: "Зачем HTTPS", q: "От чего защищает HTTPS и чем он отличается от HTTP?" },
-    { t: "Симметричное и асимметричное шифрование", q: "Почему TLS использует оба вида шифрования?" },
-    { t: "Сертификаты и цепочка доверия", q: "Как браузер проверяет, что сертификат настоящий?" },
-    { t: "Рукопожатие TLS 1.3", q: "Что происходит при рукопожатии TLS и сколько оно длится?" },
-    { t: "Атака «человек посередине»", q: "Что такое MITM и почему от неё спасает HTTPS?" },
-    { t: "HSTS", q: "Зачем заголовок `Strict-Transport-Security` и что такое HSTS preload?" },
-  ] },
+  { name: "HTTPS и TLS", kind: "lessons", desc: "Зачем HTTPS, шифрование, сертификаты, рукопожатие TLS 1.3 и HSTS." },
   { name: "Cookies, сессии и вход", kind: "soon", desc: "Как сервер узнаёт пользователя: cookies и их флаги, сессии, токены, OAuth.", topics: [
     { t: "Set-Cookie и Cookie", q: "Как сервер ставит cookie и когда браузер её отправляет?" },
     { t: "Флаги HttpOnly и Secure", q: "От чего защищают `HttpOnly` и `Secure`?" },
