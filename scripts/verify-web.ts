@@ -53,6 +53,8 @@ const CONCEPTS: { name: string; re: RegExp; at: string }[] = [
   { name: "purge", re: /purge|origin shield/i, at: "cdn2" },
   { name: "X-Forwarded-For", re: /X-Forwarded/i, at: "cdn3" },
   { name: "балансировщик", re: /round robin|least connections|sticky/i, at: "cdn4" },
+  { name: "CORS", re: /\bCORS\b|Access-Control-|same-origin|одного источника/i, at: "cors1" },
+  { name: "preflight", re: /preflight/i, at: "cors3" },
 ];
 
 /** Признаки JavaScript: в «Браузере» его быть не должно. */

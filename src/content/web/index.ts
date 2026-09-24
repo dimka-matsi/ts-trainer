@@ -2,6 +2,7 @@ import type { Flashcard } from "../flashcards";
 import { lessons as cache } from "./lessons/cache";
 import { lessons as cdn } from "./lessons/cdn";
 import { lessons as cookies } from "./lessons/cookies";
+import { lessons as cors } from "./lessons/cors";
 import { lessons as dns } from "./lessons/dns";
 import { lessons as http } from "./lessons/http";
 import { lessons as net } from "./lessons/net";
@@ -9,7 +10,7 @@ import { lessons as tls } from "./lessons/tls";
 import type { WebLesson, WebRegion } from "./types";
 
 /** Уроки по регионам: индекс в массиве = индекс региона в WEB_REGIONS. */
-const REGION_LESSONS: WebLesson[][] = [net, dns, http, tls, cookies, cache, cdn];
+const REGION_LESSONS: WebLesson[][] = [net, dns, http, tls, cookies, cache, cdn, cors];
 
 /** Уроки раздела «Браузер» в порядке прохождения. */
 export const WEB_LESSONS: WebLesson[] = REGION_LESSONS.flat();
@@ -28,15 +29,7 @@ export const WEB_REGIONS: WebRegion[] = [
   { name: "Cookies, сессии и вход", kind: "lessons", desc: "Как сервер узнаёт пользователя: cookies и их флаги, сторонние cookies, сессии и токены, OAuth." },
   { name: "Кэширование", kind: "lessons", desc: "HTTP-кэш браузера и общие кэши: свежесть, проверка и 304, файлы с хэшем, Vary, bfcache." },
   { name: "CDN, прокси и балансировка", kind: "lessons", desc: "Серверы между пользователем и приложением: CDN и его кэш, прокси, балансировщики." },
-  { name: "CORS", kind: "soon", desc: "Политика одного источника и запросы на чужой домен.", topics: [
-    { t: "Origin и same-origin policy", q: "Что такое origin и что запрещает политика одного источника?" },
-    { t: "Same-origin и same-site", q: "Чем «тот же источник» отличается от «того же сайта»?" },
-    { t: "Простые запросы и preflight", q: "Когда браузер отправляет предварительный запрос OPTIONS?" },
-    { t: "Заголовки Access-Control-*", q: "Какие заголовки должен вернуть сервер, чтобы разрешить запрос?" },
-    { t: "Запросы с cookies", q: "Почему с cookies нельзя ответить `Access-Control-Allow-Origin: *`?" },
-    { t: "CORS — не защита сервера", q: "Защищает ли CORS от CSRF? Почему запрос из curl проходит без CORS?" },
-    { t: "Обход в разработке", q: "Как разработчики обходят CORS: прокси dev-сервера и почему это не решение для продакшена?" },
-  ] },
+  { name: "CORS", kind: "lessons", desc: "Политика одного источника и как сервер разрешает чтение с других источников." },
   { name: "Безопасность", kind: "soon", desc: "Атаки на сайт и заголовки, которые от них защищают.", topics: [
     { t: "XSS: виды", q: "Что такое XSS? Чем хранимый XSS отличается от отражённого и DOM-based?" },
     { t: "Защита от XSS", q: "Как защищаются от XSS: экранирование, санитизация, `HttpOnly`, CSP?" },
