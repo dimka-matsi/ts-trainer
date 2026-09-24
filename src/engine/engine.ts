@@ -6,6 +6,8 @@ export type TsApi = typeof TS;
 export interface Diagnostic {
   line: number;
   col: number;
+  /** Длина подсвеченного фрагмента в символах (не меньше 1). */
+  len: number;
   code: number;
   msg: string;
 }
@@ -79,6 +81,7 @@ export function createEngine(ts: TsApi, lib: string): Engine {
         return {
           line: lc.line + 1,
           col: lc.character + 1,
+          len: Math.max(1, d.length ?? 1),
           code: d.code,
           msg: ts.flattenDiagnosticMessageText(d.messageText, "\n"),
         };

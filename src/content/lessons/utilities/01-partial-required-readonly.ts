@@ -5,12 +5,12 @@ export const lesson: Lesson = {
   region: 5,
   title: "Partial, Required, Readonly",
   q: "Что делают `Partial`, `Required` и `Readonly` и как они устроены?",
-  answer: "`Partial` делает все поля опциональными, `Required` — обязательными, `Readonly` запрещает запись. Все три — mapped types по `keyof T` с модификаторами `?`, `-?` и `readonly`. `Readonly` не глубокий: вложенные объекты остаются изменяемыми.",
+  answer: "`Partial` делает все поля необязательными, `Required` — обязательными, `Readonly` запрещает запись. Все три — mapped types по `keyof T` с модификаторами `?`, `-?` и `readonly`. `Readonly` не глубокий: вложенные объекты остаются изменяемыми.",
   theory: {
     p: [
-      "`Partial<T>` делает все свойства опциональными. Типичный случай — патч: `update(todo, { title: \"...\" })` принимает любое подмножество полей.",
+      "`Partial<T>` делает все свойства необязательными. Типичный случай — патч: `update(todo, { title: \"...\" })` принимает любое подмножество полей.",
       "`Required<T>` — обратное: снимает `?` со всех свойств. `Readonly<T>` запрещает перезаписывать свойства, как `Object.freeze`, но только на уровне типов и только на первом уровне вложенности.",
-      "Все три — mapped types: они проходят по ключам `T` и меняют модификаторы. `?` добавляет опциональность, `-?` снимает, `readonly` запрещает запись, `-readonly` снимает запрет.",
+      "Внутри все три устроены одинаково. `keyof T` даёт union имён полей `T`, например `\"title\" | \"done\"`, а `T[K]` — тип поля с именем `K`. Запись `{ [K in keyof T]: T[K] }` проходит по всем именам и копирует поля, это называется mapped type. Модификатор `?` делает поле необязательным, `-?` убирает необязательность, `readonly` запрещает запись, `-readonly` снимает запрет.",
     ],
     example: `interface Todo { title: string; done?: boolean }
 
@@ -31,7 +31,7 @@ type MyReadonly<T> = { readonly [K in keyof T]: T[K] };`,
   tasks: [
     {
       type: "predict",
-      q: "Какой тип у `T`?",
+      q: "Во что раскроется тип `T`?",
       probe: "T",
       code: `interface Todo { title: string; done?: boolean }
 type T = Required<Todo>;`,
@@ -45,6 +45,10 @@ type T = Required<Todo>;`,
       opts: ["Да: `Readonly` не глубокий", "Нет: `host` стал readonly", "Нет: `db` нельзя читать", "Только без `strict`"],
       a: 0,
       why: "`Readonly` добавляет модификатор только свойствам первого уровня. Нельзя перезаписать `c.db`, но `c.db.host` менять можно. Для глубокой защиты пишут `DeepReadonly`.",
+      example: `interface Cfg { db: { host: string } }
+declare const c: Readonly<Cfg>;
+c.db.host = "x";         // можно: вложенный объект не readonly
+c.db = { host: "y" };    // ошибка: db только для чтения`,
     },
     {
       type: "code",

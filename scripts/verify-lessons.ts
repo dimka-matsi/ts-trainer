@@ -1,5 +1,6 @@
 /**
  * Проверка всего учебного контента настоящим компилятором.
+ * Для примера теории: ошибки компиляции ровно на строках с комментарием «// ошибка».
  * Для каждого упражнения:
  *  - predict: тип, который печатает компилятор, совпадает с правильным вариантом, в коде нет ошибок;
  *  - code: стартовый код НЕ проходит проверку, эталонное решение проходит;
@@ -15,6 +16,10 @@ import { createEngine } from "../src/engine/engine";
 import { buildLib, LIB_FILES } from "../src/engine/lib";
 import { checkCode, normalizeType, probeType } from "../src/engine/check";
 import { LESSONS } from "../src/content/lessons";
+import { checkOrder } from "./verify-order";
+import { EXAM_ONLY_TASKS } from "../src/content/exams";
+import { FLASHCARDS } from "../src/content/flashcards";
+import type { Task } from "../src/content/types";
 import { LEVELS } from "../src/content/sorter/levels";
 import { SORTER_SOLUTIONS } from "../src/content/sorter/solutions";
 import { analyze, simulate } from "../src/sorter/logic";
@@ -27,25 +32,64 @@ const engine = createEngine(ts, lib);
 let failures = 0;
 const fail = (msg: string) => { failures++; console.log(`  ✗ ${msg}`); };
 
-for (const lesson of LESSONS) {
-  console.log(`${lesson.id} ${lesson.title}`);
-  lesson.tasks.forEach((task, i) => {
-    const tag = `[${i + 1}] ${task.type}`;
-    if (task.type === "quiz") {
-      if (task.a < 0 || task.a >= task.opts.length) fail(`${tag}: индекс ответа вне вариантов`);
-    } else if (task.type === "predict") {
-      const got = normalizeType(probeType(engine, task.code, task.probe));
-      const want = normalizeType(task.opts[task.a] ?? null);
-      const diags = engine.diagnostics();
-      if (got !== want) fail(`${tag}: компилятор показывает "${got}", а правильный вариант "${want}"`);
-      if (diags.length) fail(`${tag}: в коде есть ошибки: ${diags.map((d) => d.msg).join("; ")}`);
-    } else {
-      if (checkCode(engine, task, task.code).ok) fail(`${tag}: стартовый код уже проходит проверку`);
-      const sol = checkCode(engine, task, task.solution);
-      if (!sol.ok) fail(`${tag}: эталонное решение не проходит: ${JSON.stringify(sol)}`);
-    }
+function checkTask(task: Task, tag: string) {
+  if (task.type === "quiz") {
+    if (task.a < 0 || task.a >= task.opts.length) fail(`${tag}: индекс ответа вне вариантов`);
+    if (task.example) checkExample(task.example, `${tag}, пример`);
+  } else if (task.type === "predict") {
+    const got = normalizeType(probeType(engine, task.code, task.probe));
+    const want = normalizeType(task.opts[task.a] ?? null);
+    const diags = engine.diagnostics();
+    if (got !== want) fail(`${tag}: компилятор показывает "${got}", а правильный вариант "${want}"`);
+    if (diags.length) fail(`${tag}: в коде есть ошибки: ${diags.map((d) => d.msg).join("; ")}`);
+    if (new Set(task.opts.map(normalizeType)).size !== task.opts.length) fail(`${tag}: варианты повторяются`);
+  } else {
+    if (checkCode(engine, task, task.code).ok) fail(`${tag}: стартовый код уже проходит проверку`);
+    const sol = checkCode(engine, task, task.solution);
+    if (!sol.ok) fail(`${tag}: эталонное решение не проходит: ${JSON.stringify(sol)}`);
+  }
+}
+
+/** Пример теории: ошибки должны быть ровно на строках, помеченных «// ошибка», и больше нигде. */
+function checkExample(code: string, where = "пример") {
+  engine.set(code);
+  const lines = code.split("\n");
+  const errors = new Map<number, string>();
+  for (const d of engine.diagnostics()) errors.set(d.line, d.msg);
+  lines.forEach((text, i) => {
+    const marked = /\/\/ ошибка/.test(text);
+    const msg = errors.get(i + 1);
+    if (marked && !msg) fail(`${where}, строка ${i + 1}: помечена «ошибка», но компилятор молчит`);
+    if (!marked && msg) fail(`${where}, строка ${i + 1}: ошибка без пометки: ${msg}`);
   });
 }
+
+for (const lesson of LESSONS) {
+  console.log(`${lesson.id} ${lesson.title}`);
+  checkExample(lesson.theory.example);
+  lesson.tasks.forEach((task, i) => checkTask(task, `[${i + 1}] ${task.type}`));
+}
+
+console.log("exams");
+EXAM_ONLY_TASKS.forEach(({ region, task }, i) => checkTask(task, `регион ${region + 1}, вопрос ${i + 1}: ${task.q}`));
+
+console.log("flashcards");
+{
+  const ids = new Set<string>();
+  const questions = new Set<string>();
+  for (const card of FLASHCARDS) {
+    if (ids.has(card.id)) fail(`карточка ${card.id}: id повторяется`);
+    if (questions.has(card.q)) fail(`карточка ${card.id}: такой вопрос уже есть`);
+    ids.add(card.id);
+    questions.add(card.q);
+    if (!card.q.trim() || !card.a.trim()) fail(`карточка ${card.id}: пустой вопрос или ответ`);
+    if (!card.code) fail(`карточка ${card.id}: нет примера кода`);
+    else checkExample(card.code, `карточка ${card.id}`);
+  }
+}
+
+console.log("порядок тем");
+checkOrder(fail);
 
 LEVELS.forEach((level, i) => {
   console.log(`sorter ${i + 1} ${level.title}`);
@@ -61,5 +105,5 @@ LEVELS.forEach((level, i) => {
   });
 });
 
-console.log(failures ? `\n${failures} проблем` : `\nВсё проверено: ${LESSONS.length} уроков, ${LEVELS.length} уровней`);
+console.log(failures ? `\n${failures} проблем` : `\nВсё проверено: ${LESSONS.length} уроков, ${LEVELS.length} уровней, ${EXAM_ONLY_TASKS.length} вопросов экзаменов, ${FLASHCARDS.length} карточек`);
 process.exit(failures ? 1 : 0);

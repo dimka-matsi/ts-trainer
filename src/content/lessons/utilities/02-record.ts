@@ -29,7 +29,7 @@ type MyRecord<K extends keyof any, V> = { [P in K]: V };`,
   tasks: [
     {
       type: "predict",
-      q: "Какой тип у `Rec`?",
+      q: "Во что раскроется тип `Rec`?",
       probe: "Rec",
       code: `type Rec = Record<"a" | "b", boolean>;`,
       opts: ["{ [key: string]: boolean; }", "{ a: boolean; b: boolean; }", "{ a?: boolean; b?: boolean; }", "Record<string, boolean>"],

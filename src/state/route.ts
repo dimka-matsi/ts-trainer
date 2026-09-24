@@ -3,19 +3,26 @@ import { useSyncExternalStore } from "react";
 export type Route =
   | { view: "map" }
   | { view: "level"; index: number }
-  | { view: "lesson"; id: string };
+  | { view: "lesson"; id: string }
+  | { view: "exam"; region: number }
+  | { view: "cards" };
 
 function parse(hash: string): Route {
   const level = /^#\/level\/(\d+)$/.exec(hash);
   if (level) return { view: "level", index: Number(level[1]) - 1 };
   const lesson = /^#\/lesson\/([\w-]+)$/.exec(hash);
   if (lesson) return { view: "lesson", id: lesson[1]! };
+  const exam = /^#\/exam\/(\d+)$/.exec(hash);
+  if (exam) return { view: "exam", region: Number(exam[1]) - 1 };
+  if (hash === "#/cards") return { view: "cards" };
   return { view: "map" };
 }
 
 export function routeHref(route: Route): string {
   if (route.view === "level") return `#/level/${route.index + 1}`;
   if (route.view === "lesson") return `#/lesson/${route.id}`;
+  if (route.view === "exam") return `#/exam/${route.region + 1}`;
+  if (route.view === "cards") return "#/cards";
   return "#/";
 }
 

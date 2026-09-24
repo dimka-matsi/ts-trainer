@@ -4,6 +4,7 @@ import { LEVELS } from "../content/sorter/levels";
 import { analyze, codeLines, simulate } from "../sorter/logic";
 import type { Ball, Exit, Level, Simulation, TsError } from "../sorter/types";
 import { useProgress } from "../state/progress";
+import { levelStep, stepAfter, stepRoute } from "../state/path";
 import { navigate } from "../state/route";
 import { CodeLine, Md } from "../ui/Code";
 import { DiagnosticItem } from "../ui/Diagnostic";
@@ -236,15 +237,17 @@ export function SorterView({ index }: { index: number }) {
     const allDone = LEVELS.every((_, i) => i === index || (progress.stars[i] ?? 0) > 0);
     if (allDone) unlock("all");
     const last = index === LEVELS.length - 1;
+    const cur = levelStep(index);
+    const nextStep = cur ? stepAfter(cur) : undefined;
     setOutput(
       <>
         <h3 className="ok-t">Скомпилировалось, все значения на своих местах</h3>
         <div className="stars" aria-label={`${stars} из 3 звёзд`}>{starStr(stars)}</div>
         <p><Md text={level.debrief} /></p>
         <p><b>На карте отмечено как изученное:</b> {topics.map((t) => t.t).join(", ")}.</p>
-        {last && <p>Регион «Болото союзов» пройден. Следующий, Кузница дженериков, в разработке.</p>}
+        {last && <p>Уровни пройдены. Дальше в этом регионе — уроки о сужении, которые не ложатся на сортировщик.</p>}
         <div className="actions">
-          {!last && <button type="button" className="btn" onClick={() => navigate({ view: "level", index: index + 1 })}>Следующий уровень</button>}
+          {nextStep && <button type="button" className="btn" onClick={() => navigate(stepRoute(nextStep))}>Дальше: {nextStep.title}</button>}
           <button type="button" className="btn ghost" onClick={() => navigate({ view: "map" })}>Открыть карту</button>
         </div>
       </>,

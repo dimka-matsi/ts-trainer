@@ -41,6 +41,7 @@ export function ChoiceTaskCard({ task, onSolved }: Props) {
         {solved ? (
           <>
             <p className="ok-t"><b>Верно.</b> <Md text={task.why} /></p>
+            {task.type === "quiz" && task.example && <CodeBlock code={task.example} />}
             {compiler && <><p className="where">Компилятор показывает:</p><CodeBlock code={compiler} className="code ty" /></>}
           </>
         ) : wrong.length > 0 && (

@@ -4,7 +4,7 @@
 
 ## Как пользоваться планом
 
-План повторяет порядок [TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/intro.html) и раскладывает его на 9 регионов продукта. Каждый регион — набор уроков, каждый урок закрывает одну тему и отвечает на конкретные вопросы с собеседования.
+План повторяет порядок [TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/intro.html) и раскладывает его на 11 регионов продукта: девять по Handbook, затем «TS и React» и «Компилятор и проект». Каждый регион — набор уроков, каждый урок закрывает одну тему и отвечает на конкретные вопросы с собеседования.
 
 У каждой темы четыре поля:
 
@@ -19,65 +19,76 @@
 
 | # | Регион | Разделы Handbook | Статус |
 | --- | --- | --- | --- |
-| 1 | Основы | [The Basics](https://www.typescriptlang.org/docs/handbook/2/basic-types.html), [Everyday Types](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html), [Type Compatibility](https://www.typescriptlang.org/docs/handbook/type-compatibility.html), [Type Inference](https://www.typescriptlang.org/docs/handbook/type-inference.html) | Готово: 10 уроков |
-| 2 | Болото союзов | [Narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html) | Готово: 6 уровней |
-| 3 | Функции | [More on Functions](https://www.typescriptlang.org/docs/handbook/2/functions.html) | План |
+| 1 | Основы | [The Basics](https://www.typescriptlang.org/docs/handbook/2/basic-types.html), [Everyday Types](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html), [Type Compatibility](https://www.typescriptlang.org/docs/handbook/type-compatibility.html), [Type Inference](https://www.typescriptlang.org/docs/handbook/type-inference.html), [`satisfies`](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-9.html) | Готово: 11 уроков |
+| 2 | Болото союзов | [Narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html) | Готово: 6 уровней и 4 урока |
+| 3 | Функции | [More on Functions](https://www.typescriptlang.org/docs/handbook/2/functions.html) | Готово: 9 уроков |
 | 4 | Объекты | [Object Types](https://www.typescriptlang.org/docs/handbook/2/objects.html) | План |
 | 5 | Кузница дженериков | [Generics](https://www.typescriptlang.org/docs/handbook/2/generics.html), [Keyof](https://www.typescriptlang.org/docs/handbook/2/keyof-types.html), [Typeof](https://www.typescriptlang.org/docs/handbook/2/typeof-types.html), [Indexed Access](https://www.typescriptlang.org/docs/handbook/2/indexed-access-types.html) | План |
 | 6 | Мастерская утилит | [Utility Types](https://www.typescriptlang.org/docs/handbook/utility-types.html) | Готово: 8 уроков |
 | 7 | Башня условий | [Conditional Types](https://www.typescriptlang.org/docs/handbook/2/conditional-types.html), [Mapped Types](https://www.typescriptlang.org/docs/handbook/2/mapped-types.html), [Template Literal Types](https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html) | План |
 | 8 | Классы и модули | [Classes](https://www.typescriptlang.org/docs/handbook/2/classes.html), [Modules](https://www.typescriptlang.org/docs/handbook/2/modules.html), [Enums](https://www.typescriptlang.org/docs/handbook/enums.html), [Declaration Merging](https://www.typescriptlang.org/docs/handbook/declaration-merging.html), [Decorators](https://www.typescriptlang.org/docs/handbook/decorators.html) | План |
-| 9 | Контракты | [tsconfig](https://www.typescriptlang.org/tsconfig/), [Declaration Files](https://www.typescriptlang.org/docs/handbook/declaration-files/introduction.html), паттерны типизации API | План |
+| 9 | Контракты | [strict-флаги](https://www.typescriptlang.org/tsconfig/#strict), паттерны типизации API, branded types | План |
+| 10 | TS и React | [React TypeScript Cheatsheet](https://react-typescript-cheatsheet.netlify.app/) | План |
+| 11 | Компилятор и проект | [tsconfig](https://www.typescriptlang.org/tsconfig/), [Modules Reference](https://www.typescriptlang.org/docs/handbook/modules/reference.html), [Project References](https://www.typescriptlang.org/docs/handbook/project-references.html) | План |
 
 Utility Types стоят раньше Mapped и Conditional Types намеренно: утилитами пользуются каждый день, а их внутреннее устройство разбирается в регионе 7.
 
-## Регион 1. Основы — готово
+`.d.ts`, `declare` и module augmentation живут в регионе 8 рядом с модулями, флаги `strict` — в регионе 9, остальной tsconfig — в регионе 11.
 
-| # | Урок | Что знать | Вопрос на собесе | Подвохи |
+## Регион 1. Основы — готово, 11 уроков
+
+Порядок уроков выстроен так, чтобы каждый опирался только на предыдущие: union идёт раньше объектов, литералы раньше `type`/`interface`, `null` и совместимость раньше `as`. Проверяет `scripts/verify-order.ts`.
+
+| # | Урок (id) | Что знать | Вопрос на собесе | Подвохи |
 | --- | --- | --- | --- | --- |
-| 1 | Статическая проверка | TS проверяет код до запуска и стирает типы при компиляции | Что делает TypeScript и чего он не делает в рантайме? | Типов нет в рантайме, `tsc` эмитит JS даже с ошибками |
-| 2 | Примитивы, массивы, any | `string`, `number`, `boolean`, `T[]` = `Array<T>`; `noImplicitAny` | Чем опасен `any`? | `String` — другой тип; `[number]` — кортеж |
-| 3 | Аннотации и вывод | Вывод из инициализатора и `return`, contextual typing | Когда писать аннотации? | Аннотация расширяет тип; `async` → `Promise<T>` |
-| 4 | Объектные типы | `?` — опциональное свойство, при чтении `T \| undefined` | `a?: T` против `a: T \| undefined` | `?.` и `!` — разные вещи |
-| 5 | Union-типы | Разрешены только общие для всех членов операции | Почему у union «пересечение» свойств? | Без сужения нельзя вызвать метод одного члена |
-| 6 | type и interface | `interface` сливается, `type` умеет union, mapped, conditional | Что выбрать и почему? | Неявная index signature у `type`; конфликт в `&` даёт `never` |
-| 7 | Type assertions | `as` и `!` стираются без проверки | Когда оправдан `as`? | `as unknown as T` — красный флаг |
-| 8 | Литералы, as const, enum | `let` и свойства расширяют литералы, `as const` — нет | Почему `req.method` стал `string`? | `enum` добавляет рантайм-код |
-| 9 | null и strictNullChecks | `null`/`undefined` — отдельные типы | Что даёт `strictNullChecks`? | `\|\|` теряет `0`, `??` — нет |
-| 10 | Совместимость типов | Структурная типизация, excess property checking, `unknown`/`never` | Что такое структурная типизация? | Нужны branded types для номинальности |
+| 1 | Статическая проверка (b1) | TypeScript проверяет код до запуска, при компиляции типы удаляются | Что делает TypeScript и чего он не делает во время работы программы? | `tsc` создаёт JS даже при ошибках без `noEmitOnError` |
+| 2 | Примитивы, массивы, any (b2) | `string`, `number`, `boolean`, `T[]` = `Array<T>`; `noImplicitAny` | Чем опасен `any`? | `String` — другой тип; `[number]` — кортеж |
+| 3 | Аннотации и вывод (b3) | Вывод из значения и `return`, контекстная типизация, `declare` в примерах | Когда писать типы явно? | У `async` результат `Promise<T>` |
+| 4 | Union-типы (b5) | Без проверки доступно только общее для всех вариантов | Почему у union только общие свойства? | Тип результата зависит от описания функции, а не от аргумента |
+| 5 | Объектные типы (b4) | `?` — необязательное свойство, при чтении `T \| undefined`; имя типа через `type` | `a?: T` против `a: T \| undefined` | `?.` и `!` — разные вещи |
+| 6 | Литералы, as const, enum (b8) | `let` и поля объекта расширяют литералы, `as const` — нет | Почему `method` стал `string`? | `enum` остаётся в JS как объект |
+| 7 | type и interface (b6) | `interface` сливается, `type` называет любой тип, `&` и `never` | Что выбрать и почему? | Конфликт полей в `&` даёт `never` |
+| 8 | null и strictNullChecks (b9) | `null`/`undefined` видны в типе, `?.`, `??`, `!` | Что даёт `strictNullChecks`? | `\|\|` теряет `0`, `??` — нет |
+| 9 | Совместимость типов (b10) | Структурная типизация, лишние поля в литерале, `unknown` | Что такое структурная типизация? | Лишнее поле ловится только у объекта, написанного на месте |
+| 10 | Type assertions (b7) | `as` и `!` ничего не проверяют, branded types | Когда оправдан `as`? | `as unknown as T` — сигнал о неверных типах |
+| 11 | `satisfies` (b11) | Проверяет значение как аннотация, но оставляет выведенный тип | Чем `satisfies` отличается от `: T` и `as T`? | Точный тип сохраняется, если в `T` union литералов |
 
-## Регион 2. Болото союзов — готово, 4 подтемы добавить
+## Регион 2. Болото союзов — готово: 6 уровней и 4 урока
+
+То, что не ложится на сортировщик, сделано уроками `n1`–`n4` в `lessons/narrowing/`. Они открываются из тем региона на карте.
 
 | Подтема Handbook | Что знать | Вопрос на собесе | Уровень |
 | --- | --- | --- | --- |
 | `typeof` type guards | Сужает примитивы; `typeof null === "object"` | Какие способы сужения знаешь? | 1, 2 |
 | Truthiness narrowing | `0`, `NaN`, `""`, `0n`, `null`, `undefined` — falsy | Чем опасен `if (!value)`? | 2 |
-| Equality narrowing | `===`, `==` сужают; `x === y` оставляет общий тип | Как `== null` влияет на тип? | Добавить |
+| Equality narrowing | `===`, `==` сужают; `x === y` оставляет общий тип | Как `== null` влияет на тип? | Урок n1 |
 | Оператор `in` | Сужает по наличию свойства | Как отличить объекты без метки? | 3 |
 | `instanceof` | Нужен класс, который есть в рантайме | Почему нельзя с интерфейсом? | 3, 5 |
-| Assignments | Присваивание проверяется против объявленного типа | Почему после `x = 1` можно присвоить строку? | Добавить |
+| Assignments | Присваивание проверяется против объявленного типа | Почему после `x = 1` можно присвоить строку? | Флеш-карточка |
 | Control flow analysis | Недостижимые ветки вычитаются из типа | Что такое control flow analysis? | 1 |
-| Type predicates | `x is T`, TS доверяет телу | В чём риск `x is T`? | Добавить |
-| Assertion functions | `asserts x is T` сужает после вызова | Чем отличается от type guard? | Добавить |
+| Type predicates | `x is T`, TS доверяет телу | В чём риск `x is T`? | Урок n2 |
+| Assertion functions | `asserts x is T` сужает после вызова | Чем отличается от type guard? | Урок n3 |
 | Discriminated unions | Общее поле с литеральными типами | Зачем они нужны? | 4 |
 | `never` и exhaustiveness | Присваивание в `never` в `default` | Как не забыть новый вариант? | 4 |
+| Состояния loading / success / error | Discriminated union вместо набора флагов `isLoading`, `data`, `error` | Как исключить «данные без успеха»? | Урок n4 |
 
 Уровень 6 «Граница» дополнительно покрывает сужение `unknown` для данных из сети.
 
-## Регион 3. Функции — план
+## Регион 3. Функции — готово, 9 уроков
 
-Источник: [More on Functions](https://www.typescriptlang.org/docs/handbook/2/functions.html).
+Источник: [More on Functions](https://www.typescriptlang.org/docs/handbook/2/functions.html). Урок «Дженерик-функции» даёт основы (`<T>`, вывод, `extends`), регион 5 разбирает дженерики глубже.
 
-| Тема | Что знать | Вопрос на собесе |
-| --- | --- | --- |
-| Function type expressions, call signatures | Call signature в объектном типе даёт функцию со свойствами | Как описать функцию со свойством? |
-| Construct signatures | `new (s: string) => T` | Как типизировать фабрику классов? |
-| Generic functions | Вывод, constraints, явный `<T>` | Когда дженерик лишний? |
-| Опциональные параметры | В колбэках опциональность почти не нужна | Почему? |
-| Перегрузки | Сигнатура реализации снаружи не видна | Union или перегрузки? |
-| `this` в функциях | Псевдо-параметр `this: T` | Как типизировать `this`? |
-| `void`, `object`, `unknown`, `never`, `Function` | Возврат `void` в типе функции разрешает возвращать значение | Почему `forEach(x => arr.push(x))` компилируется? |
-| Rest-параметры | Spread требует кортежа | Почему `Math.atan2(...args)` падает без `as const`? |
+| # | Урок | Что знать | Вопрос на собесе | Подвохи |
+| --- | --- | --- | --- | --- |
+| 1 | Сигнатуры функций | Стрелка, call signature `{ (x): R; prop }`, construct signature `new () => T` | Как описать функцию со свойством? | Функция с меньшим числом параметров совместима |
+| 2 | Необязательные параметры и значения по умолчанию | `x?` даёт `T \| undefined` внутри, `x = v` — `T` | Чем `x?: number` отличается от `x = 0`? | `x: T \| undefined` без `?` обязателен |
+| 3 | Дженерик-функции (fg) | Параметр типа связывает вход и выход, выводится из аргументов, `extends` ограничивает | Зачем дженерик-функции? | Параметр типа, который встречается один раз, лишний |
+| 4 | Перегрузки | Снаружи видны только перегрузки, проверка сверху вниз | Union или перегрузки? | Union-аргумент не проходит через перегрузки |
+| 5 | `this` в функциях | Псевдо-параметр `this: T`, стрелки берут `this` снаружи, тип `this` в методах | Как типизировать `this`? | Передачу метода как колбэка TS не проверяет, только вызов |
+| 6 | `void`, `never` и колбэки | `() => void` принимает функции с результатом | Почему `forEach(x => arr.push(x))` компилируется? | Стрелка, которая только бросает, — `never`, объявление `function` — `void` |
+| 7 | `async` и `Promise<T>` | Результат всегда `Promise<T>`, `Promise.all` сохраняет кортеж | Как типизировать ошибку промиса? | В `catch` — `unknown`, забытый `await` |
+| 8 | Rest-параметры и кортежи | Spread требует известной длины, `...args: A` пробрасывает аргументы | Почему `Math.atan2(...args)` падает без `as const`? | `number[]` не подходит для фиксированного числа параметров |
+| 9 | Ковариантность и контравариантность | Результат ковариантен, параметры контравариантны под `strictFunctionTypes` | Почему параметры методов бивариантны? | Метод-сигнатура проверяется слабее свойства-функции |
 
 ## Регион 4. Объекты — план
 
@@ -85,28 +96,34 @@ Utility Types стоят раньше Mapped и Conditional Types намерен
 
 | Тема | Что знать | Вопрос на собесе |
 | --- | --- | --- |
-| Модификаторы свойств | `?`, `readonly` (не глубокий), index signatures | Защищает ли `readonly` вложенные объекты? |
+| `Object`, `{}` и `object` | `{}` и `Object` принимают всё, кроме `null`/`undefined`; `object` — только не-примитивы | Чем отличаются? |
+| Модификаторы свойств | `?`, `readonly` (не глубокий), index signatures | Защищает ли `readonly` вложенные объекты? Чем `readonly` отличается от `const`? |
 | Excess property checks | Только для свежих литералов | Как обойти и почему не стоит? |
 | `extends` и `&` | Поведение при конфликте полей | Чем отличаются? |
 | Generic object types | `Box<T>` | Зачем дженерик-интерфейсы? |
 | `ReadonlyArray` | `readonly T[]` | Как запретить мутацию массива в пропсах? |
-| Кортежи | Опциональные и rest-элементы, `readonly`, имена | Чем кортеж отличается от массива? |
+| Кортежи | Опциональные и rest-элементы, `readonly`, имена, variadic `[...T, U]` | Чем кортеж отличается от массива? |
 
 ## Регионы 5 и 7. Type Manipulation — план
 
 | Регион | Тема | Что знать | Вопрос или задача |
 | --- | --- | --- | --- |
-| 5 | Generics | Связь входа и выхода, constraints, дефолты, `const` type parameters, `NoInfer` | Типизируй `getProp(obj, key)` |
+| 5 | Generics | Связь входа и выхода, constraints, дефолты, `const` type parameters, `NoInfer` | Типизируй `getValue<T, K extends keyof T>(obj, key)` |
+| 5 | Несколько параметров и дефолты | `<T, E = Error>`, вывод нескольких параметров | Зачем дефолт у параметра типа? |
+| 5 | Дженерик-классы и интерфейсы | `class Cache<K, V>`, `interface Repo<T>` | Типизируй дженерик-репозиторий |
 | 5 | keyof | Для `[k: string]` даёт `string \| number` | Почему? |
 | 5 | typeof | Тип из значения | Тип из объекта-константы |
 | 5 | Indexed Access | `T[K]`, `T[number]` | Union элементов кортежа |
 | 7 | Conditional Types | `extends ? :`, `infer`, дистрибутивность, `[T] extends [U]` | Почему `IsNever<never>` = `never`? |
 | 7 | Mapped Types | Модификаторы, key remapping через `as` | Напиши `MyOmit` без `Omit` |
 | 7 | Template Literal Types | `infer` в шаблоне, intrinsic-утилиты | Вытащи `:id` из маршрута |
+| 7 | Рекурсивные типы | Рекурсивные алиасы и conditional types, лимит глубины | Опиши тип JSON-значения |
 
-Лайв-кодинг: `DeepReadonly`, `DeepPartial`, `TupleToUnion`, `UnionToIntersection`, типизированный `get(obj, 'a.b.c')`, типобезопасный EventEmitter.
+Лайв-кодинг: `DeepReadonly`, `DeepPartial`, `TupleToUnion`, `UnionToIntersection`, `ElementType<T>` через `infer`, типизированный `get(obj, 'a.b.c')`, типобезопасный EventEmitter, имена обработчиков `onThemeChanged` из ключей настроек.
 
 ## Регион 6. Utility Types — готово
+
+Порядок уроков: `Partial`/`Required`/`Readonly` (там же объясняются `keyof`, `T[K]` и mapped types), `Record`, `Exclude`/`Extract` (conditional types), `Pick`/`Omit`, `ReturnType` (`infer`, `typeof` в позиции типа), `Awaited`/`NoInfer`, утилиты для `this`, строковые утилиты.
 
 22 утилиты из [справочника](https://www.typescriptlang.org/docs/handbook/utility-types.html), 8 уроков. Определения сверены с `lib.es5.d.ts` TypeScript 5.9.3.
 
@@ -138,14 +155,19 @@ Utility Types стоят раньше Mapped и Conditional Types намерен
 | --- | --- | --- |
 | Поля и конструкторы | `strictPropertyInitialization`, parameter properties | Что делает `constructor(private x: number)`? |
 | `implements` и `extends` | `implements` только проверяет форму | Чем отличаются? |
-| `private` и `#private` | TS-модификаторы стираются | В чём разница? |
+| `private`, `protected` и `#private` | TS-модификаторы стираются, `#` работает в рантайме | В чём разница? |
+| `static`, геттеры и сеттеры | Статические члены не видят параметры типа класса | Где встречал? |
 | `abstract`, `this`-типы | `this is T` в методах | Абстрактный класс или интерфейс? |
 | Модули | `import type` | Зачем `import type`? |
 | Enums | Reverse mapping, `const enum` | Почему выбирают union + `as const`? |
-| Declaration merging | Module augmentation | Как расширить тип библиотеки? |
+| `.d.ts`, `declare`, `@types` | Ambient-декларации описывают то, что уже есть в рантайме | Как типизировать JS-библиотеку без типов? |
+| Declaration merging | Module augmentation, `declare global` | Как расширить тип библиотеки? |
+| `namespace` | Знать концепцию, в новом коде не использовать | Чем отличается от модуля? |
 | Decorators | Экспериментальные и стандартные (5.0+) | Где встречал? |
 
-## Регион 9. tsconfig и strict — план
+## Регион 9. Контракты — план
+
+Темы: type guards и `asserts` для данных из сети, флаги `strict`, `unknown` в `catch`, ответ API без `any` (валидация в рантайме), branded types.
 
 | Флаг | В `strict` | Что делает |
 | --- | --- | --- |
@@ -154,6 +176,7 @@ Utility Types стоят раньше Mapped и Conditional Types намерен
 | `strictFunctionTypes` | Да | Контравариантность параметров (кроме методов) |
 | `strictBindCallApply` | Да | Типизация `bind`/`call`/`apply` |
 | `strictPropertyInitialization` | Да | Инициализация полей класса |
+| `strictBuiltinIteratorReturn` | Да | `TReturn` встроенных итераторов — `undefined`, а не `any` |
 | `noImplicitThis` | Да | Ошибка на `this: any` |
 | `useUnknownInCatchVariables` | Да | `catch (e)` даёт `unknown` |
 | `alwaysStrict` | Да | `"use strict"` |
@@ -162,9 +185,38 @@ Utility Types стоят раньше Mapped и Conditional Types намерен
 | `noImplicitOverride` | Нет | Требует `override` |
 | `isolatedModules`, `verbatimModuleSyntax` | Нет | Поштучная компиляция, `import type` |
 
-Состав `strict` указан по памяти на TS 5.x; сверить с [заметками к TS 6.0](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-6-0.html).
+Состав `strict` сверен с опциями компилятора TypeScript 5.9.3; для TS 6 сверить с [заметками к TS 6.0](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-6-0.html).
 
-Плюс отдельный блок «TS и React»: `ComponentProps`, `PropsWithChildren`, типизация хуков и `forwardRef`, polymorphic `as`-prop.
+## Регион 10. TS и React — план
+
+В roadmap Middle/Senior это Must know, поэтому регион идёт в порядке работ сразу после дженериков.
+
+| Тема | Что знать | Вопрос на собесе |
+| --- | --- | --- |
+| Пропсы и `children` | `ReactNode` шире `ReactElement`, `JSX.Element` — результат JSX | Какой тип у `children`? |
+| События | `ChangeEvent<HTMLInputElement>`, `FormEvent<HTMLFormElement>`, `MouseEvent`, `KeyboardEvent` | Как типизировать `onChange`? |
+| `useState`, `useReducer` | Discriminated union для `action` | Как сузить `action` по `type`? |
+| `useRef` | Ref на DOM с `null` против изменяемого значения | Почему `ref.current` иногда readonly? |
+| `useContext` | Контекст без `undefined` через свой хук с проверкой | Как не проверять контекст в каждом компоненте? |
+| Взаимоисключающие пропсы | Union с `never`-полями | Как запретить `href` вместе с `onClick`? |
+| Дженерик-компоненты и хуки | `<T,>` в `.tsx`, вывод из пропсов | Напиши `Select<T>` и `useFetch<T>` |
+| `ComponentProps`, `ref` | `ComponentProps<"button">`, `forwardRef` и `ref` как проп | Как сделать обёртку над `button`? |
+| Полиморфный `as`-prop, HOC, render props | `ElementType`, `ComponentPropsWithoutRef<C>` | Как типизировать `<Box as="a">`? |
+
+## Регион 11. Компилятор и проект — план
+
+| Тема | Что знать | Вопрос на собесе |
+| --- | --- | --- |
+| Компиляция и транспиляция | `tsc` проверяет типы, Babel, SWC и esbuild только стирают их | Чем `tsc` отличается от Babel? |
+| `isolatedModules`, `verbatimModuleSyntax` | Каждый файл компилируется отдельно, нужен `import type` | Зачем эти флаги при сборке через SWC? |
+| Type stripping | Node запускает `.ts`, просто стирая типы; `erasableSyntaxOnly` запрещает `enum`, `namespace` и parameter properties | Что нельзя писать, если код запускается через type stripping? |
+| `target`, `module`, `moduleResolution`, `lib`, `jsx` | Во что компилировать и как искать модули | Чем `target` отличается от `lib`? |
+| `esModuleInterop` | Импорт CommonJS как default | Что будет без него? |
+| `skipLibCheck`, `declaration`, `sourceMap`, `noEmit`, `incremental` | Скорость, `.d.ts` для библиотек, отладка | Когда включать `skipLibCheck`? |
+| `paths`, project references | Алиасы и разбиение на проекты | Как ускорить проверку монорепы? |
+| Разбор tsconfig | Объяснить каждую опцию своего проекта | Расскажи про tsconfig своего проекта |
+
+Версии Node для type stripping и состояние TypeScript 7 (нативный компилятор) сверять с официальными заметками к релизам, а не по памяти.
 
 ## Механики упражнений
 
@@ -172,17 +224,47 @@ Utility Types стоят раньше Mapped и Conditional Types намерен
 | --- | --- | --- | --- |
 | Сортировщик | Условия в `if`, значения катятся по веткам | Понимание сужения | Регион 2 |
 | Предскажи тип | Код и 4 варианта; после ответа показывается тип от компилятора | Предсказывать систему типов | Все уроки |
-| Почини код | Ошибки компиляции, убрать без `any` и `as` | Читать ошибки TS | Регион 1 |
+| Почини код | Ошибки компиляции, убрать без `any` и `as` | Читать ошибки TS | Регионы 1, 9 |
 | Напиши тип | Скрытые тесты `Expect<Equal<...>>` | Лайв-кодинг | Регионы 5–7, утилиты |
 
-Урок: теория с примером → песочница → 2–4 упражнения → вопрос для ответа вслух.
+| Итоговый экзамен | 12 случайных вопросов региона, одна попытка, разбор ошибок, порог 80% | Проверить регион целиком | Готовые регионы |
+| Флеш-карточки | Вопрос → ответ вслух → сверка с образцом, «знал» убирает карточку из колоды | Отвечать на собесе за минуту | Все регионы, 112 карточек |
+
+Урок: теория с примером → песочница → 2–4 упражнения → вопрос для ответа вслух. Регион заканчивается итоговым экзаменом. Карточки есть и для регионов «скоро»: по ним можно готовиться до появления уроков.
+
+## Что спрашивают на собеседованиях
+
+Сверка на 24 сентября 2026: roadmap «TypeScript — полная теория для Middle/Senior Frontend», [GreatFrontEnd: TypeScript Interview Questions for Senior Developers](https://www.greatfrontend.com/blog/typescript-interview-questions-for-senior-frontend-developers), [45 TypeScript interview questions](https://listiak.dev/blog/the-45-typescript-interview-questions-interview-cheat-sheet-i-wish-i-had), [ENIGMA AI: вопросы по TypeScript](https://enigmai.ru/prep/tech/typescript/).
+
+На senior-собеседовании меньше спрашивают определения и больше просят смоделировать задачу типами: состояние запроса, взаимоисключающие пропсы, карта вариантов через `satisfies`, безопасная граница с сетью.
+
+| Частый вопрос | Где в плане |
+| --- | --- |
+| `type` против `interface`, `any` против `unknown`, `never` | Регион 1 |
+| `satisfies`, `as const`, `enum` против union | Регион 1 |
+| Что остаётся от типов в рантайме, как браузер исполняет TS | Регионы 1, 11 |
+| Состояние loading / success / error | Регион 2 |
+| Type guards, `x is T`, `asserts` | Регионы 2, 9 |
+| `getValue<T, K extends keyof T>`, дефолты дженериков | Регион 5 |
+| Свои `Partial`, `Pick`, `Omit`, `Record` | Регион 6 |
+| `infer`, `ElementType<T>`, распаковка промиса | Регионы 6, 7 |
+| Имена событий через template literal и mapped types | Регион 7 |
+| Ковариантность и контравариантность | Регион 3 |
+| `readonly` против `const`, `Object`/`{}`/`object` | Регион 4 |
+| `private` против `#field`, `.d.ts`, `declare`, `import type` | Регион 8 |
+| Сервер вернул не ту форму, `unknown` в `catch`, branded types | Регион 9 |
+| Взаимоисключающие пропсы, дженерик-компоненты, события, хуки | Регион 10 |
+| tsconfig, `tsc` против Babel и SWC | Регион 11 |
 
 ## Порядок дальше
 
-- [ ] Регион 2: уровни или уроки по equality narrowing, assignments, type predicates, assertion functions
+- [x] Регион 1: урок `satisfies`
+- [x] Регион 2: equality narrowing, type predicates, assertion functions, состояния loading / success / error
 - [ ] Регион 5: Generics, `keyof`, `typeof`, indexed access
-- [ ] Регион 7: conditional, mapped, template literal types и задачи для лайв-кодинга
-- [ ] Регионы 3 и 4: функции и объекты
-- [ ] Регион 9: `satisfies`, guards, `strict`, API без `any`
+- [ ] Регион 10: TS и React
+- [ ] Регион 7: conditional, mapped, template literal, рекурсивные типы и задачи для лайв-кодинга
+- [x] Регион 3: функции
+- [ ] Регион 4: объекты
+- [ ] Регион 9: guards, `strict`, API без `any`, branded types
+- [ ] Регион 11: компилятор и tsconfig
 - [ ] Регион 8: классы и модули
-- [ ] Блок «TS и React»

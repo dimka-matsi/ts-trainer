@@ -26,7 +26,7 @@ type T2 = NonNullable<string[] | null | undefined>;  // string[]`,
   tasks: [
     {
       type: "predict",
-      q: "Какой тип у `T`?",
+      q: "Во что раскроется тип `T`?",
       probe: "T",
       code: `type Ev = "click" | "focus" | "blur" | "keydown";
 type T = Exclude<Ev, "focus" | "blur">;`,
@@ -36,7 +36,7 @@ type T = Exclude<Ev, "focus" | "blur">;`,
     },
     {
       type: "predict",
-      q: "Какой тип у `S`?",
+      q: "Во что раскроется тип `S`?",
       probe: "S",
       code: `type Shape = { kind: "circle"; r: number } | { kind: "square"; x: number };
 type S = Extract<Shape, { kind: "square" }>;`,

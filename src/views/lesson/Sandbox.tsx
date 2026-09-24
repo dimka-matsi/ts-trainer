@@ -29,7 +29,7 @@ export function Sandbox({ initial }: { initial: string }) {
 
   return (
     <div className="sbgrid">
-      <CodeEditor value={code} onChange={setCode} label="Код песочницы" />
+      <CodeEditor value={code} onChange={setCode} label="Код песочницы" marks={result?.diags} />
       <div className="sbside">
         <div className="panel">
           <b>Что видит компилятор</b>

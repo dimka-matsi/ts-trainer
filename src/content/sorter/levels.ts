@@ -41,7 +41,7 @@ export const LEVELS: Level[] = [
     theory: {
       p: [
         "Union `A | B` значит: значение может быть любым из перечисленных типов. Пока ты не проверил, какой именно, TypeScript разрешает только то, что есть у всех вариантов сразу.",
-        "Проверка `typeof` сужает тип: внутри ветки компилятор знает, что туда прошло, а в `else` остаётся всё остальное. Это называется control flow analysis — TS читает условия так же, как ты.",
+        "Проверка `typeof` сужает тип: внутри ветки компилятор знает, что туда прошло, а в `else` остаётся всё остальное. Это называется control flow analysis — TypeScript читает условия так же, как ты.",
         "`typeof` различает только примитивы: \"string\", \"number\", \"boolean\", \"bigint\", \"symbol\", \"undefined\", \"function\" и \"object\".",
       ],
       example: `function fmt(x: string | number) {
@@ -79,12 +79,12 @@ export const LEVELS: Level[] = [
     slots: 2,
     members: ["string", "number", "null"],
     task: "Задание: разведи `null`, строки и числа по своим функциям. Осторожно с `!value`.",
-    debrief: "`!value` отправил бы `\"\"` и `0` туда же, куда `null`, и TS это видит: в такой ветке тип остаётся `string | number | null`. Надёжно проверять `value === null`. А `typeof null === \"object\"` — старая странность JS, которую TS знает и честно сужает до `null`.",
+    debrief: "`!value` отправил бы `\"\"` и `0` туда же, куда `null`, и TypeScript это видит: в такой ветке тип остаётся `string | number | null`. Надёжно проверять `value === null`. А `typeof null === \"object\"` — старая странность JS, которую TypeScript знает и сужает до `null`.",
     theory: {
       p: [
         "Сужать можно и через truthiness: `if (value)` убирает `null` и `undefined`. Но falsy в JS ещё `\"\"`, `0`, `NaN` и `false` — они тоже не пройдут.",
         "TypeScript не делит `string` на пустые и непустые строки. Поэтому после `if (!value)` тип остаётся `string | number | null`: внутри может оказаться и `null`, и `\"\"`, и `0`.",
-        "Для `null` надёжна явная проверка `value === null`. `value == null` ловит сразу `null` и `undefined` — редкий случай, когда нестрогое сравнение уместно. И историческая странность: `typeof null === \"object\"`, TS её знает.",
+        "Для `null` надёжна явная проверка `value === null`. `value == null` ловит сразу `null` и `undefined` — редкий случай, когда нестрогое сравнение уместно. И историческая странность: `typeof null === \"object\"`, TypeScript её знает.",
       ],
       example: `function label(count: number | null) {
   if (!count) return "нет данных";  // 0 тоже сюда
@@ -128,11 +128,11 @@ function labelFixed(count: number | null) {
     slots: 2,
     members: ["Cat", "Dog", "Fish"],
     task: "Задание: каждый питомец должен попасть к своему методу.",
-    debrief: "`in` сузил `Cat | Dog | Fish` по наличию метода. `instanceof` тут не работает: интерфейсы существуют только в типах и исчезают после компиляции, проверять в рантайме нечего.",
+    debrief: "`in` сузил `Cat | Dog | Fish` по наличию метода. `instanceof` тут не работает: интерфейсы существуют только в типах и исчезают после компиляции, проверять во время работы программы нечего.",
     theory: {
       p: [
-        "Для объектов `typeof` всегда даёт \"object\", поэтому различать их приходится по форме. Оператор `\"key\" in obj` проверяет наличие свойства, и TS оставляет в union только варианты, где это свойство объявлено.",
-        "`instanceof` проверяет цепочку прототипов, значит, ему нужен класс, который существует в рантайме. Интерфейсы и type alias стираются при компиляции, поэтому `pet instanceof Dog` для интерфейса — ошибка.",
+        "Для объектов `typeof` всегда даёт \"object\", поэтому различать их приходится по форме. Оператор `\"key\" in obj` проверяет наличие свойства, и TypeScript оставляет в union только варианты, где это свойство объявлено.",
+        "`instanceof` проверяет цепочку прототипов, значит, ему нужен класс, который существует во время работы программы. Интерфейсы и type alias стираются при компиляции, поэтому `pet instanceof Dog` для интерфейса — ошибка.",
         "Если формы отличаются неочевидно, надёжнее добавить явную метку в каждый вариант. Это тема следующего уровня.",
       ],
       example: `interface Cat { meow(): void }
@@ -145,7 +145,7 @@ function talk(pet: Cat | Dog) {
     pet.bark();   // pet: Dog
   }
 }`,
-      keys: ["`in` сужает union по наличию свойства.", "`instanceof` работает только с классами.", "Типы исчезают после компиляции, в рантайме их нет."],
+      keys: ["`in` сужает union по наличию свойства.", "`instanceof` работает только с классами.", "Типы удаляются при компиляции, во время работы их нет."],
     },
     decls: ["interface Cat { meow(): void }", "interface Dog { bark(): void }", "interface Fish { swim(): void }"],
     balls: [
@@ -176,7 +176,7 @@ function talk(pet: Cat | Dog) {
     slots: 3,
     members: ["Circle", "Square", "Triangle"],
     task: "Задание: разложи фигуры по функциям площади так, чтобы до `assertNever` не дошло ничего.",
-    debrief: "Добавь завтра в `Shape` шестиугольник — и `assertNever` сразу покажет ошибку в месте, которое нужно дописать. Это exhaustive check. Повторная проверка того же `kind` тоже даёт ошибку: TS знает, что этот вариант уже отфильтрован.",
+    debrief: "Добавь завтра в `Shape` шестиугольник — и `assertNever` сразу покажет ошибку в месте, которое нужно дописать. Это exhaustive check. Повторная проверка того же `kind` тоже даёт ошибку: TypeScript знает, что этот вариант уже отфильтрован.",
     theory: {
       p: [
         "Discriminated union — это union объектов с общим полем-меткой литерального типа: `kind`, `type`, `status`. Проверил метку — получил точный вариант.",
@@ -229,11 +229,11 @@ function view(s: State) {
     slots: 2,
     members: ["string", "string[]", "Date"],
     task: "Задание: массив к `join`, дату к `toISOString`, строки к `toUpperCase`.",
-    debrief: "`typeof value === \"object\"` отправил бы в одну ветку и массив, и дату. Для классов подходит `instanceof`, для массивов `Array.isArray`, и TS сужает тип после обоих.",
+    debrief: "`typeof value === \"object\"` отправил бы в одну ветку и массив, и дату. Для классов подходит `instanceof`, для массивов `Array.isArray`, и TypeScript сужает тип после обоих.",
     theory: {
       p: [
         "`typeof` вернёт \"object\" для массивов, дат, `null` и любых объектов. Поэтому `typeof x === \"object\"` почти никогда не та проверка, которая нужна.",
-        "`Array.isArray(x)` — стандартная проверка массива, TS по ней сужает. Для экземпляров классов (`Date`, `Map`, `Error`, свои классы) подходит `instanceof`.",
+        "`Array.isArray(x)` — стандартная проверка массива, TypeScript по ней сужает. Для экземпляров классов (`Date`, `Map`, `Error`, свои классы) подходит `instanceof`.",
         "Каждая проверка вычитает варианты из union, поэтому порядок влияет на то, что остаётся дальше.",
       ],
       example: `function show(v: string | string[] | Date) {
@@ -272,21 +272,22 @@ function view(s: State) {
     boss: true,
     members: [],
     task: "Задание: пропусти к `saveId` только объект со строковым `id`, остальное отбракуй. Порядок проверок важен.",
-    debrief: "Ты вручную сделал то, что делают zod и valibot: превратил `unknown` в проверенные данные. В реальном коде такие проверки выносят в type guard `isUser(x): x is User` или в схему, но логика та же.",
+    debrief: "Ты вручную сделал то, что делают zod и valibot: превратил `unknown` в проверенные данные. В реальном коде такие проверки выносят в отдельную функцию или в схему валидации, но логика та же.",
     theory: {
       p: [
         "`unknown` — безопасный «что угодно»: с ним нельзя ничего сделать, пока не сузишь. Это правильный тип для данных из сети, `JSON.parse`, `localStorage` и `catch (e)`.",
         "Сужать `unknown` до объекта приходится по шагам: `typeof x === \"object\"` оставляет `object | null`, `x !== null` даёт `object`, и только потом можно спросить `\"id\" in x` и проверить тип поля.",
         "Главная опасность — `any`. `JSON.parse` и `res.json()` возвращают `any`, а `Array.isArray` на `unknown` даёт `any[]`. С `any` компилятор молча перестаёт проверять.",
-        "В реальных проектах эти шаги упаковывают в type guard `isUser(x): x is User` или в схему валидации вроде zod.",
+        "Проверки соединяют через `&&` и идут слева направо: каждая следующая уже видит тип, суженный предыдущими. Если поменять порядок, компилятор выдаст ошибку.",
       ],
-      example: `function isUser(x: unknown): x is { id: string } {
-  return typeof x === "object" && x !== null
-    && "id" in x && typeof x.id === "string";
-}
+      example: `declare function saveId(id: string): void;
 
-const data: unknown = await res.json();
-if (isUser(data)) saveId(data.id);`,
+function handle(data: unknown) {
+  if (typeof data === "object" && data !== null
+    && "id" in data && typeof data.id === "string") {
+    saveId(data.id); // data.id: string
+  }
+}`,
       keys: ["Внешние данные — это `unknown`, а не `any`.", "Сначала объект, потом не `null`, потом поле.", "`any` отключает проверки молча."],
     },
     decls: ["declare function reject(x: unknown): void;", "declare function saveId(id: string): void;"],

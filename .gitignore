@@ -2,3 +2,9 @@ node_modules
 dist
 *.log
 .DS_Store
+
+# Прогресс тренажёра (пишет dev-сервер)
+.local/
+
+# Локальные настройки Claude Code (пути на конкретной машине)
+.claude/

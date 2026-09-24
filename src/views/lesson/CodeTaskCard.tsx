@@ -4,7 +4,7 @@ import type { CodeTask } from "../../content/types";
 import { useEngine } from "../../state/engine";
 import { useProgress } from "../../state/progress";
 import { CodeBlock, Md } from "../../ui/Code";
-import { CodeEditor } from "../../ui/CodeEditor";
+import { CodeEditor, type EditorMark } from "../../ui/CodeEditor";
 import { DiagnosticItem } from "../../ui/Diagnostic";
 
 interface Props {
@@ -18,10 +18,13 @@ export function CodeTaskCard({ task, onSolved }: Props) {
   const { unlock } = useProgress();
   const [code, setCode] = useState(task.code);
   const [feedback, setFeedback] = useState<ReactNode>(null);
+  const [marks, setMarks] = useState<EditorMark[]>([]);
+  const edit = (next: string) => { setCode(next); setMarks([]); };
 
   const check = () => {
     if (!engine) { setFeedback(<p className="muted">Компилятор ещё загружается, попробуй через пару секунд.</p>); return; }
     const r = checkCode(engine, task, code);
+    setMarks(r.errors);
     if (r.ok) {
       setFeedback(<p className="ok-t"><b>Всё сходится.</b> Ошибок нет{task.tests ? ", тесты прошли" : ""}{task.runtime ? ", проверки при запуске тоже" : ""}.</p>);
       if (task.kind === "write") unlock("firsttype");
@@ -46,16 +49,20 @@ export function CodeTaskCard({ task, onSolved }: Props) {
     <>
       <p><b>Решение.</b> Разберись, почему оно работает, и проверь его.</p>
       <CodeBlock code={task.solution} />
-      <button type="button" className="btn ghost" onClick={() => setCode(task.solution)}>Вставить в редактор</button>
+      <button type="button" className="btn ghost" onClick={() => edit(task.solution)}>Вставить в редактор</button>
     </>,
   );
 
   return (
     <>
       <p className="tq"><Md text={task.goal} /></p>
-      <CodeEditor value={code} onChange={setCode} />
+      <CodeEditor value={code} onChange={edit} marks={marks} />
       {task.tests && (
-        <details className="tests"><summary>Тесты, которые должны пройти</summary><CodeBlock code={task.tests} /></details>
+        <details className="tests">
+          <summary>Тесты, которые должны пройти</summary>
+          <p className="muted"><Md text={"Строка `Expect<Equal<A, B>>` компилируется, только если типы `A` и `B` совпадают. Строка после `// @ts-expect-error` должна давать ошибку, иначе тест не пройден."} /></p>
+          <CodeBlock code={task.tests} />
+        </details>
       )}
       {task.runtime && (
         <details className="tests">
@@ -67,7 +74,7 @@ export function CodeTaskCard({ task, onSolved }: Props) {
         <button type="button" className="btn" onClick={check}>Проверить</button>
         <button type="button" className="btn ghost" onClick={() => setFeedback(<p><b>Подсказка.</b> <Md text={task.hint} /></p>)}>Подсказка</button>
         <button type="button" className="btn ghost" onClick={showSolution}>Показать решение</button>
-        <button type="button" className="btn ghost" onClick={() => { setCode(task.code); setFeedback(null); }}>Сбросить</button>
+        <button type="button" className="btn ghost" onClick={() => { edit(task.code); setFeedback(null); }}>Сбросить</button>
       </div>
       <div className="tfb" aria-live="polite">{feedback}</div>
     </>

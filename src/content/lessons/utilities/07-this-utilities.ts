@@ -31,7 +31,7 @@ define({
   tasks: [
     {
       type: "predict",
-      q: "Какой тип у `T`?",
+      q: "Во что раскроется тип `T`?",
       probe: "T",
       code: `function greet(this: { name: string }, msg: string) { return msg + this.name; }
 type T = ThisParameterType<typeof greet>;`,
@@ -41,7 +41,7 @@ type T = ThisParameterType<typeof greet>;`,
     },
     {
       type: "predict",
-      q: "Какой тип у `F`?",
+      q: "Во что раскроется тип `F`?",
       probe: "F",
       code: `function greet(this: { name: string }, msg: string) { return msg + this.name; }
 type F = OmitThisParameter<typeof greet>;`,

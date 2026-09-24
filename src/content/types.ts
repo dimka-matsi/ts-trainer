@@ -10,6 +10,8 @@ export interface QuizTask {
   /** Индекс правильного варианта. */
   a: number;
   why: string;
+  /** Код к объяснению, показывается после ответа. Строки с ошибкой помечаются `// ошибка`, verify это проверяет. */
+  example?: string;
 }
 
 export interface PredictTask {

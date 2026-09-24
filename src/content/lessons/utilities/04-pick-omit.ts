@@ -26,7 +26,7 @@ type Caught = StrictOmit<Todo, "titel">; // ошибка`,
   tasks: [
     {
       type: "predict",
-      q: "Какой тип у `T`?",
+      q: "Во что раскроется тип `T`?",
       probe: "T",
       code: `interface Todo { id: number; title: string; done: boolean }
 type T = Omit<Todo, "id" | "done">;`,
@@ -36,7 +36,7 @@ type T = Omit<Todo, "id" | "done">;`,
     },
     {
       type: "predict",
-      q: "Какой тип у `R`?",
+      q: "Во что раскроется тип `R`?",
       probe: "R",
       code: `type A = { kind: "a"; id: number; a: string };
 type B = { kind: "b"; id: number; b: boolean };

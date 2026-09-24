@@ -1,7 +1,9 @@
 import { LESSONS } from "../../content/lessons";
 import { REGIONS } from "../../content/regions";
 import type { Lesson, Task } from "../../content/types";
-import { lessonDone, useProgress } from "../../state/progress";
+import { hasExam } from "../../content/exams";
+import { lessonDone, lessonStep, regionDone, stepAfter, stepRoute } from "../../state/path";
+import { useProgress } from "../../state/progress";
 import { navigate } from "../../state/route";
 import { Md } from "../../ui/Code";
 import { TheoryBlock } from "../../ui/TheoryBlock";
@@ -17,7 +19,9 @@ export function LessonView({ lesson }: { lesson: Lesson }) {
   const inRegion = LESSONS.filter((l) => l.region === lesson.region);
   const idx = inRegion.indexOf(lesson);
   const prev = inRegion[idx - 1];
-  const next = inRegion[idx + 1];
+  const after = (() => { const s = lessonStep(lesson.id); return s ? stepAfter(s) : undefined; })();
+  const finished = lessonDone(progress, lesson);
+  const examReady = !after || after.region !== lesson.region ? regionDone(progress, lesson.region) && hasExam(lesson.region) : false;
   const done = progress.lessons[lesson.id] ?? {};
 
   return (
@@ -64,8 +68,16 @@ export function LessonView({ lesson }: { lesson: Lesson }) {
       <div className="lsnav">
         {prev && <button type="button" className="btn ghost" onClick={() => navigate({ view: "lesson", id: prev.id })}>Назад: {prev.title}</button>}
         <button type="button" className="btn ghost" onClick={() => navigate({ view: "map" })}>К карте</button>
-        {next && <button type="button" className="btn" onClick={() => navigate({ view: "lesson", id: next.id })}>Дальше: {next.title}</button>}
+        {examReady && (
+          <button type="button" className="btn ghost" onClick={() => navigate({ view: "exam", region: lesson.region })}>Итоговый экзамен региона</button>
+        )}
+        {after && (
+          <button type="button" className="btn" disabled={!finished} onClick={() => navigate(stepRoute(after))}>
+            Дальше: {after.title}
+          </button>
+        )}
       </div>
+      {after && !finished && <p className="muted lsnote">Следующая тема откроется, когда будут выполнены все упражнения этого урока.</p>}
     </section>
   );
 }

@@ -19,12 +19,12 @@ type Handlers<E extends string> = {
   [K in E as \`on\${Capitalize<K>}\`]: () => void;
 };
 type H = Handlers<"click" | "hover">;`,
-    keys: ["Четыре intrinsic-утилиты регистра.", "Раскрываются в полную силу с template literal types.", "Работают по каждому члену union."],
+    keys: ["Четыре intrinsic-утилиты регистра.", "Чаще всего нужны вместе с template literal types.", "Работают по каждому члену union."],
   },
   tasks: [
     {
       type: "predict",
-      q: "Какой тип у `T`?",
+      q: "Во что раскроется тип `T`?",
       probe: "T",
       code: `type T = \`on\${Capitalize<"click" | "scroll">}\`;`,
       opts: ["\"onclick\" | \"onscroll\"", "\"onClick\" | \"onScroll\"", "`on${string}`", "\"onClick\""],
@@ -33,7 +33,7 @@ type H = Handlers<"click" | "hover">;`,
     },
     {
       type: "predict",
-      q: "Какой тип у `T`?",
+      q: "Во что раскроется тип `T`?",
       probe: "T",
       code: `type T = Lowercase<"ABC" | "Def">;`,
       opts: ["\"abc\" | \"def\"", "\"abc\" | \"Def\"", "string", "\"aBC\" | \"def\""],

@@ -8,7 +8,7 @@ export const lesson: Lesson = {
   answer: "Через `ReturnType<typeof fn>`: утилита достаёт результат с помощью `infer`. Аналогично `Parameters` даёт кортеж параметров, а для классов есть `ConstructorParameters` и `InstanceType`. У перегрузок берётся последняя сигнатура.",
   theory: {
     p: [
-      "`ReturnType<F>` и `Parameters<F>` достают из типа функции результат и кортеж параметров. Обычно их применяют к `typeof fn`, чтобы не дублировать типы: `ReturnType<typeof createStore>`.",
+      "`ReturnType<F>` и `Parameters<F>` достают из типа функции результат и кортеж параметров. Им нужен тип функции, а не сама функция. Его получают через `typeof`: в позиции типа `typeof createStore` означает «тип функции `createStore`». Так не приходится описывать типы дважды: `ReturnType<typeof createStore>`.",
       "Для перегруженной функции обе утилиты берут последнюю сигнатуру. `Parameters` возвращает именованный кортеж, его можно индексировать: `Parameters<typeof f>[0]`.",
       "`ConstructorParameters<C>` и `InstanceType<C>` делают то же для классов: параметры конструктора и тип экземпляра. Применяются к `typeof MyClass`.",
       "Внутри все четыре построены на `infer`: `ReturnType<T> = T extends (...args: any) => infer R ? R : any`.",
@@ -28,7 +28,7 @@ type ApiInst = InstanceType<typeof Api>;          // Api`,
   tasks: [
     {
       type: "predict",
-      q: "Какой тип у `R`?",
+      q: "Во что раскроется тип `R`?",
       probe: "R",
       code: `function f(a: string, b = 1) { return [a, b] as const; }
 type R = ReturnType<typeof f>;`,
@@ -38,13 +38,13 @@ type R = ReturnType<typeof f>;`,
     },
     {
       type: "predict",
-      q: "Какой тип у `P`?",
+      q: "Во что раскроется тип `P`?",
       probe: "P",
       code: `declare function g(id: number, opts?: { force: boolean }): void;
 type P = Parameters<typeof g>[1];`,
       opts: ["{ force: boolean; }", "{ force: boolean; } | undefined", "number", "never"],
       a: 1,
-      why: "Второй параметр опциональный, поэтому элемент кортежа при чтении даёт `{ force: boolean } | undefined`.",
+      why: "Второй параметр необязательный, поэтому элемент кортежа при чтении даёт `{ force: boolean } | undefined`.",
     },
     {
       type: "code",
