@@ -1,36 +1,60 @@
-/** Формат контента раздела «Браузер». Логика та же, что у TypeScript, но задания проверяются запуском в DOM. */
+/**
+ * Формат контента раздела «Браузер»: сеть, протоколы и то, как браузер загружает страницу.
+ * Кода на JavaScript здесь нет: задания — вопросы, порядок шагов, пары и группы.
+ */
 import type { QuizTask } from "../types";
 
-/** «Что выведется»: код запускается, строки console.log склеиваются через ", " и сравниваются с вариантом. */
-export interface OutputTask {
-  type: "output";
+/** Расставить шаги по порядку. `items` записаны в правильном порядке, интерфейс их перемешивает. */
+export interface OrderTask {
+  type: "order";
   q: string;
-  /** Разметка, в которой выполняется код. */
-  html?: string;
-  code: string;
-  opts: string[];
-  a: number;
+  items: string[];
   why: string;
 }
 
-/**
- * Задание на DOM: стартовый код не проходит тесты, эталонное решение проходит.
- * Тесты — JavaScript после кода ученика: доступны assert(cond, msg), logs() и sleep(ms), можно await.
- */
-export interface DomTask {
-  type: "dom";
-  kind: "fix" | "write";
-  goal: string;
-  html: string;
-  code: string;
-  tests: string;
-  hint: string;
-  solution: string;
-  /** Фрагменты, которые обязаны остаться в коде. */
-  must?: string[];
+/** Сопоставить пары: слева термин, справа смысл. Правые части не повторяются. */
+export interface MatchTask {
+  type: "match";
+  q: string;
+  pairs: [string, string][];
+  why: string;
 }
 
-export type WebTask = QuizTask | OutputTask | DomTask;
+/** Разложить по группам: у каждого пункта индекс группы из `groups`. */
+export interface SortTask {
+  type: "sort";
+  q: string;
+  groups: string[];
+  items: [string, number][];
+  why: string;
+}
+
+export type WebTask = QuizTask | OrderTask | MatchTask | SortTask;
+
+/** Схема обмена: участники и стрелки между ними, по шагам. */
+export interface Flow {
+  actors: string[];
+  steps: { from: number; to: number; label: string; note?: string; lost?: boolean }[];
+}
+
+/** HTTP-сообщение: стартовая строка, заголовки, тело. */
+export interface HttpMessage {
+  line: string;
+  headers: [string, string][];
+  body?: string;
+}
+
+/** Запрос для вкладки «Сеть»: как строка в DevTools, с заголовками и таймингом. */
+export interface NetRequest {
+  name: string;
+  type: string;
+  request: HttpMessage;
+  response: HttpMessage;
+  /** Фазы и их длительность в миллисекундах, в порядке выполнения. */
+  timing: [string, number][];
+  /** С какой миллисекунды начался запрос. */
+  start: number;
+}
 
 export interface WebLesson {
   id: string;
@@ -41,9 +65,8 @@ export interface WebLesson {
   answer: string;
   theory: {
     p: string[];
-    /** Разметка и код примера: открываются в песочнице. */
-    html: string;
-    example: string;
+    flow?: Flow;
+    requests?: NetRequest[];
     keys: string[];
   };
   tasks: WebTask[];

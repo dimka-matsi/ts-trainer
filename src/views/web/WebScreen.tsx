@@ -8,15 +8,11 @@ import { ExamView, type ExamConfig } from "../ExamView";
 import { WebLessonView } from "./WebLessonView";
 import { WebMapView } from "./WebMapView";
 
-/** Экзамен региона «Браузера»: вопросы уроков, «что выведется» показывается как код с вариантами. */
+/** Экзамен региона «Браузера»: вопросы с вариантами из его уроков. */
 const webExam = (region: number): ExamConfig => ({
   name: WEB_REGIONS[region]!.name,
   regionNo: region + 1,
-  pool: WEB_LESSONS.filter((l) => l.region === region).flatMap((l) => l.tasks.flatMap((t): ExamTask[] => {
-    if (t.type === "quiz") return [t];
-    if (t.type === "output") return [{ type: "predict", q: t.q, code: t.html ? `<!-- index.html -->\n${t.html}\n\n// script.js\n${t.code}` : t.code, probe: "", opts: t.opts, a: t.a, why: t.why }];
-    return [];
-  })),
+  pool: WEB_LESSONS.filter((l) => l.region === region).flatMap((l) => l.tasks.flatMap((t): ExamTask[] => (t.type === "quiz" ? [t] : []))),
   examKey: WEB_EXAM_KEY(region),
   fromLessons: true,
   back: { view: "web" },

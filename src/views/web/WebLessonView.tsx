@@ -5,15 +5,15 @@ import { useProgress } from "../../state/progress";
 import { navigate } from "../../state/route";
 import { useToast } from "../../state/toast";
 import { webLessonAfter, webLessonDone, webRegionDone } from "../../state/webPath";
-import { CodeBlock, Md } from "../../ui/Code";
+import { Md } from "../../ui/Code";
 import { ChoiceTaskCard } from "../lesson/ChoiceTaskCard";
-import { WebSandbox } from "./WebSandbox";
-import { DomTaskCard, OutputTaskCard } from "./WebTasks";
+import { FlowDiagram, NetworkPanel } from "./NetVisuals";
+import { MatchTaskCard, OrderTaskCard, SortTaskCard } from "./WebTasks";
 
-type Panel = "theory" | "sandbox" | "tasks" | "answer";
+type Panel = "theory" | "flow" | "network" | "tasks" | "answer";
 
 const kindLabel = (t: WebTask) =>
-  t.type === "output" ? "Что выведется" : t.type === "quiz" ? "Вопрос" : t.kind === "write" ? "Напиши код" : "Почини код";
+  t.type === "quiz" ? "Вопрос" : t.type === "order" ? "Расставь по порядку" : t.type === "match" ? "Сопоставь" : "Разложи по группам";
 
 /** Урок «Браузера»: разделы — вкладки как в DevTools, внизу строка состояния с прогрессом. */
 export function WebLessonView({ lesson }: { lesson: WebLesson }) {
@@ -34,7 +34,15 @@ export function WebLessonView({ lesson }: { lesson: WebLesson }) {
     if (solved + 1 === lesson.tasks.length) toast(`Урок пройден: ${lesson.title}`);
   };
 
-  const tabs: [Panel, string][] = [["theory", "Теория"], ["sandbox", "Песочница"], ["tasks", `Упражнения ${solved}/${lesson.tasks.length}`], ["answer", "Ответ вслух"]];
+  const { flow, requests } = lesson.theory;
+  const tabs: [Panel, string][] = [
+    ["theory", "Теория"],
+    ...(flow ? [["flow", "Схема"] as [Panel, string]] : []),
+    ...(requests?.length ? [["network", "Сеть"] as [Panel, string]] : []),
+    ["tasks", `Упражнения ${solved}/${lesson.tasks.length}`],
+    ["answer", "Ответ вслух"],
+  ];
+  const visual: Panel | null = flow ? "flow" : requests?.length ? "network" : null;
 
   return (
     <section className="wl">
@@ -53,15 +61,20 @@ export function WebLessonView({ lesson }: { lesson: WebLesson }) {
           {panel === "theory" && (
             <div className="tbody wl-theory">
               {lesson.theory.p.map((p, i) => <p key={i}><Md text={p} /></p>)}
-              <CodeBlock code={lesson.theory.example} />
               <div className="keys"><b>Главное</b><ul>{lesson.theory.keys.map((k, i) => <li key={i}><Md text={k} /></li>)}</ul></div>
-              <div className="actions"><button type="button" className="btn" onClick={() => setPanel("sandbox")}>Открыть пример в песочнице</button></div>
+              {visual && <div className="actions"><button type="button" className="btn" onClick={() => setPanel(visual)}>{visual === "flow" ? "Разобрать по шагам на схеме" : "Открыть вкладку «Сеть»"}</button></div>}
             </div>
           )}
-          {panel === "sandbox" && (
+          {panel === "flow" && flow && (
             <>
-              <p className="how">Меняй код и разметку: страница и консоль обновятся сами. Код выполняется в изолированном iframe.</p>
-              <WebSandbox html={lesson.theory.html} code={lesson.theory.example} />
+              <p className="how">Нажимай «Следующий шаг»: стрелки показывают, кто кому и что отправляет.</p>
+              <FlowDiagram flow={flow} />
+            </>
+          )}
+          {panel === "network" && requests && (
+            <>
+              <p className="how">Так эту загрузку показала бы вкладка Network в DevTools. Выбери запрос, чтобы увидеть заголовки и тайминг.</p>
+              <NetworkPanel requests={requests} />
             </>
           )}
           {panel === "tasks" && lesson.tasks.map((task, i) => (
@@ -71,8 +84,9 @@ export function WebLessonView({ lesson }: { lesson: WebLesson }) {
                 <span className="tkind">{kindLabel(task)}</span>
                 <span className="tdone">✓ выполнено</span>
               </div>
-              {task.type === "output" ? <OutputTaskCard task={task} onSolved={() => solve(i)} />
-                : task.type === "dom" ? <DomTaskCard task={task} onSolved={() => solve(i)} />
+              {task.type === "order" ? <OrderTaskCard task={task} onSolved={() => solve(i)} />
+                : task.type === "match" ? <MatchTaskCard task={task} onSolved={() => solve(i)} />
+                : task.type === "sort" ? <SortTaskCard task={task} onSolved={() => solve(i)} />
                 : <ChoiceTaskCard task={task} onSolved={() => solve(i)} />}
             </article>
           ))}

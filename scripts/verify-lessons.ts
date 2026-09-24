@@ -134,7 +134,7 @@ LEVELS.forEach((level, i) => {
 });
 
 console.log("\nраздел «Браузер»");
-const web = await checkWeb(fail);
+const web = checkWeb(fail);
 
 console.log(failures ? `\n${failures} проблем` : `\nВсё проверено: ${LESSONS.length} уроков, ${LEVELS.length} уровней, ${EXAM_ONLY_TASKS.length} вопросов экзаменов, ${FLASHCARDS.length} карточек; «Браузер»: ${web.lessons} уроков, ${web.cards} карточек`);
 process.exit(failures ? 1 : 0);

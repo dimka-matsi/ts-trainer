@@ -580,26 +580,82 @@ button.brand{background:none; border:0; padding:0; color:inherit; font:inherit; 
 .dt-status{position:sticky; bottom:0; display:flex; flex-wrap:wrap; align-items:center; gap:8px 12px; padding:8px 12px; background:var(--dt-bar); border-top:1px solid var(--edge); font-size:12.5px; color:var(--ink-soft); border-radius:0 0 var(--r) var(--r)}
 .dt-status .btn{font-size:13px}
 
-/* Песочница и консоль */
-.dt-sandbox{display:grid; gap:12px; margin-top:8px}
-@media (min-width:920px){ .dt-sandbox{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr); align-items:start} }
-.dt-pane{border:1px solid var(--edge); border-radius:var(--r); overflow:hidden; background:var(--card); min-width:0}
-.dt-pane .ed{border:0; border-radius:0}
-.dt-pane .ed-bar{display:none}
-.dt-preview{display:block; width:100%; height:190px; border:0; background:#fff; border-bottom:1px solid var(--edge)}
-.dt-console{font:12.5px/1.5 var(--mono); background:var(--card)}
-.dt-console-bar{display:flex; align-items:center; justify-content:space-between; padding:4px 10px; background:var(--dt-bar); border-bottom:1px solid var(--edge); font:12px system-ui, sans-serif; color:var(--ink-soft)}
-.dt-console-bar button{border:0; background:none; color:var(--ink-soft); cursor:pointer; font-size:13px}
-.dt-console-body{max-height:220px; overflow:auto}
-.dt-line{display:flex; gap:8px; padding:3px 10px; border-bottom:1px solid var(--edge); white-space:pre-wrap; overflow-wrap:anywhere; color:var(--ink)}
-.dt-line.empty{color:var(--ink-soft); font-family:system-ui, sans-serif}
-.dt-arrow{color:var(--ink-soft)}
-.dt-line.lv-warn{background:var(--warn-bg); color:var(--warn-ink)}
-.dt-line.lv-error{background:var(--err-bg); color:var(--err-ink)}
-.dt-line.lv-info{color:var(--pipe-ink)}
-.tfb .dt-console,.task .dt-console{margin-top:10px; border:1px solid var(--edge); border-radius:var(--r); overflow:hidden}
-.dt-html{margin:6px 0 10px}
-.dt-html summary{cursor:pointer; font:12.5px var(--mono); color:var(--ink-soft)}
+/* Схема обмена */
+.flow{border:1px solid var(--edge); border-radius:var(--r); background:var(--card); overflow:hidden}
+.flow-actors{display:grid; background:var(--dt-bar); border-bottom:1px solid var(--edge)}
+.flow-actor{display:flex; flex-direction:column; align-items:center; text-align:center; padding:8px 6px; font-size:13px}
+.flow-actor small{color:var(--ink-soft); font:11.5px var(--mono); overflow-wrap:anywhere}
+.flow-steps{position:relative; list-style:none; margin:0; padding:10px 0 14px; min-height:60px}
+.flow-lane{position:absolute; top:0; bottom:0; width:0; border-left:1px dashed var(--edge-2)}
+.flow-step{position:relative; padding:6px 0; min-height:56px; display:flex; align-items:center}
+.flow-arrow{position:relative; min-height:44px; display:flex; flex-direction:column; justify-content:center; align-items:center; gap:3px; padding:0 4px}
+.flow-label{font:12.5px var(--mono); position:relative; color:var(--ink); text-align:center; max-width:100%; overflow-wrap:anywhere}
+.flow-note{font-size:11.5px; color:var(--ink-soft); text-align:center; line-height:1.3}
+.flow-line{position:relative; display:block; width:100%; height:2px; background:var(--pipe)}
+.flow-line::after{content:""; position:absolute; top:-4px; border:5px solid transparent}
+.ltr .flow-line::after{right:-2px; border-left-color:var(--pipe); border-right:0}
+.rtl .flow-line::after{left:-2px; border-right-color:var(--pipe); border-left:0}
+.self .flow-line{height:0; background:none; border-top:2px dotted var(--pipe)}
+.self .flow-line::after{display:none}
+.lost .flow-line{width:55%; align-self:flex-start; background:repeating-linear-gradient(90deg, var(--bad) 0 6px, transparent 6px 10px)}
+.lost.rtl .flow-line{align-self:flex-end}
+.lost .flow-line::after{display:none}
+.lost .flow-note,.lost .flow-label{color:var(--bad)}
+.flow-step.now .flow-label{font-weight:700}
+.flow-step.now .flow-arrow{background:var(--pipe-soft); border-radius:var(--r)}
+@media (prefers-reduced-motion: no-preference){ .flow-step.now .flow-arrow{animation:flow-in .25s ease-out} }
+@keyframes flow-in{from{opacity:0; transform:translateY(-4px)}}
+.flow-controls{display:flex; flex-wrap:wrap; align-items:center; gap:8px; padding:8px 12px; border-top:1px solid var(--edge); background:var(--dt-bar); font-size:12.5px; color:var(--ink-soft)}
+.flow-controls span{margin-right:auto}
+
+/* Вкладка «Сеть» */
+.net{border:1px solid var(--edge); border-radius:var(--r); overflow:hidden; background:var(--card); font-size:12.5px}
+.net-row{display:grid; grid-template-columns:minmax(0,1.3fr) 56px minmax(0,.9fr) 64px minmax(0,2fr); gap:10px; align-items:center; min-height:26px; padding:3px 10px; width:100%; border:0; border-bottom:1px solid var(--edge); background:transparent; color:var(--ink); font:inherit; text-align:left; cursor:pointer}
+.net-row:nth-child(odd):not(.net-head){background:var(--dt-stripe)}
+.net-row:hover:not(.net-head){background:var(--pipe-soft)}
+.net-row.sel{background:var(--pipe-soft) !important; box-shadow:inset 2px 0 0 var(--pipe)}
+.net-head{background:var(--dt-panel); color:var(--ink-soft); cursor:default}
+.net-name{font-family:var(--mono)}
+.net-wf{position:relative; height:12px}
+.net-wf i,.net-timing i{position:absolute; top:1px; bottom:1px; min-width:2px; border-radius:1px}
+.net-timing i{position:static; display:block; height:10px}
+.ph-0{background:#9aa0a6} .ph-1{background:#1ba1a1} .ph-2{background:#e8a33d} .ph-3{background:#a142f4} .ph-4{background:#1e8e3e} .ph-5{background:#1a73e8}
+.net-detail .dt-tabs{border-radius:0; border-top:1px solid var(--edge)}
+.net-pane{padding:10px 12px}
+.net-cap{margin:6px 0 4px; font-size:12px; color:var(--ink-soft)}
+.net-msg{margin:0 0 8px; padding:8px 10px; background:var(--code-bg); border-radius:var(--r); font:12.5px/1.6 var(--mono); color:var(--code-ink); white-space:pre-wrap; overflow-wrap:anywhere}
+.net-h{color:var(--ty)}
+.net-body{color:var(--code-dim)}
+.net-timing{width:100%; border-collapse:collapse}
+.net-timing th{text-align:left; font-weight:400; padding:4px 10px 4px 0; white-space:nowrap; width:1%}
+.net-timing td{padding:4px 0}
+.net-timing td:last-child{text-align:right; font-family:var(--mono); width:1%; white-space:nowrap; padding-left:10px}
+.net-timing .sum th,.net-timing .sum td{border-top:1px solid var(--edge); font-weight:600}
+@media (max-width:640px){
+  .net-row{grid-template-columns:minmax(0,1fr) 40px 60px; }
+  .net-row > :nth-child(3),.net-row > :nth-child(5){display:none}
+}
+
+/* Задания без кода: порядок, пары, группы */
+.ord-picked{list-style:none; margin:10px 0; padding:8px; display:flex; flex-direction:column; gap:6px; border:1px dashed var(--edge-2); border-radius:var(--r); min-height:44px}
+.ord-slot{padding:6px 10px; color:var(--ink-soft); font-size:13.5px}
+.ord-pool{display:flex; flex-wrap:wrap; gap:6px}
+.ord-item{display:flex; align-items:center; gap:10px; width:100%; padding:7px 10px; border:1px solid var(--edge-2); border-radius:var(--r); background:var(--card); color:var(--ink); font:inherit; font-size:14px; text-align:left; cursor:pointer}
+.ord-pool .ord-item{width:auto}
+.ord-item:hover:not(:disabled){border-color:var(--pipe); background:var(--pipe-soft)}
+.ord-item.wrong{border-color:var(--bad); background:var(--bad-bg)}
+.ord-item.right{border-color:var(--ok); background:var(--ok-bg); cursor:default}
+.ord-n{flex:none; width:20px; height:20px; display:grid; place-items:center; border-radius:50%; background:var(--pipe); color:var(--btn-ink); font:600 11px var(--mono)}
+.match{display:flex; flex-direction:column; gap:6px; margin:10px 0}
+.match-row{display:grid; grid-template-columns:minmax(0,.8fr) auto minmax(0,2fr); gap:10px; align-items:center; padding:6px 8px; border:1px solid var(--edge); border-radius:var(--r)}
+.match-row.right{border-color:var(--ok); background:var(--ok-bg)}
+.match-row.wrong{border-color:var(--bad); background:var(--bad-bg)}
+.match-row.two{grid-template-columns:minmax(0,1.4fr) auto}
+.match-left{font-size:14px}
+.match-arrow{color:var(--ink-soft)}
+.match-opts{display:flex; flex-wrap:wrap; gap:5px}
+.match-opts .chip{font-size:12.5px}
+@media (max-width:640px){ .match-row{grid-template-columns:1fr} .match-arrow{display:none} }
 
 /* ══════════════════ Хаб: выбор направления ══════════════════ */
 :root[data-track="hub"]{

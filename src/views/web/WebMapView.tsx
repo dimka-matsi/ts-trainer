@@ -23,7 +23,7 @@ export function WebMapView() {
     <section className="wm">
       <p className="eyebrow">// браузер → собеседование</p>
       <h1>Браузер</h1>
-      <p className="lead">События, event loop, HTTP, кэширование, CORS, безопасность и рендеринг: всё, что спрашивают на фронтенд-собеседованиях про работу браузера. Код в заданиях выполняется в настоящем DOM.</p>
+      <p className="lead">Как страница попадает в браузер: IP и TCP, DNS, HTTP и HTTPS, cookies, кэш и CDN, CORS, безопасность и отрисовка. Всё, что спрашивают на фронтенд-собеседованиях про сеть. Без кода: схемы обмена, вкладка «Сеть» и задания на понимание.</p>
       <div className="actions hero-actions">
         {now && (
           <button type="button" className="btn" onClick={() => navigate({ view: "web-lesson", id: now.id })}>
