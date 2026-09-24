@@ -1,4 +1,5 @@
 import type { Flashcard } from "../flashcards";
+import { lessons as browser } from "./lessons/browser";
 import { lessons as cache } from "./lessons/cache";
 import { lessons as cdn } from "./lessons/cdn";
 import { lessons as cookies } from "./lessons/cookies";
@@ -11,7 +12,7 @@ import { lessons as tls } from "./lessons/tls";
 import type { WebLesson, WebRegion } from "./types";
 
 /** Уроки по регионам: индекс в массиве = индекс региона в WEB_REGIONS. */
-const REGION_LESSONS: WebLesson[][] = [net, dns, http, tls, cookies, cache, cdn, cors, security];
+const REGION_LESSONS: WebLesson[][] = [net, dns, http, tls, cookies, cache, cdn, cors, security, browser];
 
 /** Уроки раздела «Браузер» в порядке прохождения. */
 export const WEB_LESSONS: WebLesson[] = REGION_LESSONS.flat();
@@ -32,11 +33,7 @@ export const WEB_REGIONS: WebRegion[] = [
   { name: "CDN, прокси и балансировка", kind: "lessons", desc: "Серверы между пользователем и приложением: CDN и его кэш, прокси, балансировщики." },
   { name: "CORS", kind: "lessons", desc: "Политика одного источника и как сервер разрешает чтение с других источников." },
   { name: "Безопасность", kind: "lessons", desc: "Атаки на сайт и защита от них: XSS, CSRF, CSP, clickjacking, чужой код, заголовки, изоляция." },
-  { name: "Устройство браузера", kind: "soon", desc: "Из каких частей состоит браузер и как он изолирует сайты.", topics: [
-    { t: "Процессы браузера", q: "Зачем браузеру отдельные процессы: главный, вкладок, GPU, сети?" },
-    { t: "Изоляция сайтов и песочница", q: "Почему одна вкладка не может прочитать память другой?" },
-    { t: "Движки", q: "Что такое Blink, WebKit и Gecko и почему сайт может выглядеть по-разному?" },
-  ] },
+  { name: "Устройство браузера", kind: "lessons", desc: "Из каких процессов состоит браузер, как он изолирует сайты и чем отличаются движки." },
   { name: "Рендеринг страницы", kind: "soon", desc: "Путь от байтов HTML до пикселей на экране и способы рендеринга сайта.", topics: [
     { t: "Critical rendering path", q: "Что происходит от получения HTML до первого кадра?" },
     { t: "Блокирующие ресурсы", q: "Почему CSS и скрипты в `<head>` задерживают отрисовку? Чем `async` отличается от `defer`?" },

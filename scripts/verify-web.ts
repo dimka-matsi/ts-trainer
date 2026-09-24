@@ -61,6 +61,9 @@ const CONCEPTS: { name: string; re: RegExp; at: string }[] = [
   { name: "SRI", re: /\bSRI\b|Subresource Integrity|integrity=/i, at: "sec6" },
   { name: "nosniff", re: /nosniff|Referrer-Policy|Permissions-Policy/i, at: "sec7" },
   { name: "COOP и COEP", re: /\bCOOP\b|\bCOEP\b|\bCORP\b|Spectre|SharedArrayBuffer/, at: "sec8" },
+  { name: "процессы браузера", re: /процесс отрисовки|IPC/i, at: "br1" },
+  { name: "Site Isolation", re: /Site Isolation|\bORB\b/i, at: "br2" },
+  { name: "движки", re: /\bBlink\b|\bGecko\b|WebKit|Baseline/, at: "br3" },
 ];
 
 /** Признаки JavaScript: в «Браузере» его быть не должно. */
