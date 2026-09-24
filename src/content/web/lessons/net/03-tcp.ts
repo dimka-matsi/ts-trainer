@@ -1,7 +1,7 @@
-import type { WebLesson } from "../types";
+import type { WebLesson } from "../../types";
 
 export const lesson: WebLesson = {
-  id: "n3",
+  id: "net3",
   region: 0,
   title: "TCP: рукопожатие и надёжная доставка",
   q: "Как TCP устанавливает соединение и за счёт чего гарантирует доставку?",

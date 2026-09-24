@@ -1,13 +1,13 @@
 import type { Flashcard } from "../flashcards";
-import { lesson as n1 } from "./lessons/01-ip-ports";
-import { lesson as n2 } from "./lessons/02-layers";
-import { lesson as n3 } from "./lessons/03-tcp";
-import { lesson as n4 } from "./lessons/04-udp";
-import { lesson as n5 } from "./lessons/05-url-journey";
+import { lessons as dns } from "./lessons/dns";
+import { lessons as net } from "./lessons/net";
 import type { WebLesson, WebRegion } from "./types";
 
+/** Уроки по регионам: индекс в массиве = индекс региона в WEB_REGIONS. */
+const REGION_LESSONS: WebLesson[][] = [net, dns];
+
 /** Уроки раздела «Браузер» в порядке прохождения. */
-export const WEB_LESSONS: WebLesson[] = [n1, n2, n3, n4, n5];
+export const WEB_LESSONS: WebLesson[] = REGION_LESSONS.flat();
 export const WEB_LESSON_BY_ID: Record<string, WebLesson> = Object.fromEntries(WEB_LESSONS.map((l) => [l.id, l]));
 
 /**
@@ -17,12 +17,7 @@ export const WEB_LESSON_BY_ID: Record<string, WebLesson> = Object.fromEntries(WE
  */
 export const WEB_REGIONS: WebRegion[] = [
   { name: "Как работает интернет", kind: "lessons", desc: "IP-адреса и порты, уровни сети, TCP и UDP, путь запроса от URL до страницы." },
-  { name: "DNS", kind: "soon", desc: "Как имя сайта превращается в IP-адрес.", topics: [
-    { t: "Путь DNS-запроса", q: "Как резолвер находит IP-адрес: корневые серверы, зона `.ru`, авторитетный сервер?" },
-    { t: "Типы записей", q: "Зачем записи A, AAAA, CNAME, MX, TXT и NS? На что указывает MX?" },
-    { t: "TTL и кэш DNS", q: "Почему после смены IP-адреса сайт у части пользователей открывается по-старому?" },
-    { t: "DNS-серверы и безопасность", q: "Что такое DNS over HTTPS и чем опасна подмена DNS-ответа?" },
-  ] },
+  { name: "DNS", kind: "lessons", desc: "Как имя сайта превращается в IP-адрес: путь запроса, записи, TTL, подмена и шифрование." },
   { name: "HTTP", kind: "soon", desc: "Запрос и ответ, методы, коды, заголовки, соединения, версии протокола.", topics: [
     { t: "Устройство запроса и ответа", q: "Из чего состоит HTTP-запрос и HTTP-ответ?" },
     { t: "Методы", q: "Чем GET отличается от POST? Какие методы безопасные, а какие идемпотентные?" },

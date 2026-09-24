@@ -8,26 +8,31 @@
  *  - в разделе нет JavaScript: только сеть и протоколы;
  *  - порядок тем: понятие не встречается раньше урока, где его объясняют.
  */
+import { LESSONS } from "../src/content/lessons";
 import { WEB_FLASHCARDS, WEB_LESSONS, WEB_REGIONS } from "../src/content/web";
 import type { HttpMessage, NetRequest, WebLesson, WebTask } from "../src/content/web/types";
 
 /** Где понятие объясняют впервые. Раньше этого урока его не упоминают. */
 const CONCEPTS: { name: string; re: RegExp; at: string }[] = [
-  { name: "TCP", re: /\bTCP\b/, at: "n2" },
-  { name: "UDP", re: /\bUDP\b/, at: "n2" },
-  { name: "DNS", re: /\bDNS\b/, at: "n2" },
-  { name: "OSI", re: /\bOSI\b|\bL[47]\b/, at: "n2" },
-  { name: "рукопожатие", re: /рукопожати|\bSYN\b|\bACK\b/, at: "n3" },
-  { name: "RTT", re: /\bRTT\b/, at: "n3" },
-  { name: "head-of-line blocking", re: /head-of-line/, at: "n3" },
-  { name: "QUIC", re: /\bQUIC\b/, at: "n4" },
-  { name: "HTTP/2 и HTTP/3", re: /HTTP\/[23]\b/, at: "n4" },
-  { name: "TLS", re: /\bTLS\b/, at: "n5" },
-  { name: "DOM", re: /\bDOM\b/, at: "n5" },
+  { name: "TCP", re: /\bTCP\b/, at: "net2" },
+  { name: "UDP", re: /\bUDP\b/, at: "net2" },
+  { name: "DNS", re: /\bDNS\b/, at: "net2" },
+  { name: "OSI", re: /\bOSI\b|\bL[47]\b/, at: "net2" },
+  { name: "рукопожатие", re: /рукопожати|\bSYN\b|\bACK\b/, at: "net3" },
+  { name: "RTT", re: /\bRTT\b/, at: "net3" },
+  { name: "head-of-line blocking", re: /head-of-line/, at: "net3" },
+  { name: "QUIC", re: /\bQUIC\b/, at: "net4" },
+  { name: "HTTP/2 и HTTP/3", re: /HTTP\/[23]\b/, at: "net4" },
+  { name: "TLS", re: /\bTLS\b/, at: "net5" },
+  { name: "DOM", re: /\bDOM\b/, at: "net5" },
+  { name: "резолвер", re: /резолвер/i, at: "dns1" },
+  { name: "TTL", re: /\bTTL\b/, at: "dns1" },
+  { name: "CNAME", re: /\bCNAME\b/, at: "dns2" },
+  { name: "DNSSEC и DoH", re: /\bDNSSEC\b|\bDoH\b|DNS over/, at: "dns4" },
 ];
 
 /** Признаки JavaScript: в «Браузере» его быть не должно. */
-const JS = /=>|\bfunction\b|\bconst\s|\blet\s|console\.|addEventListener|document\.|fetch\(/;
+const JS = /=>|\bfunction\b|\bconst\s|\blet\s|console\.|addEventListener|document\.(?!cookie\b)|fetch\(/;
 
 /** Коды ответа и их стандартные фразы (RFC 9110). */
 const REASONS: Record<string, string> = {
@@ -63,12 +68,16 @@ function checkRequest(r: NetRequest, tag: string, fail: (msg: string) => void) {
   const req = METHODS.exec(r.request.line);
   if (!req) fail(`${tag}: стартовая строка запроса «${r.request.line}» не похожа на HTTP`);
   else if (req[2] === "1.1" && header(r.request, "Host").length !== 1) fail(`${tag}: в HTTP/1.1 нужен ровно один заголовок Host`);
-  const res = /^HTTP\/(?:1\.0|1\.1|2|3) (\d{3})(?: (.*))?$/.exec(r.response.line);
+  const res = /^HTTP\/(1\.0|1\.1|2|3) (\d{3})(?: (.*))?$/.exec(r.response.line);
   if (!res) fail(`${tag}: строка ответа «${r.response.line}» не похожа на HTTP`);
   else {
-    const [, code, reason] = res;
+    const [, version, code, reason] = res;
+    const legacy = version!.startsWith("1");
+    if (req && (req[2]!.startsWith("1") !== legacy)) fail(`${tag}: версии HTTP у запроса и ответа разные`);
     if (!REASONS[code!]) fail(`${tag}: неизвестный код ${code}`);
-    else if (reason !== REASONS[code!]) fail(`${tag}: у кода ${code} фраза «${REASONS[code!]}», а не «${reason}»`);
+    // В HTTP/2 и HTTP/3 фразы после кода нет, в HTTP/1.x она обязательна.
+    else if (legacy && reason !== REASONS[code!]) fail(`${tag}: у кода ${code} фраза «${REASONS[code!]}», а не «${reason}»`);
+    else if (!legacy && reason) fail(`${tag}: в HTTP/${version} нет фразы после кода`);
     if ((code === "304" || code === "204") && r.response.body) fail(`${tag}: у ответа ${code} не бывает тела`);
   }
   for (const c of header(r.response, "Set-Cookie")) {
@@ -90,6 +99,18 @@ function checkRequest(r: NetRequest, tag: string, fail: (msg: string) => void) {
 export function checkWeb(fail: (msg: string) => void) {
   const order = WEB_LESSONS.map((l) => l.id);
   if (new Set(order).size !== order.length) fail("id уроков «Браузера» повторяются");
+  // Прогресс хранится по id урока, поэтому id не должны совпадать с уроками TypeScript.
+  const tsIds = new Set(LESSONS.map((l) => l.id));
+  for (const id of order) if (tsIds.has(id)) fail(`${id}: такой id уже есть у урока TypeScript`);
+  // Уроки идут регион за регионом, в экзамене региона хотя бы 6 вопросов.
+  WEB_LESSONS.forEach((l, i) => { if (i > 0 && l.region < WEB_LESSONS[i - 1]!.region) fail(`${l.id}: уроки регионов перемешаны`); });
+  WEB_REGIONS.forEach((r, ri) => {
+    const mine = WEB_LESSONS.filter((l) => l.region === ri);
+    if (r.kind === "lessons" && !mine.length) fail(`регион «${r.name}» с уроками, но уроков нет`);
+    if (r.kind === "soon" && mine.length) fail(`регион «${r.name}» помечен «скоро», но в нём есть уроки`);
+    const quizzes = mine.flatMap((l) => l.tasks.filter((t) => t.type === "quiz")).length;
+    if (r.kind === "lessons" && quizzes < 6) fail(`регион «${r.name}»: для экзамена нужно хотя бы 6 вопросов, есть ${quizzes}`);
+  });
 
   for (const lesson of WEB_LESSONS) {
     console.log(`${lesson.id} ${lesson.title}`);

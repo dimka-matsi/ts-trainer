@@ -1,7 +1,7 @@
-import type { WebLesson } from "../types";
+import type { WebLesson } from "../../types";
 
 export const lesson: WebLesson = {
-  id: "n4",
+  id: "net4",
   region: 0,
   title: "UDP и QUIC: когда скорость важнее гарантий",
   q: "Чем TCP отличается от UDP? Где используют UDP?",

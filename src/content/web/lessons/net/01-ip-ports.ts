@@ -1,7 +1,7 @@
-import type { WebLesson } from "../types";
+import type { WebLesson } from "../../types";
 
 export const lesson: WebLesson = {
-  id: "n1",
+  id: "net1",
   region: 0,
   title: "Клиент, сервер, IP-адрес и порт",
   q: "Как два компьютера находят друг друга в интернете? Что такое IP-адрес и порт?",

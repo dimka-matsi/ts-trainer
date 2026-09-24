@@ -1,7 +1,7 @@
-import type { WebLesson } from "../types";
+import type { WebLesson } from "../../types";
 
 export const lesson: WebLesson = {
-  id: "n2",
+  id: "net2",
   region: 0,
   title: "Уровни сети: TCP/IP и OSI",
   q: "Расскажи про модель OSI или TCP/IP. На каком уровне работают HTTP, TCP и IP?",

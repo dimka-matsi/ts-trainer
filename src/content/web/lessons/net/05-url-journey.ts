@@ -1,7 +1,7 @@
-import type { WebLesson } from "../types";
+import type { WebLesson } from "../../types";
 
 export const lesson: WebLesson = {
-  id: "n5",
+  id: "net5",
   region: 0,
   title: "Что происходит после ввода URL",
   q: "Что происходит, когда вводишь адрес сайта в браузере и нажимаешь Enter?",
