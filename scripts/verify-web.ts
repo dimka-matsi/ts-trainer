@@ -49,6 +49,10 @@ const CONCEPTS: { name: string; re: RegExp; at: string }[] = [
   { name: "ETag", re: /\bETag\b|If-None-Match/i, at: "cache2" },
   { name: "CDN", re: /\bCDN\b/, at: "cache4" },
   { name: "bfcache", re: /bfcache/i, at: "cache6" },
+  { name: "anycast", re: /anycast|GeoDNS/i, at: "cdn1" },
+  { name: "purge", re: /purge|origin shield/i, at: "cdn2" },
+  { name: "X-Forwarded-For", re: /X-Forwarded/i, at: "cdn3" },
+  { name: "балансировщик", re: /round robin|least connections|sticky/i, at: "cdn4" },
 ];
 
 /** Признаки JavaScript: в «Браузере» его быть не должно. */

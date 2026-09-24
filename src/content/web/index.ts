@@ -1,5 +1,6 @@
 import type { Flashcard } from "../flashcards";
 import { lessons as cache } from "./lessons/cache";
+import { lessons as cdn } from "./lessons/cdn";
 import { lessons as cookies } from "./lessons/cookies";
 import { lessons as dns } from "./lessons/dns";
 import { lessons as http } from "./lessons/http";
@@ -8,7 +9,7 @@ import { lessons as tls } from "./lessons/tls";
 import type { WebLesson, WebRegion } from "./types";
 
 /** Уроки по регионам: индекс в массиве = индекс региона в WEB_REGIONS. */
-const REGION_LESSONS: WebLesson[][] = [net, dns, http, tls, cookies, cache];
+const REGION_LESSONS: WebLesson[][] = [net, dns, http, tls, cookies, cache, cdn];
 
 /** Уроки раздела «Браузер» в порядке прохождения. */
 export const WEB_LESSONS: WebLesson[] = REGION_LESSONS.flat();
@@ -26,13 +27,7 @@ export const WEB_REGIONS: WebRegion[] = [
   { name: "HTTPS и TLS", kind: "lessons", desc: "Зачем HTTPS, шифрование, сертификаты, рукопожатие TLS 1.3 и HSTS." },
   { name: "Cookies, сессии и вход", kind: "lessons", desc: "Как сервер узнаёт пользователя: cookies и их флаги, сторонние cookies, сессии и токены, OAuth." },
   { name: "Кэширование", kind: "lessons", desc: "HTTP-кэш браузера и общие кэши: свежесть, проверка и 304, файлы с хэшем, Vary, bfcache." },
-  { name: "CDN, прокси и балансировка", kind: "soon", desc: "Серверы между пользователем и приложением.", topics: [
-    { t: "Как работает CDN", q: "Что такое CDN и почему с ним сайт открывается быстрее?" },
-    { t: "Кэш на границе", q: "Как CDN решает, что хранить и когда обновить?" },
-    { t: "Сброс кэша", q: "Выложили новую версию, а пользователи видят старую. Что делать?" },
-    { t: "Прямой и обратный прокси", q: "Чем прямой прокси отличается от обратного? Зачем nginx перед приложением?" },
-    { t: "Балансировщик нагрузки", q: "Как балансировщик распределяет запросы и чем L4 отличается от L7?" },
-  ] },
+  { name: "CDN, прокси и балансировка", kind: "lessons", desc: "Серверы между пользователем и приложением: CDN и его кэш, прокси, балансировщики." },
   { name: "CORS", kind: "soon", desc: "Политика одного источника и запросы на чужой домен.", topics: [
     { t: "Origin и same-origin policy", q: "Что такое origin и что запрещает политика одного источника?" },
     { t: "Same-origin и same-site", q: "Чем «тот же источник» отличается от «того же сайта»?" },
