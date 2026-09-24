@@ -64,6 +64,11 @@ const CONCEPTS: { name: string; re: RegExp; at: string }[] = [
   { name: "процессы браузера", re: /процесс отрисовки|IPC/i, at: "br1" },
   { name: "Site Isolation", re: /Site Isolation|\bORB\b/i, at: "br2" },
   { name: "движки", re: /\bBlink\b|\bGecko\b|WebKit|Baseline/, at: "br3" },
+  { name: "CSSOM", re: /CSSOM|render tree|дерево отрисовки/i, at: "rnd1" },
+  { name: "async и defer", re: /\bdefer\b|preload scanner|сканер предзагрузки/i, at: "rnd2" },
+  { name: "слои и composite", re: /will-change|layout thrashing/i, at: "rnd3" },
+  { name: "FOIT и FOUT", re: /\bFOIT\b|\bFOUT\b|font-display/i, at: "rnd4" },
+  { name: "SSR и гидратация", re: /\bSSR\b|\bSSG\b|\bCSR\b|гидратац/i, at: "rnd5" },
 ];
 
 /** Признаки JavaScript: в «Браузере» его быть не должно. */

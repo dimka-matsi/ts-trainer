@@ -7,12 +7,13 @@ import { lessons as cors } from "./lessons/cors";
 import { lessons as dns } from "./lessons/dns";
 import { lessons as http } from "./lessons/http";
 import { lessons as net } from "./lessons/net";
+import { lessons as render } from "./lessons/render";
 import { lessons as security } from "./lessons/security";
 import { lessons as tls } from "./lessons/tls";
 import type { WebLesson, WebRegion } from "./types";
 
 /** Уроки по регионам: индекс в массиве = индекс региона в WEB_REGIONS. */
-const REGION_LESSONS: WebLesson[][] = [net, dns, http, tls, cookies, cache, cdn, cors, security, browser];
+const REGION_LESSONS: WebLesson[][] = [net, dns, http, tls, cookies, cache, cdn, cors, security, browser, render];
 
 /** Уроки раздела «Браузер» в порядке прохождения. */
 export const WEB_LESSONS: WebLesson[] = REGION_LESSONS.flat();
@@ -34,13 +35,7 @@ export const WEB_REGIONS: WebRegion[] = [
   { name: "CORS", kind: "lessons", desc: "Политика одного источника и как сервер разрешает чтение с других источников." },
   { name: "Безопасность", kind: "lessons", desc: "Атаки на сайт и защита от них: XSS, CSRF, CSP, clickjacking, чужой код, заголовки, изоляция." },
   { name: "Устройство браузера", kind: "lessons", desc: "Из каких процессов состоит браузер, как он изолирует сайты и чем отличаются движки." },
-  { name: "Рендеринг страницы", kind: "soon", desc: "Путь от байтов HTML до пикселей на экране и способы рендеринга сайта.", topics: [
-    { t: "Critical rendering path", q: "Что происходит от получения HTML до первого кадра?" },
-    { t: "Блокирующие ресурсы", q: "Почему CSS и скрипты в `<head>` задерживают отрисовку? Чем `async` отличается от `defer`?" },
-    { t: "Layout, paint, composite", q: "Что вызывает перерасчёт раскладки и почему анимировать `transform` дешевле, чем `top`?" },
-    { t: "Шрифты", q: "Что такое FOIT и FOUT и зачем `font-display`?" },
-    { t: "CSR, SSR, SSG и гидратация", q: "Чем рендеринг на клиенте отличается от серверного и статической генерации?" },
-  ] },
+  { name: "Рендеринг страницы", kind: "lessons", desc: "Путь от байтов HTML до пикселей, блокирующие ресурсы, шрифты и способы рендеринга сайта." },
   { name: "Реальное время", kind: "soon", desc: "Как сервер отправляет данные сам: polling, SSE, WebSocket, WebRTC.", topics: [
     { t: "Polling и long polling", q: "Как получать обновления от сервера без WebSocket?" },
     { t: "Server-Sent Events", q: "Когда хватит SSE?" },
