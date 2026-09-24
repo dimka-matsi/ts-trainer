@@ -1,4 +1,5 @@
 import type { Flashcard } from "../flashcards";
+import { lessons as cookies } from "./lessons/cookies";
 import { lessons as dns } from "./lessons/dns";
 import { lessons as http } from "./lessons/http";
 import { lessons as net } from "./lessons/net";
@@ -6,7 +7,7 @@ import { lessons as tls } from "./lessons/tls";
 import type { WebLesson, WebRegion } from "./types";
 
 /** Уроки по регионам: индекс в массиве = индекс региона в WEB_REGIONS. */
-const REGION_LESSONS: WebLesson[][] = [net, dns, http, tls];
+const REGION_LESSONS: WebLesson[][] = [net, dns, http, tls, cookies];
 
 /** Уроки раздела «Браузер» в порядке прохождения. */
 export const WEB_LESSONS: WebLesson[] = REGION_LESSONS.flat();
@@ -22,17 +23,7 @@ export const WEB_REGIONS: WebRegion[] = [
   { name: "DNS", kind: "lessons", desc: "Как имя сайта превращается в IP-адрес: путь запроса, записи, TTL, подмена и шифрование." },
   { name: "HTTP", kind: "lessons", desc: "Запрос и ответ, методы, коды, заголовки, соединения, стили API и версии протокола." },
   { name: "HTTPS и TLS", kind: "lessons", desc: "Зачем HTTPS, шифрование, сертификаты, рукопожатие TLS 1.3 и HSTS." },
-  { name: "Cookies, сессии и вход", kind: "soon", desc: "Как сервер узнаёт пользователя: cookies и их флаги, сессии, токены, OAuth.", topics: [
-    { t: "Set-Cookie и Cookie", q: "Как сервер ставит cookie и когда браузер её отправляет?" },
-    { t: "Флаги HttpOnly и Secure", q: "От чего защищают `HttpOnly` и `Secure`?" },
-    { t: "SameSite", q: "Чем отличаются `SameSite=Strict`, `Lax` и `None`?" },
-    { t: "Domain, Path, срок жизни, префиксы", q: "Как ограничить cookie поддоменом, задать срок жизни и зачем префикс `__Host-`?" },
-    { t: "Сторонние cookies", q: "Что такое сторонние cookies и почему браузеры их ограничивают?" },
-    { t: "Сессия или токен", q: "Чем сессия в cookie отличается от JWT в заголовке `Authorization`?" },
-    { t: "Где хранить токен", q: "Где безопаснее хранить токен: в cookie с `HttpOnly` или в localStorage?" },
-    { t: "Access- и refresh-токены", q: "Зачем два токена и как обновить короткий токен?" },
-    { t: "OAuth 2.0 и OpenID Connect", q: "Как работает вход через Google? Что такое authorization code и PKCE?" },
-  ] },
+  { name: "Cookies, сессии и вход", kind: "lessons", desc: "Как сервер узнаёт пользователя: cookies и их флаги, сторонние cookies, сессии и токены, OAuth." },
   { name: "Кэширование", kind: "soon", desc: "HTTP-кэш браузера: свежесть, проверка, 304, кэш при переходах.", topics: [
     { t: "Cache-Control", q: "Чем `no-cache` отличается от `no-store`? Что значит `max-age`?" },
     { t: "ETag и 304", q: "Как браузер проверяет, изменился ли файл, не скачивая его заново?" },

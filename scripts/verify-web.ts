@@ -38,6 +38,13 @@ const CONCEPTS: { name: string; re: RegExp; at: string }[] = [
   { name: "центр сертификации", re: /центр сертификации|Let's Encrypt|Certificate Transparency|промежуточн\S* (центр|сертификат)/i, at: "tls3" },
   { name: "0-RTT", re: /0-RTT|ClientHello/, at: "tls4" },
   { name: "HSTS", re: /\bHSTS\b|Strict-Transport-Security/i, at: "tls5" },
+  { name: "cookie", re: /cookie(?!s, сессии)/i, at: "ck1" },
+  { name: "XSS", re: /\bXSS\b/, at: "ck2" },
+  { name: "CSRF", re: /\bCSRF\b/, at: "ck3" },
+  { name: "сторонние cookies", re: /сторонн\S* cookie|Partitioned|CHIPS/i, at: "ck4" },
+  { name: "JWT", re: /\bJWT\b/, at: "ck5" },
+  { name: "refresh-токен", re: /refresh/i, at: "ck6" },
+  { name: "OAuth", re: /OAuth|PKCE|OpenID/, at: "ck7" },
 ];
 
 /** Признаки JavaScript: в «Браузере» его быть не должно. */
@@ -98,7 +105,11 @@ function checkRequest(r: NetRequest, tag: string, fail: (msg: string) => void) {
   }
   if (r.request.body && !header(r.request, "Content-Type").length) fail(`${tag}: у запроса с телом нет Content-Type`);
   for (const c of header(r.response, "Set-Cookie")) {
-    if (/samesite=none/i.test(c) && !/;\s*secure\b/i.test(c)) fail(`${tag}: cookie с SameSite=None без Secure браузер отклонит`);
+    const secure = /;\s*secure\b/i.test(c);
+    if (/samesite=none/i.test(c) && !secure) fail(`${tag}: cookie с SameSite=None без Secure браузер отклонит`);
+    if (/partitioned/i.test(c) && !secure) fail(`${tag}: Partitioned-cookie без Secure браузер отклонит`);
+    if (/^__Secure-/.test(c) && !secure) fail(`${tag}: префикс __Secure- требует Secure`);
+    if (/^__Host-/.test(c) && (!secure || !/;\s*path=\/(;|$)/i.test(c) || /;\s*domain=/i.test(c))) fail(`${tag}: префикс __Host- требует Secure, Path=/ и запрещает Domain`);
   }
   let last = -1;
   for (const [phase, ms] of r.timing) {
