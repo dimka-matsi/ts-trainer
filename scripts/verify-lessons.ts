@@ -17,6 +17,7 @@ import { buildLib, LIB_FILES } from "../src/engine/lib";
 import { checkCode, normalizeType, probeType } from "../src/engine/check";
 import { LESSONS } from "../src/content/lessons";
 import { checkOrder } from "./verify-order";
+import { checkWeb } from "./verify-web";
 import { HANDBOOK } from "../src/content/handbook";
 import { REGIONS } from "../src/content/regions";
 import { EXAM_ONLY_TASKS } from "../src/content/exams";
@@ -132,5 +133,8 @@ LEVELS.forEach((level, i) => {
   });
 });
 
-console.log(failures ? `\n${failures} проблем` : `\nВсё проверено: ${LESSONS.length} уроков, ${LEVELS.length} уровней, ${EXAM_ONLY_TASKS.length} вопросов экзаменов, ${FLASHCARDS.length} карточек`);
+console.log("\nраздел «Браузер»");
+const web = await checkWeb(fail);
+
+console.log(failures ? `\n${failures} проблем` : `\nВсё проверено: ${LESSONS.length} уроков, ${LEVELS.length} уровней, ${EXAM_ONLY_TASKS.length} вопросов экзаменов, ${FLASHCARDS.length} карточек; «Браузер»: ${web.lessons} уроков, ${web.cards} карточек`);
 process.exit(failures ? 1 : 0);
