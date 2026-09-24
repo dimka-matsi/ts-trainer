@@ -7,12 +7,13 @@ import { lessonUnlocked, levelUnlocked, regionDone } from "./state/path";
 import { ProgressProvider, useProgress } from "./state/progress";
 import { useRoute, type Route } from "./state/route";
 import { ToastProvider } from "./state/toast";
-import { Achievements } from "./ui/Achievements";
 import { Header } from "./ui/Header";
 import { LessonView } from "./views/lesson/LessonView";
 import { LockedView } from "./views/LockedView";
 import { CardsView } from "./views/CardsView";
 import { ExamView } from "./views/ExamView";
+import { InterviewView } from "./views/InterviewView";
+import { ProgressView } from "./views/ProgressView";
 import { MapView } from "./views/MapView";
 import { SorterView } from "./views/SorterView";
 
@@ -32,6 +33,8 @@ function Screen({ route }: { route: Route }) {
       : <LockedView what={`Экзамен «${REGIONS[route.region]!.name}»`} />;
   }
   if (route.view === "cards") return <CardsView />;
+  if (route.view === "interview") return <InterviewView />;
+  if (route.view === "progress") return <ProgressView />;
   if (route.view === "level" && LEVELS[route.index]) {
     return levelUnlocked(progress, route.index)
       ? <SorterView key={route.index} index={route.index} />
@@ -49,7 +52,6 @@ export function App() {
           <Header route={route} />
           <div className="wrap">
             <main><Screen route={route} /></main>
-            <Achievements />
           </div>
         </EngineProvider>
       </ProgressProvider>

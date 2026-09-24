@@ -17,6 +17,8 @@ import { buildLib, LIB_FILES } from "../src/engine/lib";
 import { checkCode, normalizeType, probeType } from "../src/engine/check";
 import { LESSONS } from "../src/content/lessons";
 import { checkOrder } from "./verify-order";
+import { HANDBOOK } from "../src/content/handbook";
+import { REGIONS } from "../src/content/regions";
 import { EXAM_ONLY_TASKS } from "../src/content/exams";
 import { FLASHCARDS } from "../src/content/flashcards";
 import type { Task } from "../src/content/types";
@@ -86,6 +88,31 @@ console.log("flashcards");
     if (!card.code) fail(`карточка ${card.id}: нет примера кода`);
     else checkExample(card.code, `карточка ${card.id}`);
   }
+}
+
+console.log("сверка с Handbook");
+{
+  const lessonIds = new Set(LESSONS.map((l) => l.id));
+  const cardIds = new Set(FLASHCARDS.map((c) => c.id));
+  let built = 0, planned = 0, skipped = 0;
+  for (const h of HANDBOOK) {
+    const where = `Handbook «${h.page}» → ${h.section}`;
+    if (!h.covered.length) fail(`${where}: раздел ни к чему не привязан`);
+    for (const c of h.covered) {
+      if ("lesson" in c && !lessonIds.has(c.lesson)) fail(`${where}: нет урока ${c.lesson}`);
+      if ("level" in c && !LEVELS[c.level]) fail(`${where}: нет уровня ${c.level + 1}`);
+      if ("card" in c && !cardIds.has(c.card)) fail(`${where}: нет карточки ${c.card}`);
+      if ("skip" in c && c.skip.trim().length < 10) fail(`${where}: у пропуска нет понятной причины`);
+      if ("topic" in c) {
+        const [ri, title] = c.topic;
+        if (!(REGIONS[ri]?.topics ?? []).some((t) => t.t === title)) fail(`${where}: в регионе ${ri + 1} нет темы «${title}»`);
+      }
+    }
+    if (h.covered.some((c) => "lesson" in c || "level" in c)) built++;
+    else if (h.covered.some((c) => "topic" in c || "card" in c)) planned++;
+    else skipped++;
+  }
+  console.log(`  разделов: ${HANDBOOK.length}, в уроках: ${built}, в плане: ${planned}, пропущено с причиной: ${skipped}`);
 }
 
 console.log("порядок тем");

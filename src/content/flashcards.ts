@@ -1107,6 +1107,30 @@ type Keys = keyof User;          // "id" | "name"
 type Name = User["name"];        // string
 type Tag = string[][number];     // string
 const k: Keys = "email";         // ошибка: такого поля нет`,
+  na: `function show(x: string | null) {
+  if (x === null) return "пусто";
+  return x.toUpperCase(); // x: string — null ушёл через return
+}
+let v: string | number = "a";
+v = 42;          // теперь v: number
+v = true;        // ошибка: boolean не входит в объявленный тип`,
+  fo: `function run(fn: Function) { return fn(); }
+const a = run(() => 42);              // any
+function runSafe<T>(fn: () => T) { return fn(); }
+const b = runSafe(() => 42);          // number
+const o: object = "текст";            // ошибка: строка — примитив`,
+  fd: `type Options = { size?: number; color: string };
+function draw({ size = 10, color }: Options) {
+  return color + size; // size: number
+}
+function wrong({ size: number }) { // ошибка: это переименование, а не тип
+  return number;
+}`,
+  g7: `class Dog { bark() {} }
+function create<T>(C: new () => T): T { return new C(); }
+const d = create(Dog); // Dog
+interface Producer<out T> { get: () => T }
+interface Bad<in T> { get: () => T } // ошибка: T на выходе, а помечен in`,
   f4: `type Button = { label: string; onClick(this: Button): void };
 declare const btn: Button;
 btn.onClick();

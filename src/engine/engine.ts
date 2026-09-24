@@ -12,6 +12,12 @@ export interface Diagnostic {
   msg: string;
 }
 
+export interface Completion {
+  name: string;
+  /** Вид: property, method, function, keyword, var… — как у TypeScript. */
+  kind: string;
+}
+
 export interface Declaration {
   name: string;
   info: string;
@@ -23,6 +29,8 @@ export interface Engine {
   set(code: string): void;
   diagnostics(): Diagnostic[];
   quickInfo(pos: number): string | null;
+  /** Варианты автодополнения в позиции pos. */
+  completions(pos: number): Completion[];
   declarations(): Declaration[];
   transpile(code: string): string;
 }
@@ -90,6 +98,14 @@ export function createEngine(ts: TsApi, lib: string): Engine {
     quickInfo(pos) {
       const q = service.getQuickInfoAtPosition(MAIN, pos);
       return q ? ts.displayPartsToString(q.displayParts) : null;
+    },
+    completions(pos) {
+      const res = service.getCompletionsAtPosition(MAIN, pos, { includeCompletionsWithInsertText: false });
+      if (!res) return [];
+      return res.entries
+        .filter((e) => !e.name.startsWith("__"))
+        .sort((a, b) => a.sortText.localeCompare(b.sortText) || a.name.localeCompare(b.name))
+        .map((e) => ({ name: e.name, kind: e.kind }));
     },
     declarations() {
       const sf = sourceFile();

@@ -5,7 +5,9 @@ export type Route =
   | { view: "level"; index: number }
   | { view: "lesson"; id: string }
   | { view: "exam"; region: number }
-  | { view: "cards" };
+  | { view: "cards" }
+  | { view: "interview" }
+  | { view: "progress" };
 
 function parse(hash: string): Route {
   const level = /^#\/level\/(\d+)$/.exec(hash);
@@ -15,6 +17,8 @@ function parse(hash: string): Route {
   const exam = /^#\/exam\/(\d+)$/.exec(hash);
   if (exam) return { view: "exam", region: Number(exam[1]) - 1 };
   if (hash === "#/cards") return { view: "cards" };
+  if (hash === "#/interview") return { view: "interview" };
+  if (hash === "#/progress") return { view: "progress" };
   return { view: "map" };
 }
 
@@ -23,6 +27,8 @@ export function routeHref(route: Route): string {
   if (route.view === "lesson") return `#/lesson/${route.id}`;
   if (route.view === "exam") return `#/exam/${route.region + 1}`;
   if (route.view === "cards") return "#/cards";
+  if (route.view === "interview") return "#/interview";
+  if (route.view === "progress") return "#/progress";
   return "#/";
 }
 

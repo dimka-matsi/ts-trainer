@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { EXAM_PASS, hasExam } from "../content/exams";
 import { FLASHCARDS } from "../content/flashcards";
 import { LESSONS } from "../content/lessons";
@@ -11,7 +11,7 @@ import { Md } from "../ui/Code";
 import { TopicDialog } from "./TopicDialog";
 
 export function MapView() {
-  const { progress } = useProgress();
+  const { progress, markIntroSeen } = useProgress();
   const [dialog, setDialog] = useState<PlacedTopic | null>(null);
   const topics = allTopics();
   const liveRegions = REGIONS.filter((r) => r.kind !== "soon").length;
@@ -22,6 +22,23 @@ export function MapView() {
     else setDialog(t);
   };
   const now = currentStep(progress);
+  // Раскрыт регион с текущей темой, остальные свёрнуты до заголовка и кнопки.
+  const [expanded, setExpanded] = useState<Set<number>>(() => new Set(now ? [now.region] : [0]));
+  const toggle = (ri: number) => setExpanded((prev) => {
+    const next = new Set(prev);
+    if (next.has(ri)) next.delete(ri); else next.add(ri);
+    return next;
+  });
+  const isNow = (t: PlacedTopic) => !!now && (now.kind === "lesson" ? t.lesson === now.lesson.id : t.lv === now.index && t.ri === now.region);
+  const curRef = useRef<HTMLButtonElement>(null);
+
+  // При возвращении на карту прокручиваем к текущей теме, если она не в начале.
+  useEffect(() => {
+    const el = curRef.current;
+    if (!el || !learned) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    el.scrollIntoView({ block: "center", behavior: reduce ? "auto" : "smooth" });
+  }, []);
 
   return (
     <section className="map">
@@ -41,7 +58,16 @@ export function MapView() {
         )}
         <button type="button" className="btn ghost" onClick={() => navigate({ view: "cards" })}>Флеш-карточки: {FLASHCARDS.length} вопросов</button>
       </div>
-      <div className="legend"><span>✓ изучено</span><span>● открыто</span><span>○ откроется после предыдущих тем</span></div>
+      {!progress.seenIntro && (
+        <div className="intro-note" role="note">
+          <b>Как здесь учиться</b>
+          <p>Темы открываются по порядку: следующая становится доступна, когда выполнены все упражнения предыдущей. В конце региона — итоговый экзамен. Флеш-карточки, поиск и пробное собеседование доступны всегда: ими удобно повторять перед интервью.</p>
+          <button type="button" className="btn ghost small" onClick={markIntroSeen}>Понятно</button>
+        </div>
+      )}
+      <div className="legend">
+        <span>✓ изучено</span><span>● открыто</span><span><i className="lock" aria-hidden="true" /> откроется после предыдущих тем</span>
+      </div>
       <div className="regions">
         {REGIONS.map((r, ri) => {
           const ts = topics.filter((t) => t.ri === ri);
@@ -65,25 +91,34 @@ export function MapView() {
             }
           }
           return (
-            <div key={ri} className={`region ${r.kind === "soon" ? "soon" : "live"}`}>
+            <div key={ri} className={`region ${r.kind === "soon" ? "soon" : "live"}${expanded.has(ri) ? "" : " folded"}`}>
               <div className="rail"><div className="num">{ri + 1}</div></div>
               <div className="rcard">
                 <div className="rhead">
                   <h2>{r.name}</h2>
                   <span className="rstat">{r.kind === "soon" ? `Скоро, ${ts.length} темы` : `Изучено ${done} из ${ts.length}`}</span>
+                  <button type="button" className="fold" aria-expanded={expanded.has(ri)} onClick={() => toggle(ri)}>
+                    {expanded.has(ri) ? "Свернуть темы" : `Темы: ${ts.length}`}
+                  </button>
                 </div>
                 <p className="rdesc"><Md text={r.desc} /></p>
                 {r.kind !== "soon" && <div className="bar" aria-hidden="true"><i style={{ width: `${Math.round((done / ts.length) * 100)}%` }} /></div>}
-                <div className="topics">
-                  {ts.map((t) => {
-                    const st = topicState(progress, t);
-                    return (
-                      <button key={t.ti} type="button" className={`topic ${st}`} onClick={() => openTopic(t)}>
-                        <span className="ic" aria-hidden="true">{ICON[st]}</span>{t.t}
-                      </button>
-                    );
-                  })}
-                </div>
+                {expanded.has(ri) && (
+                  <div className="topics">
+                    {ts.map((t) => {
+                      const st = topicState(progress, t);
+                      const cur = isNow(t);
+                      return (
+                        <button key={t.ti} type="button" ref={cur ? curRef : undefined}
+                          className={`topic ${st}${cur ? " cur" : ""}`} onClick={() => openTopic(t)}
+                          aria-label={st === "ahead" ? `${t.t}, закрыто` : undefined}>
+                          {st === "ahead" ? <i className="lock" aria-hidden="true" /> : <span className="ic" aria-hidden="true">{ICON[st]}</span>}
+                          {t.t}{cur && <span className="cur-tag">сейчас</span>}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
                 {(cta || (r.kind !== "soon" && hasExam(ri))) && (
                   <div className="rlevels">
                     {cta}

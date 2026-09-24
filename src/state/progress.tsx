@@ -5,6 +5,25 @@ import { LESSON_BY_ID, LESSONS } from "../content/lessons";
 import { lessonDone } from "./path";
 import { useToast } from "./toast";
 
+export interface CardState {
+  /** 0 — не знал, дальше растёт с каждым «знал». */
+  box: number;
+  /** Когда показать снова, мс. */
+  due: number;
+}
+
+const DAY = 24 * 60 * 60 * 1000;
+/** Через сколько дней повторить карточку на уровне box. */
+const INTERVAL_DAYS = [0, 1, 3, 7, 16, 35];
+
+/** Карточка выучена, если на неё хоть раз ответили «знал» и с тех пор не ошиблись. */
+export const cardKnown = (p: Progress, id: string) => (p.cards[id]?.box ?? 0) > 0;
+/** Карточку пора повторить: она уже встречалась и срок подошёл. */
+export const cardDue = (p: Progress, id: string, now = Date.now()) => {
+  const c = p.cards[id];
+  return c != null && c.due <= now;
+};
+
 export interface Progress {
   /** Лучшие звёзды по уровням сортировщика. */
   stars: Record<number, number>;
@@ -13,8 +32,10 @@ export interface Progress {
   lessons: Record<string, Record<number, boolean>>;
   /** Лучший результат итогового экзамена по региону, в процентах. */
   exams: Record<number, number>;
-  /** id выученных флеш-карточек. */
-  cards: string[];
+  /** Интервальное повторение карточек: id → уровень и когда показать снова. Нет записи — карточка новая. */
+  cards: Record<string, CardState>;
+  /** Вводная на карте уже показана и закрыта. */
+  seenIntro: boolean;
   /** Время последнего изменения: при синхронизации с файлом побеждает более новая копия. */
   updatedAt: number;
 }
@@ -38,9 +59,24 @@ function normalize(raw: unknown): Progress {
     ach: strings(p.ach),
     lessons: isObj(p.lessons) ? (p.lessons as Progress["lessons"]) : {},
     exams: isObj(p.exams) ? (p.exams as Progress["exams"]) : {},
-    cards: strings(p.cards),
+    cards: normalizeCards(p.cards),
+    seenIntro: p.seenIntro === true,
     updatedAt: typeof p.updatedAt === "number" ? p.updatedAt : 0,
   };
+}
+
+/** Раньше карточки хранились списком выученных id: переносим их на первый уровень с повтором завтра. */
+function normalizeCards(x: unknown): Record<string, CardState> {
+  if (Array.isArray(x)) {
+    const due = Date.now() + DAY;
+    return Object.fromEntries(x.filter((v): v is string => typeof v === "string").map((id) => [id, { box: 1, due }]));
+  }
+  if (!isObj(x)) return {};
+  const out: Record<string, CardState> = {};
+  for (const [id, v] of Object.entries(x)) {
+    if (isObj(v) && typeof v.box === "number" && typeof v.due === "number") out[id] = { box: v.box, due: v.due };
+  }
+  return out;
 }
 
 function load(): Progress {
@@ -66,8 +102,11 @@ interface ProgressApi {
   markTask(lessonId: string, task: number): void;
   unlock(id: AchievementId): void;
   setExam(region: number, percent: number): void;
-  /** Отметить карточки выученными или вернуть в повторение. */
-  setCards(ids: string[], known: boolean): void;
+  /** Ответ на карточку: «знал» отодвигает следующий повтор, «не знал» возвращает её на сегодня. */
+  reviewCard(id: string, known: boolean): void;
+  /** Забыть историю карточек: они снова станут новыми. */
+  resetCards(ids: string[]): void;
+  markIntroSeen(): void;
 }
 
 const ProgressContext = createContext<ProgressApi | null>(null);
@@ -158,20 +197,26 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
     if (percent >= EXAM_PASS) unlock("exam");
   }, [unlock, commit]);
 
-  const setCards = useCallback((ids: string[], known: boolean) => {
-    const set = new Set(ref.current.cards);
-    for (const id of ids) {
-      if (known) set.add(id);
-      else set.delete(id);
-    }
-    const next = { ...ref.current, cards: [...set] };
+  const reviewCard = useCallback((id: string, known: boolean) => {
+    const prev = ref.current.cards[id]?.box ?? 0;
+    const box = known ? Math.min(prev + 1, INTERVAL_DAYS.length - 1) : 0;
+    const due = Date.now() + INTERVAL_DAYS[box]! * DAY;
+    const next = { ...ref.current, cards: { ...ref.current.cards, [id]: { box, due } } };
     commit(next);
-    if (set.size >= 50) unlock("cards50");
+    if (Object.values(next.cards).filter((c) => c.box > 0).length >= 50) unlock("cards50");
   }, [unlock, commit]);
 
+  const resetCards = useCallback((ids: string[]) => {
+    const cards = { ...ref.current.cards };
+    for (const id of ids) delete cards[id];
+    commit({ ...ref.current, cards });
+  }, [commit]);
+
+  const markIntroSeen = useCallback(() => commit({ ...ref.current, seenIntro: true }), [commit]);
+
   const api = useMemo(
-    () => ({ progress, setStars, markTask, unlock, setExam, setCards }),
-    [progress, setStars, markTask, unlock, setExam, setCards],
+    () => ({ progress, setStars, markTask, unlock, setExam, reviewCard, resetCards, markIntroSeen }),
+    [progress, setStars, markTask, unlock, setExam, reviewCard, resetCards, markIntroSeen],
   );
   return <ProgressContext.Provider value={api}>{children}</ProgressContext.Provider>;
 }

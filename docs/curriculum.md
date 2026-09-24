@@ -2,6 +2,12 @@
 
 Живая версия: документ «TypeScript: учебный план по Handbook» в Claude (https://claude.ai/code/artifact/e2b2f451-bbff-431d-a94a-81fb631ea4cd). Этот файл — его копия для репозитория на 24 сентября 2026. При расхождениях правь здесь и синхронизируй документ.
 
+## Сверка с TypeScript Handbook
+
+Каждый раздел документации привязан к уроку, уровню, теме плана на карте или помечен как пропущенный с причиной. Сама сверка лежит в `src/content/handbook.ts`, verify проверяет, что все ссылки существуют. На 24 сентября 2026: 131 раздел, 86 уже в уроках и уровнях, 38 в плане, 7 пропущено (обзорные страницы, туториалы по инструментам, синтаксис JavaScript, заметки к старым версиям).
+
+При сверке 24.09.2026 добавлены уроки: присваивания и анализ потока (na), типы `object` и `Function` (fo), деструктуризация параметров (fd), классы в дженериках и аннотации `in`/`out` (g7). В план добавлены темы: ReadonlyArray, Symbol и `unique symbol`, итераторы и генераторы (регион 4); поля и `strictPropertyInitialization`, `override`, геттеры и `static`-блоки, тип `this` и this-guards, class expressions, mixins, ES-модули и CommonJS, namespaces, декораторы (регион 8); JSX (регион 10); декларации для библиотеки, JSDoc и проверка JS, triple-slash директивы (регион 11).
+
 ## Как пользоваться планом
 
 План повторяет порядок [TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/intro.html) и раскладывает его на 11 регионов продукта: девять по Handbook, затем «TS и React» и «Компилятор и проект». Каждый регион — набор уроков, каждый урок закрывает одну тему и отвечает на конкретные вопросы с собеседования.
@@ -20,10 +26,10 @@
 | # | Регион | Разделы Handbook | Статус |
 | --- | --- | --- | --- |
 | 1 | Основы | [The Basics](https://www.typescriptlang.org/docs/handbook/2/basic-types.html), [Everyday Types](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html), [Type Compatibility](https://www.typescriptlang.org/docs/handbook/type-compatibility.html), [Type Inference](https://www.typescriptlang.org/docs/handbook/type-inference.html), [`satisfies`](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-9.html) | Готово: 11 уроков |
-| 2 | Болото союзов | [Narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html) | Готово: 6 уровней и 4 урока |
-| 3 | Функции | [More on Functions](https://www.typescriptlang.org/docs/handbook/2/functions.html) | Готово: 9 уроков |
+| 2 | Болото союзов | [Narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html) | Готово: 6 уровней и 5 уроков |
+| 3 | Функции | [More on Functions](https://www.typescriptlang.org/docs/handbook/2/functions.html) | Готово: 11 уроков |
 | 4 | Объекты | [Object Types](https://www.typescriptlang.org/docs/handbook/2/objects.html) | План |
-| 5 | Кузница дженериков | [Generics](https://www.typescriptlang.org/docs/handbook/2/generics.html), [Keyof](https://www.typescriptlang.org/docs/handbook/2/keyof-types.html), [Typeof](https://www.typescriptlang.org/docs/handbook/2/typeof-types.html), [Indexed Access](https://www.typescriptlang.org/docs/handbook/2/indexed-access-types.html) | Готово: 6 уроков |
+| 5 | Кузница дженериков | [Generics](https://www.typescriptlang.org/docs/handbook/2/generics.html), [Keyof](https://www.typescriptlang.org/docs/handbook/2/keyof-types.html), [Typeof](https://www.typescriptlang.org/docs/handbook/2/typeof-types.html), [Indexed Access](https://www.typescriptlang.org/docs/handbook/2/indexed-access-types.html) | Готово: 7 уроков |
 | 6 | Мастерская утилит | [Utility Types](https://www.typescriptlang.org/docs/handbook/utility-types.html) | Готово: 8 уроков |
 | 7 | Башня условий | [Conditional Types](https://www.typescriptlang.org/docs/handbook/2/conditional-types.html), [Mapped Types](https://www.typescriptlang.org/docs/handbook/2/mapped-types.html), [Template Literal Types](https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html) | План |
 | 8 | Классы и модули | [Classes](https://www.typescriptlang.org/docs/handbook/2/classes.html), [Modules](https://www.typescriptlang.org/docs/handbook/2/modules.html), [Enums](https://www.typescriptlang.org/docs/handbook/enums.html), [Declaration Merging](https://www.typescriptlang.org/docs/handbook/declaration-merging.html), [Decorators](https://www.typescriptlang.org/docs/handbook/decorators.html) | План |
@@ -53,9 +59,9 @@ Utility Types стоят раньше Mapped и Conditional Types намерен
 | 10 | Type assertions (b7) | `as` и `!` ничего не проверяют, branded types | Когда оправдан `as`? | `as unknown as T` — сигнал о неверных типах |
 | 11 | `satisfies` (b11) | Проверяет значение как аннотация, но оставляет выведенный тип | Чем `satisfies` отличается от `: T` и `as T`? | Точный тип сохраняется, если в `T` union литералов |
 
-## Регион 2. Болото союзов — готово: 6 уровней и 4 урока
+## Регион 2. Болото союзов — готово: 6 уровней и 5 уроков
 
-То, что не ложится на сортировщик, сделано уроками `n1`–`n4` в `lessons/narrowing/`. Они открываются из тем региона на карте.
+То, что не ложится на сортировщик, сделано уроками `na`, `n1`–`n4` в `lessons/narrowing/`. Они открываются из тем региона на карте.
 
 | Подтема Handbook | Что знать | Вопрос на собесе | Уровень |
 | --- | --- | --- | --- |
@@ -64,8 +70,8 @@ Utility Types стоят раньше Mapped и Conditional Types намерен
 | Equality narrowing | `===`, `==` сужают; `x === y` оставляет общий тип | Как `== null` влияет на тип? | Урок n1 |
 | Оператор `in` | Сужает по наличию свойства | Как отличить объекты без метки? | 3 |
 | `instanceof` | Нужен класс, который есть в рантайме | Почему нельзя с интерфейсом? | 3, 5 |
-| Assignments | Присваивание проверяется против объявленного типа | Почему после `x = 1` можно присвоить строку? | Флеш-карточка |
-| Control flow analysis | Недостижимые ветки вычитаются из типа | Что такое control flow analysis? | 1 |
+| Assignments | Присваивание проверяется против объявленного типа | Почему после `x = 1` можно присвоить строку? | Урок na |
+| Control flow analysis | Недостижимые ветки вычитаются из типа | Что такое control flow analysis? | 1, урок na |
 | Type predicates | `x is T`, TS доверяет телу | В чём риск `x is T`? | Урок n2 |
 | Assertion functions | `asserts x is T` сужает после вызова | Чем отличается от type guard? | Урок n3 |
 | Discriminated unions | Общее поле с литеральными типами | Зачем они нужны? | 4 |
@@ -74,7 +80,7 @@ Utility Types стоят раньше Mapped и Conditional Types намерен
 
 Уровень 6 «Граница» дополнительно покрывает сужение `unknown` для данных из сети.
 
-## Регион 3. Функции — готово, 9 уроков
+## Регион 3. Функции — готово, 11 уроков
 
 Источник: [More on Functions](https://www.typescriptlang.org/docs/handbook/2/functions.html). Урок «Дженерик-функции» даёт основы (`<T>`, вывод, `extends`), регион 5 разбирает дженерики глубже.
 
@@ -86,6 +92,8 @@ Utility Types стоят раньше Mapped и Conditional Types намерен
 | 4 | Перегрузки | Снаружи видны только перегрузки, проверка сверху вниз | Union или перегрузки? | Union-аргумент не проходит через перегрузки |
 | 5 | `this` в функциях | Псевдо-параметр `this: T`, стрелки берут `this` снаружи, тип `this` в методах | Как типизировать `this`? | Передачу метода как колбэка TS не проверяет, только вызов |
 | 6 | `void`, `never` и колбэки | `() => void` принимает функции с результатом | Почему `forEach(x => arr.push(x))` компилируется? | Стрелка, которая только бросает, — `never`, объявление `function` — `void` |
+| 6а | Типы `object` и `Function` (fo) | `object` — не-примитивы, вызов `Function` даёт `any` | Чем `Function` хуже `() => void`? | Вместо `Function` — сигнатура или дженерик |
+| 6б | Деструктуризация параметров (fd) | Тип после всего шаблона, значения по умолчанию в шаблоне | Как типизировать `({ a, b })`? | `{ a: number }` внутри шаблона — переименование |
 | 7 | `async` и `Promise<T>` | Результат всегда `Promise<T>`, `Promise.all` сохраняет кортеж | Как типизировать ошибку промиса? | В `catch` — `unknown`, забытый `await` |
 | 8 | Rest-параметры и кортежи | Spread требует известной длины, `...args: A` пробрасывает аргументы | Почему `Math.atan2(...args)` падает без `as const`? | `number[]` не подходит для фиксированного числа параметров |
 | 9 | Ковариантность и контравариантность | Результат ковариантен, параметры контравариантны под `strictFunctionTypes` | Почему параметры методов бивариантны? | Метод-сигнатура проверяется слабее свойства-функции |
@@ -104,7 +112,7 @@ Utility Types стоят раньше Mapped и Conditional Types намерен
 | `ReadonlyArray` | `readonly T[]` | Как запретить мутацию массива в пропсах? |
 | Кортежи | Опциональные и rest-элементы, `readonly`, имена, variadic `[...T, U]` | Чем кортеж отличается от массива? |
 
-## Регион 5. Кузница дженериков — готово, 6 уроков
+## Регион 5. Кузница дженериков — готово, 7 уроков
 
 Основы (`<T>`, вывод из аргументов, `extends`) даёт урок «Дженерик-функции» в регионе 3. Здесь — то, на чём держатся утилиты.
 
@@ -116,6 +124,7 @@ Utility Types стоят раньше Mapped и Conditional Types намерен
 | 4 | Параметры по умолчанию (g4) | `<T, E = Error>`, вывод нескольких параметров | Зачем значение по умолчанию у параметра типа? | Указать явно только часть параметров нельзя |
 | 5 | Дженерик-интерфейсы и классы (g5) | `class C<K, V>`, ограничения параметров класса | Как типизировать дженерик-кэш? | Статика не видит параметры класса |
 | 6 | const у параметра типа (g6) | `<const T>` выводит как `as const` (TS 5.0) | Что даёт `<const T>`? | Для массивов ограничение `readonly ...[]` |
+| 7 | Классы в дженериках и in/out (g7) | `create<T>(C: new () => T)`, аннотации вариантности (TS 4.7) | Зачем `in` и `out`? | Параметр-метод проверяется в обе стороны, аннотацию проверяют на свойстве-функции |
 
 ## Регион 7. Type Manipulation — план
 
