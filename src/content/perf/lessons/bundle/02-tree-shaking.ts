@@ -3,7 +3,7 @@ import type { WebLesson } from "../../../course/types";
 
 export const lesson: WebLesson = {
   id: "perf6",
-  region: 1,
+  region: 2,
   title: "Бандл: разбиение кода, tree shaking, минификация",
   q: "Как уменьшить JavaScript, который скачивает пользователь? Что такое code splitting и tree shaking?",
   answer:

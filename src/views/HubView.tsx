@@ -42,8 +42,8 @@ export function HubView() {
       ...courseStats(COURSES.web),
     },
     {
-      id: "perf", name: "Оптимизация", tagline: "Измерение, сеть, сервер, интерфейс, JS-движок",
-      about: "Как сделать сайт быстрым и доказать это цифрами: Core Web Vitals, загрузка, TTFB, длинные задачи, скрытые классы и сборщик мусора. Лучше после «Браузера».",
+      id: "perf", name: "Оптимизация", tagline: "Метрики, сборка, сервер, React, JS-движок",
+      about: "Как сделать сайт быстрым и доказать это цифрами: Core Web Vitals, webpack и чанки, TTFB, ререндеры React, виртуализация, скрытые классы и разбор задач с собеседований. Лучше после «Браузера».",
       ...courseStats(COURSES.perf),
     },
     { id: "js", name: "JavaScript", tagline: "Замыкания, this, event loop, DOM", about: "Язык и работа со страницей: асинхронность, события DOM, Web API." },

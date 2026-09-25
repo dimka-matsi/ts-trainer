@@ -2,7 +2,7 @@ import type { WebLesson } from "../../../course/types";
 
 export const lesson: WebLesson = {
   id: "srv5",
-  region: 2,
+  region: 3,
   title: "Масштабирование и очереди",
   q: "Как сервер выдерживает рост нагрузки? Зачем очереди задач и ограничение частоты запросов?",
   answer:

@@ -2,7 +2,7 @@ import type { WebLesson } from "../../../course/types";
 
 export const lesson: WebLesson = {
   id: "ui1",
-  region: 3,
+  region: 4,
   title: "Главный поток и длинные задачи",
   q: "Почему страница «зависает» и не реагирует на клики? Что такое длинная задача и как её разбить?",
   answer:

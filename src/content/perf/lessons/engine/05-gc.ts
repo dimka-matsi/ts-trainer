@@ -2,7 +2,7 @@ import type { WebLesson } from "../../../course/types";
 
 export const lesson: WebLesson = {
   id: "js5",
-  region: 4,
+  region: 6,
   title: "Сборщик мусора",
   q: "Как работает сборщик мусора в V8? Что такое поколения и почему бывают паузы?",
   answer:

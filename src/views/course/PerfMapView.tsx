@@ -46,7 +46,7 @@ export function PerfMapView({ course }: { course: Course }) {
         <div>
           <p className="eyebrow">// отчёт о скорости</p>
           <h1>Оптимизация</h1>
-          <p className="lead">Как сделать сайт быстрым и как это доказать цифрами: измерение, сеть и загрузка, сервер, рендеринг и интерфейс, JS-движок. Опирается на «Браузер»: механизмы там, здесь — приёмы.</p>
+          <p className="lead">Как сделать сайт быстрым и как это доказать цифрами: измерение, сеть и загрузка, сборка, сервер, интерфейс, React, JS-движок и разбор задач с собеседований. Опирается на «Браузер»: механизмы там, здесь — приёмы.</p>
           <div className="actions">
             {now && (
               <button type="button" className="btn" onClick={() => navigate({ view: "course-lesson", course: course.id, id: now.id })}>

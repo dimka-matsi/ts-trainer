@@ -6,7 +6,7 @@
 
 - **TypeScript** (`#/ts`): уроки по порядку TypeScript Handbook, песочница с настоящим компилятором, упражнения проверяет компилятор. Пиксельный стиль в синем цвете TS.
 - **Браузер** (`#/web`): как устроены сеть и браузер — IP и порты, TCP/UDP, DNS, HTTP и HTTPS, cookies, HTTP-кэш, CDN, CORS, безопасность, устройство браузера, отрисовка, реальное время. Стиль DevTools: карта как вкладка Network, урок — панель с вкладками, схема обмена по шагам и вкладка «Сеть» с водопадом.
-- **Оптимизация** (`#/perf`): как сделать быстрее и как это измерить — измерение (Core Web Vitals, профилирование, бюджеты), сеть и загрузка, сервер, рендеринг и интерфейс, JS-движок. Опирается на «Браузер». Стиль отчёта Lighthouse: карта — категории с круговыми шкалами и уроки-аудиты.
+- **Оптимизация** (`#/perf`): как сделать быстрее и как это измерить — измерение (Core Web Vitals, профилирование, бюджеты), сеть и загрузка, сборка и бандл (webpack, Vite, чанки), сервер, рендеринг и интерфейс, React, JS-движок и в конце разбор типовых задач собеседования («сайт тормозит», лента с картинками, медленный старт SPA, тяжёлая таблица). Опирается на «Браузер». Стиль отчёта Lighthouse: карта — категории с круговыми шкалами и уроки-аудиты.
 - В «Браузере» и «Оптимизации» **нет JavaScript-кода** ни в теории, ни в заданиях (verify это проверяет). Устройство JS-движка объясняется схемами и словами.
 - Граница между направлениями: каждое отвечает на один вопрос. «Браузер» — как это работает (механизмы), «Оптимизация» — как ускорить и измерить (приёмы). Новую большую тему сначала относят к направлению, а если это другой вопрос — заводят новое направление.
 - JavaScript, React, Node.js, Vue — на хабе как «скоро».
@@ -56,7 +56,7 @@ scripts/verify-lessons.ts   проверка контента в Node
 ```
 src/content/course/  types.ts (Course, makeCourse, WebLesson, задания, Flow, NetRequest), http.ts (msg — HTTP-сообщение с верным Content-Length)
 src/content/web/     курс «Браузер»: lessons/<регион>/ (net, dns, http, tls, cookies, cache, cdn, cors, security, browser, render, realtime), index.ts
-src/content/perf/    курс «Оптимизация»: lessons/<регион>/ (metrics, network, server, ui, engine), index.ts
+src/content/perf/    курс «Оптимизация»: lessons/<регион>/ (metrics, network, bundle, server, ui, react, engine, cases), index.ts
 src/content/courses.ts   COURSES: все курсы по id
 src/state/coursePath.ts  порядок уроков курса
 src/views/course/    CourseHeader, CourseScreen, CourseLessonView, WebMapView (карта «Браузера»), PerfMapView (карта «Оптимизации»), NetVisuals, WebTasks

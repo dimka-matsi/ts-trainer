@@ -2,7 +2,7 @@ import type { WebLesson } from "../../../course/types";
 
 export const lesson: WebLesson = {
   id: "ui5",
-  region: 3,
+  region: 4,
   title: "Виртуальный скролл",
   q: "Как показать список из 100 000 строк и не повесить страницу? Как работает виртуальный скролл?",
   answer:

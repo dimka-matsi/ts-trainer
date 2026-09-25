@@ -2,7 +2,7 @@ import type { WebLesson } from "../../../course/types";
 
 export const lesson: WebLesson = {
   id: "srv2",
-  region: 2,
+  region: 3,
   title: "Кэш на сервере",
   q: "Какие бывают кэши на сервере и в чём главная сложность кэширования?",
   answer:
