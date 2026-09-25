@@ -6,7 +6,7 @@ export const lesson: WebLesson = {
   title: "Движки браузеров",
   q: "Что такое Blink, WebKit и Gecko и почему сайт может выглядеть в браузерах по-разному?",
   answer:
-    "Движок — часть браузера, которая превращает HTML и CSS в картинку. Их всего три: Blink (Chrome, Edge, Opera, Яндекс Браузер), WebKit (Safari) и Gecko (Firefox). У каждого свой движок JavaScript: V8, JavaScriptCore и SpiderMonkey. Движки по-разному и в разное время реализуют стандарты, поэтому новые возможности появляются неодновременно, а старые ошибки различаются. Проверяют поддержку на caniuse.com и по статусу Baseline и тестируют хотя бы в двух движках.",
+    "Движок — часть браузера, которая превращает HTML и CSS в картинку. Основных движков три: Blink (Chrome, Edge, Opera, Яндекс Браузер), WebKit (Safari) и Gecko (Firefox). У каждого свой движок JavaScript: V8, JavaScriptCore и SpiderMonkey. Движки по-разному и в разное время реализуют стандарты, поэтому новые возможности появляются неодновременно, а старые ошибки различаются. Проверяют поддержку на caniuse.com и по статусу Baseline и тестируют хотя бы в двух движках.",
   theory: {
     p: [
       "Браузер — это интерфейс плюс движок. Движок отрисовки разбирает HTML и CSS, строит раскладку и рисует. Все Chromium-браузеры (Chrome, Edge, Opera, Яндекс Браузер, Samsung Internet) используют Blink. Safari — WebKit, из которого Blink вырос в 2013 году. Firefox — Gecko. Отдельно движки JavaScript: V8 в Blink, JavaScriptCore в WebKit, SpiderMonkey в Gecko.",

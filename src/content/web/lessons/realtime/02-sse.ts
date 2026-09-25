@@ -24,7 +24,8 @@ export const lesson: WebLesson = {
         start: 0,
         timing: [["Очередь", 1], ["Ожидание ответа", 45], ["Загрузка", 30000]],
         request: msg("GET /api/events HTTP/2", [[":authority", "shop.ru"], ["accept", "text/event-stream"], ["last-event-id", "41"]]),
-        response: msg("HTTP/2 200", [["cache-control", "no-store"]], { type: "text/event-stream; charset=utf-8", text: STREAM }),
+        // Поток не закрывается, длина заранее неизвестна, поэтому content-length нет.
+        response: { line: "HTTP/2 200", headers: [["content-type", "text/event-stream; charset=utf-8"], ["cache-control", "no-store"]], body: STREAM },
       },
     ],
     keys: [
