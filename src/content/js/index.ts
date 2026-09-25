@@ -4,6 +4,7 @@ import { lessons as arrays } from "./lessons/arrays";
 import { lessons as async } from "./lessons/async";
 import { lessons as dom } from "./lessons/dom";
 import { lessons as functions } from "./lessons/functions";
+import { lessons as modules } from "./lessons/modules";
 import { lessons as objects } from "./lessons/objects";
 import { lessons as scope } from "./lessons/scope";
 import { lessons as values } from "./lessons/values";
@@ -14,7 +15,7 @@ import { lessons as webapi } from "./lessons/webapi";
  * объекты и прототипы → массивы и коллекции → асинхронность → DOM и события → Web API → модули и современный JS →
  * задачи live coding. Код заданий выполняется по-настоящему: в браузере — в воркере, в verify — в Node.
  */
-const REGION_LESSONS: WebLesson[][] = [values, scope, functions, objects, arrays, async, dom, webapi];
+const REGION_LESSONS: WebLesson[][] = [values, scope, functions, objects, arrays, async, dom, webapi, modules];
 
 const REGIONS: WebRegion[] = [
   { name: "Типы и значения", kind: "lessons", desc: "Восемь типов и `typeof`, примитивы и ссылки, приведение типов, `==` и `===`, числа и `0.1 + 0.2`, копирование объектов." },
@@ -25,7 +26,7 @@ const REGIONS: WebRegion[] = [
   { name: "Асинхронность и event loop", kind: "lessons", desc: "Стек вызовов и event loop, промисы, микро- и макрозадачи, `async`/`await`, комбинаторы промисов." },
   { name: "DOM и события", kind: "lessons", desc: "Дерево DOM и поиск элементов, всплытие и погружение, делегирование, опции `addEventListener`, загрузка страницы." },
   { name: "Web API", kind: "lessons", desc: "`fetch` и отмена запросов, хранилища, таймеры и `requestAnimationFrame`, observers, Web Workers." },
-  { name: "Модули и современный JS", kind: "soon", desc: "ES-модули и CommonJS, строгий режим, обработка ошибок, новые возможности ES2020–ES2025." },
+  { name: "Модули и современный JS", kind: "lessons", desc: "ES-модули и CommonJS, строгий режим, обработка ошибок, новые возможности ES2020–ES2025." },
   { name: "Live coding", kind: "soon", desc: "Задачи, которые пишут на собеседовании: debounce, throttle, deepClone, deepEqual, flatten, memoize, Promise.all, EventEmitter, curry, retry." },
 ];
 
