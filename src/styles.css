@@ -525,6 +525,8 @@ button.brand{background:none; border:0; padding:0; color:inherit; font:inherit; 
 .dt-htab[aria-current="true"]{color:var(--ink); border-bottom-color:var(--pipe)}
 .dt-htab .badge{background:var(--pipe); color:var(--btn-ink)}
 .dt-theme{border:0; background:none; color:var(--ink-soft); font-size:15px; cursor:pointer; padding:0 6px}
+.dt-search{display:inline-grid; place-items:center}
+.dt-theme:hover,.dt-theme:focus-visible{color:var(--ink)}
 .dt-back-short{display:none}
 @media (max-width:640px){ .dt-back-long{display:none} .dt-back-short{display:inline} .dt-brand small{display:none} .dt-toolbar-in{gap:6px; padding:0 10px} .dt-htab{padding:0 8px} }
 
