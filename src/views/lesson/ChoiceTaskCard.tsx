@@ -27,6 +27,7 @@ export function ChoiceTaskCard({ task, onSolved }: Props) {
   return (
     <>
       {task.type === "predict" && <CodeBlock code={task.code} />}
+      {task.type === "quiz" && task.code && <CodeBlock code={task.code} />}
       <p className="tq"><Md text={task.q} /></p>
       <div className="opts">
         {task.opts.map((o, j) => (

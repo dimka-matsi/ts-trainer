@@ -7,7 +7,7 @@ import { Md } from "../ui/Code";
 
 type TrackId = "ts" | CourseId;
 
-const TRACK_NAME: Record<TrackId, string> = { ts: "TypeScript", web: "Браузер", sec: "Безопасность", perf: "Оптимизация" };
+const TRACK_NAME: Record<TrackId, string> = { ts: "TypeScript", web: "Браузер", sec: "Безопасность", perf: "Оптимизация", react: "React" };
 const LEVEL_NAME = { junior: "junior", middle: "middle", senior: "senior" } as const;
 
 interface Item { card: Flashcard; track: TrackId }

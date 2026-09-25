@@ -2,10 +2,10 @@ import type { CourseId } from "../content/course/types";
 import { navigate } from "../state/route";
 
 /** Плитки хаба в том же порядке, что карточки на главном экране. */
-const TILES: ("ts" | CourseId)[] = ["ts", "web", "sec", "perf"];
+const TILES: ("ts" | CourseId)[] = ["ts", "web", "sec", "perf", "react"];
 
 /**
- * Кнопка возврата на хаб: мини-копия главного экрана из четырёх плиток цветов направлений.
+ * Кнопка возврата на хаб: мини-копия главного экрана из плиток цветов направлений.
  * Плитка текущего направления горит, остальные приглушены; при наведении загораются все и расходятся.
  */
 export function HubButton({ current }: { current: "ts" | CourseId }) {

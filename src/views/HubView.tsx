@@ -7,6 +7,7 @@ import { navigate, type Route } from "../state/route";
 import { setTheme, useTheme } from "../state/theme";
 import { courseCurrent, courseLessonDone } from "../state/coursePath";
 import { HubQuestion } from "./HubQuestion";
+import { Atom } from "../ui/Atom";
 
 interface TrackCard {
   id: string;
@@ -22,7 +23,7 @@ interface TrackCard {
 }
 
 /** Ширина живых карточек в сетке из 12 колонок: главная широкая, дальше «ёлочкой». */
-const SPANS = [7, 5, 5, 7];
+const SPANS = [7, 5, 4, 4, 4];
 
 /** Главный экран: выбор направления. У каждого направления своя карта и свой стиль. */
 export function HubView() {
@@ -60,7 +61,11 @@ export function HubView() {
       ...courseStats(COURSES.perf),
     },
     { id: "js", name: "JavaScript", tagline: "Замыкания, this, event loop, DOM", about: "Язык и работа со страницей: асинхронность, события DOM, Web API." },
-    { id: "react", name: "React", tagline: "Компоненты, хуки, рендеринг", about: "Состояние, эффекты, мемоизация, архитектура компонентов." },
+    {
+      id: "react", name: "React", tagline: "Состояние: Context, Redux, Zustand, TanStack Query",
+      about: "Начинаем с управления состоянием: useState и useReducer, Context и его ререндеры, Redux и Redux Toolkit, Zustand, MobX и Effector, серверное состояние и выбор инструмента под проект. С кодом и разбором, что и почему перерисуется.",
+      ...courseStats(COURSES.react),
+    },
     { id: "node", name: "Node.js", tagline: "Сервер, потоки, модули", about: "Event loop в Node, файлы и потоки, HTTP-сервер, npm." },
     { id: "vue", name: "Vue", tagline: "Реактивность и компоненты", about: "Composition API, реактивность, шаблоны и маршрутизация." },
   ];
@@ -91,7 +96,7 @@ export function HubView() {
           return (
             <button key={t.id} type="button" className={`hub-card hc-${t.id}`} data-span={SPANS[i] ?? 6}
               onClick={() => t.route && navigate(t.route)}>
-              <span className="hc-art" aria-hidden="true" />
+              {t.id === "react" ? <Atom className="hc-art" size={46} /> : <span className="hc-art" aria-hidden="true" />}
               <span className="hc-name">{t.name}</span>
               <span className="hc-tag">{t.tagline}</span>
               <span className="hc-about">{t.about}</span>

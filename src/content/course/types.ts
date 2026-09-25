@@ -68,6 +68,8 @@ export interface WebLesson {
     p: string[];
     flow?: Flow;
     requests?: NetRequest[];
+    /** Пример кода к теории. Только в курсах с кодом (`withCode`), verify проверяет синтаксис. */
+    code?: string;
     keys: string[];
   };
   tasks: WebTask[];
@@ -82,7 +84,7 @@ export interface WebRegion {
 }
 
 /** Направления с уроками этого формата. id совпадает с началом адреса: `#/web`, `#/perf`. */
-export type CourseId = "web" | "perf" | "sec";
+export type CourseId = "web" | "perf" | "sec" | "react";
 
 /** Курс: регионы, уроки по порядку прохождения, карточки и база ключей экзаменов в общем прогрессе. */
 export interface Course {
@@ -94,10 +96,12 @@ export interface Course {
   flashcards: Flashcard[];
   /** Ключ экзамена региона: examBase + индекс региона. У TypeScript ключи 0…10. */
   examBase: number;
+  /** В курсе можно показывать код: в теории и в вопросах. В остальных курсах кода нет совсем. */
+  withCode: boolean;
 }
 
 /** Собирает курс: уроки идут регион за регионом, индекс массива — индекс региона. */
-export function makeCourse(id: CourseId, name: string, regions: WebRegion[], byRegion: WebLesson[][], extraCards: Flashcard[], cardPrefix: string, examBase: number): Course {
+export function makeCourse(id: CourseId, name: string, regions: WebRegion[], byRegion: WebLesson[][], extraCards: Flashcard[], cardPrefix: string, examBase: number, opts: { withCode?: boolean } = {}): Course {
   const lessons = byRegion.flat();
   return {
     id,
@@ -110,5 +114,6 @@ export function makeCourse(id: CourseId, name: string, regions: WebRegion[], byR
       ...extraCards,
     ],
     examBase,
+    withCode: opts.withCode ?? false,
   };
 }

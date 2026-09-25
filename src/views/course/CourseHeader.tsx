@@ -4,6 +4,7 @@ import { courseLessonUnlocked } from "../../state/coursePath";
 import { cardDue, useProgress } from "../../state/progress";
 import { navigate, type Route } from "../../state/route";
 import { setTheme, useTheme } from "../../state/theme";
+import { Atom } from "../../ui/Atom";
 import { HubButton } from "../../ui/HubButton";
 import { SearchDialog, type SearchSource } from "../../ui/SearchDialog";
 
@@ -28,7 +29,7 @@ export function CourseHeader({ course, route }: { course: Course; route: Route }
     cards: course.flashcards,
     unlocked: (p, id) => { const l = course.byId[id]; return !!l && courseLessonUnlocked(course, p, l); },
     go: (id) => navigate({ view: "course-lesson", course: course.id, id }),
-    placeholder: course.id === "web" ? "Например: DNS, keep-alive, ETag" : course.id === "sec" ? "Например: XSS, SameSite, CSP" : "Например: LCP, чанки, React.memo",
+    placeholder: course.id === "web" ? "Например: DNS, keep-alive, ETag" : course.id === "sec" ? "Например: XSS, SameSite, CSP" : course.id === "react" ? "Например: Context, useSelector, staleTime" : "Например: LCP, чанки, React.memo",
   }), [course]);
 
   // «/» открывает поиск, если фокус не в поле ввода.
@@ -53,7 +54,7 @@ export function CourseHeader({ course, route }: { course: Course; route: Route }
     <header className="dt-toolbar">
       <div className="dt-toolbar-in">
         <HubButton current={course.id} />
-        <span className="dt-brand"><i className="dt-brand-icon" aria-hidden="true" />{course.name}<small>{where}</small></span>
+        <span className="dt-brand">{course.id === "react" ? <Atom className="dt-brand-atom" /> : <i className="dt-brand-icon" aria-hidden="true" />}{course.name}<small>{where}</small></span>
         <nav className="dt-htabs" aria-label="Разделы">
           {tab({ view: "course", course: course.id }, "Карта", route.view === "course" || route.view === "course-lesson")}
           {tab({ view: "course-cards", course: course.id }, "Карточки", route.view === "course-cards" || route.view === "course-interview", due)}

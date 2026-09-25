@@ -100,6 +100,7 @@ export function ExamView({ cfg }: { cfg: ExamConfig }) {
             {mistakes.map(({ q, chosen }, j) => (
               <article key={j} className="task">
                 {q.task.type === "predict" && <CodeBlock code={q.task.code} />}
+        {q.task.type === "quiz" && q.task.code && <CodeBlock code={q.task.code} />}
                 <p className="tq"><Md text={q.task.q} /></p>
                 <p className="where">Твой ответ: <Opt task={q.task} i={chosen} /> · правильно: <Opt task={q.task} i={q.task.a} /></p>
                 <p><Md text={q.task.why} /></p>
@@ -138,6 +139,7 @@ export function ExamView({ cfg }: { cfg: ExamConfig }) {
       <ExamBar run={run} />
       <article className="task exam-q">
         {q.task.type === "predict" && <CodeBlock code={q.task.code} />}
+        {q.task.type === "quiz" && q.task.code && <CodeBlock code={q.task.code} />}
         <p className="tq"><Md text={q.task.q} /></p>
         <div className="opts">
           {q.order.map((j) => (

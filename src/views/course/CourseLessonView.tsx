@@ -4,7 +4,7 @@ import { useProgress } from "../../state/progress";
 import { navigate } from "../../state/route";
 import { useToast } from "../../state/toast";
 import { courseLessonAfter, courseLessonDone, courseRegionDone } from "../../state/coursePath";
-import { Md } from "../../ui/Code";
+import { CodeBlock, Md } from "../../ui/Code";
 import { ChoiceTaskCard } from "../lesson/ChoiceTaskCard";
 import { FlowDiagram, NetworkPanel } from "./NetVisuals";
 import { MatchTaskCard, OrderTaskCard, SortTaskCard } from "./WebTasks";
@@ -60,6 +60,7 @@ export function CourseLessonView({ course, lesson }: { course: Course; lesson: W
           {panel === "theory" && (
             <div className="tbody wl-theory">
               {lesson.theory.p.map((p, i) => <p key={i}><Md text={p} /></p>)}
+              {lesson.theory.code && <CodeBlock code={lesson.theory.code} />}
               <div className="keys"><b>Главное</b><ul>{lesson.theory.keys.map((k, i) => <li key={i}><Md text={k} /></li>)}</ul></div>
               {visual && <div className="actions"><button type="button" className="btn" onClick={() => setPanel(visual)}>{visual === "flow" ? "Разобрать по шагам на схеме" : "Открыть вкладку «Сеть»"}</button></div>}
             </div>

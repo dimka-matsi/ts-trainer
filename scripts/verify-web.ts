@@ -5,9 +5,10 @@
  *  - схемы и запросы: участники существуют, стартовые строки и коды ответа — настоящие,
  *    фазы тайминга идут в порядке DevTools, у HTTP/1.1 есть Host, у 304 нет тела,
  *    `SameSite=None` только вместе с `Secure`;
- *  - в разделе нет JavaScript: только сеть и протоколы;
+ *  - в курсах без кода нет JavaScript; в курсах с кодом (React) каждый пример кода синтаксически верен;
  *  - порядок тем: понятие не встречается раньше урока, где его объясняют.
  */
+import ts from "typescript";
 import { LESSONS } from "../src/content/lessons";
 import { COURSES } from "../src/content/courses";
 import type { Course } from "../src/content/course/types";
@@ -105,6 +106,23 @@ const CONCEPTS: { name: string; re: RegExp; at: string }[] = [
   { name: "встраивание функций", re: /встраивани\S* функци|inlining/i, at: "js4" },
   { name: "поколения GC", re: /Scavenger|поколени/i, at: "js5" },
   { name: "утечки памяти", re: /WeakMap|detached|снимок кучи|снимки кучи/i, at: "js6" },
+  // React: управление состоянием
+  { name: "useReducer", re: /useReducer/, at: "st2" },
+  { name: "Context", re: /useContext|createContext/, at: "ctx1" },
+  { name: "Redux", re: /\bRedux\b/, at: "rdx1" },
+  { name: "селекторы Redux", re: /useSelector|createSelector|shallowEqual/, at: "rdx2" },
+  { name: "middleware", re: /middleware|\bthunk|\bsaga/i, at: "rdx3" },
+  { name: "API Redux Toolkit", re: /createSlice|configureStore|\bImmer\b/, at: "rdx4" },
+  { name: "createAsyncThunk и нормализация", re: /createAsyncThunk|createEntityAdapter|нормализ/i, at: "rdx5" },
+  { name: "useSyncExternalStore", re: /useSyncExternalStore|tearing/i, at: "ext1" },
+  { name: "Zustand", re: /Zustand|useShallow/, at: "zs1" },
+  { name: "MobX", re: /MobX|makeAutoObservable/, at: "mbx1" },
+  { name: "атомы", re: /Jotai|Recoil|useAtom/, at: "atm1" },
+  { name: "Effector", re: /Effector|useUnit/, at: "eff1" },
+  { name: "TanStack Query", re: /TanStack|React Query|useQuery|\bSWR\b/, at: "sq1" },
+  { name: "staleTime и gcTime", re: /staleTime|gcTime/, at: "sq2" },
+  { name: "оптимистичное обновление", re: /оптимистичн|useMutation|invalidateQueries/i, at: "sq3" },
+  { name: "API RTK Query", re: /createApi|providesTags|invalidatesTags|keepUnusedDataFor/, at: "sq4" },
 ];
 
 /** Признаки JavaScript: в «Браузере» его быть не должно. */
@@ -125,7 +143,7 @@ const PHASES = ["Очередь", "DNS", "TCP", "TLS", "Ожидание отв�
 const METHODS = /^(GET|HEAD|POST|PUT|PATCH|DELETE|OPTIONS) \S+ HTTP\/(1\.0|1\.1|2|3)$/;
 
 const taskText = (t: WebTask) =>
-  t.type === "quiz" ? [t.q, ...t.opts, t.why, t.example ?? ""]
+  t.type === "quiz" ? [t.q, ...t.opts, t.why, t.code ?? "", t.example ?? ""]
     : t.type === "order" ? [t.q, ...t.items, t.why]
     : t.type === "match" ? [t.q, ...t.pairs.flat(), t.why]
     : [t.q, ...t.groups, ...t.items.map(([s]) => s), t.why];
@@ -135,7 +153,7 @@ const messageText = (m: HttpMessage) => [m.line, ...m.headers.map(([k, v]) => `$
 /** Текст урока, который читает ученик: теория, схема и задания. */
 function proseText(l: WebLesson): string[] {
   const flow = l.theory.flow ? [...l.theory.flow.actors, ...l.theory.flow.steps.flatMap((s) => [s.label, s.note ?? ""])] : [];
-  return [l.title, l.q, l.answer, ...l.theory.p, ...l.theory.keys, ...flow, ...l.tasks.flatMap(taskText)];
+  return [l.title, l.q, l.answer, ...l.theory.p, l.theory.code ?? "", ...l.theory.keys, ...flow, ...l.tasks.flatMap(taskText)];
 }
 
 /** Весь текст урока вместе с HTTP-сообщениями вкладки «Сеть». */
@@ -143,6 +161,25 @@ function lessonText(l: WebLesson): string[] {
   const reqs = (l.theory.requests ?? []).flatMap((r) => [r.name, ...messageText(r.request), ...messageText(r.response)]);
   return [...proseText(l), ...reqs];
 }
+
+/** Синтаксические ошибки примера кода (TSX). Типы не проверяем: библиотек вроде Redux в проекте нет. */
+function syntaxErrors(code: string): string[] {
+  const out = ts.transpileModule(code, {
+    fileName: "example.tsx",
+    reportDiagnostics: true,
+    compilerOptions: { jsx: ts.JsxEmit.Preserve, target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext },
+  });
+  return (out.diagnostics ?? []).map((d) => ts.flattenDiagnosticMessageText(d.messageText, " "));
+}
+
+/** Все примеры кода урока: теория, код к вопросам и к объяснениям. */
+const lessonCode = (l: WebLesson): [string, string][] => [
+  ...(l.theory.code ? [["теория", l.theory.code] as [string, string]] : []),
+  ...l.tasks.flatMap((t, i): [string, string][] => t.type !== "quiz" ? [] : [
+    ...(t.code ? [[`задание ${i + 1}`, t.code] as [string, string]] : []),
+    ...(t.example ? [[`задание ${i + 1}, пример`, t.example] as [string, string]] : []),
+  ]),
+];
 
 const header = (m: HttpMessage, name: string) => m.headers.filter(([k]) => k.toLowerCase() === name.toLowerCase()).map(([, v]) => v);
 
@@ -232,10 +269,16 @@ function checkCourse(course: Course, fail: (msg: string) => void) {
     }
     (requests ?? []).forEach((r) => checkRequest(r, `${tag} запрос ${r.name}`, fail));
 
-    const texts = lessonText(lesson);
-    for (const text of texts) {
-      const m = JS.exec(text);
-      if (m) fail(`${tag}: в «Браузере» не должно быть JavaScript: …${text.slice(Math.max(0, m.index - 30), m.index + 30)}…`);
+    if (course.withCode) {
+      for (const [where, code] of lessonCode(lesson)) {
+        for (const e of syntaxErrors(code)) fail(`${tag}, ${where}: ошибка синтаксиса в коде: ${e}`);
+      }
+    } else {
+      if (lessonCode(lesson).length) fail(`${tag}: в курсе «${course.name}» нет примеров кода`);
+      for (const text of lessonText(lesson)) {
+        const m = JS.exec(text);
+        if (m) fail(`${tag}: в курсе «${course.name}» не должно быть JavaScript: …${text.slice(Math.max(0, m.index - 30), m.index + 30)}…`);
+      }
     }
     // Порядок тем проверяем по тексту урока. Заголовки в запросах вкладки «Сеть» — снимок настоящего обмена,
     // в нём могут быть ещё не пройденные заголовки, и это нормально.
@@ -278,8 +321,9 @@ function checkCourse(course: Course, fail: (msg: string) => void) {
     ids.add(card.id);
     questions.add(card.q);
     if (!WEB_REGIONS[card.region]) fail(`карточка ${card.id}: нет региона ${card.region}`);
-    const m = JS.exec([card.q, card.a, card.code ?? ""].join("\n"));
-    if (m) fail(`карточка ${card.id}: в «Браузере» не должно быть JavaScript`);
+    if (course.withCode) {
+      for (const e of card.code ? syntaxErrors(card.code) : []) fail(`карточка ${card.id}: ошибка синтаксиса в коде: ${e}`);
+    } else if (JS.exec([card.q, card.a, card.code ?? ""].join("\n"))) fail(`карточка ${card.id}: в курсе «${course.name}» не должно быть JavaScript`);
   }
   return { lessons: WEB_LESSONS.length, cards: WEB_FLASHCARDS.length };
 }
