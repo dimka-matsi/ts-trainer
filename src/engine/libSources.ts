@@ -12,10 +12,16 @@ import promise from "typescript/lib/lib.es2015.promise.d.ts?raw";
 import arrayInclude from "typescript/lib/lib.es2016.array.include.d.ts?raw";
 import object2017 from "typescript/lib/lib.es2017.object.d.ts?raw";
 import string2017 from "typescript/lib/lib.es2017.string.d.ts?raw";
-import { buildLib } from "./lib";
+import reactIndex from "/node_modules/@types/react/index.d.ts?raw";
+import reactGlobal from "/node_modules/@types/react/global.d.ts?raw";
+import reactJsxRuntime from "/node_modules/@types/react/jsx-runtime.d.ts?raw";
+import { buildLib, reactExtras } from "./lib";
 
 // Порядок совпадает с LIB_FILES в lib.ts.
 export const LIB = buildLib([
   decorators, decoratorsLegacy, es5, symbol, symbolWellknown, iterable, generator,
   core, collection, promise, arrayInclude, object2017, string2017,
 ]);
+
+/** Типы React для уроков «TS и React»: читаются только при импорте `react` или JSX. */
+export const REACT_EXTRAS = reactExtras((f) => (f === "index.d.ts" ? reactIndex : f === "global.d.ts" ? reactGlobal : reactJsxRuntime));

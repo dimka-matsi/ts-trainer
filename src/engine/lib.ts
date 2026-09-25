@@ -43,6 +43,30 @@ export function buildLib(sources: readonly string[]): string {
   return stripped.join("\n") + ENV_DECLARATIONS;
 }
 
+/**
+ * Типы React для уроков «TS и React»: настоящие файлы пакета @types/react. Они не входят в программу сразу,
+ * а подгружаются, только когда код импортирует `react` или использует JSX в файле `.tsx`.
+ */
+export const REACT_TYPE_FILES = ["index.d.ts", "global.d.ts", "jsx-runtime.d.ts"] as const;
+export const REACT_TYPES_DIR = "/node_modules/@types/react/";
+
+/**
+ * Заглушка вместо пакета csstype (900 КБ): React берёт из него только тип CSS-свойств.
+ * Стили в уроках не разбираются, поэтому достаточно словаря свойств.
+ */
+export const CSSTYPE_STUB = `export interface Properties<TLength = (string & {}) | 0, TTime = string & {}> {
+  [property: string]: string | number | undefined;
+}
+export interface PropertiesHyphen<TLength = (string & {}) | 0, TTime = string & {}> extends Properties<TLength, TTime> {}
+`;
+
+/** Файлы, которые компилятор может прочитать по запросу: типы React и заглушка csstype. */
+export function reactExtras(read: (file: (typeof REACT_TYPE_FILES)[number]) => string): Record<string, string> {
+  const out: Record<string, string> = { "/node_modules/csstype/index.d.ts": CSSTYPE_STUB };
+  for (const f of REACT_TYPE_FILES) out[REACT_TYPES_DIR + f] = read(f);
+  return out;
+}
+
 /** Хелперы для тестов на типы, доступны в каждом упражнении. */
 export const PRELUDE = `type Equal<X, Y> = (<T>() => T extends X ? 1 : 2) extends (<T>() => T extends Y ? 1 : 2) ? true : false;
 type Expect<T extends true> = T;

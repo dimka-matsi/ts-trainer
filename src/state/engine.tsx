@@ -14,9 +14,9 @@ export function EngineProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let alive = true;
     Promise.all([import("typescript"), import("../engine/libSources")])
-      .then(([mod, { LIB }]) => {
+      .then(([mod, { LIB, REACT_EXTRAS }]) => {
         const ts = ((mod as { default?: TsApi }).default ?? mod) as TsApi;
-        if (alive) setState({ engine: createEngine(ts, LIB), status: "ready" });
+        if (alive) setState({ engine: createEngine(ts, LIB, REACT_EXTRAS), status: "ready" });
       })
       .catch((e: unknown) => {
         console.error("Не удалось загрузить компилятор", e);

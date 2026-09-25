@@ -13,7 +13,7 @@ import { createRequire } from "node:module";
 import { dirname, join } from "node:path";
 import ts from "typescript";
 import { createEngine } from "../src/engine/engine";
-import { buildLib, LIB_FILES } from "../src/engine/lib";
+import { buildLib, LIB_FILES, reactExtras } from "../src/engine/lib";
 import { checkCode, normalizeType, probeType } from "../src/engine/check";
 import { LESSONS } from "../src/content/lessons";
 import { checkOrder } from "./verify-order";
@@ -30,7 +30,8 @@ import { analyze, simulate } from "../src/sorter/logic";
 const require = createRequire(import.meta.url);
 const libDir = dirname(require.resolve("typescript/lib/lib.es5.d.ts"));
 const lib = buildLib(LIB_FILES.map((f) => readFileSync(join(libDir, f), "utf8")));
-const engine = createEngine(ts, lib);
+const reactDir = dirname(require.resolve("@types/react/package.json"));
+const engine = createEngine(ts, lib, reactExtras((f) => readFileSync(join(reactDir, f), "utf8")));
 
 let failures = 0;
 const fail = (msg: string) => { failures++; console.log(`  ✗ ${msg}`); };

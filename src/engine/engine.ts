@@ -87,7 +87,10 @@ export function splitFiles(code: string): Section[] {
   });
 }
 
-export function createEngine(ts: TsApi, lib: string): Engine {
+/**
+ * @param extras файлы, которые не входят в программу, но их можно прочитать по импорту (типы React).
+ */
+export function createEngine(ts: TsApi, lib: string, extras: Record<string, string> = {}): Engine {
   const files = new Map<string, { version: number; text: string }>([
     ["/lib.d.ts", { version: 1, text: lib }],
     ["/prelude.d.ts", { version: 1, text: PRELUDE }],
@@ -102,6 +105,7 @@ export function createEngine(ts: TsApi, lib: string): Engine {
     target: ts.ScriptTarget.ES2017,
     module: ts.ModuleKind.ESNext,
     moduleResolution: ts.ModuleResolutionKind.Bundler,
+    jsx: ts.JsxEmit.ReactJSX,
     noEmit: true,
     allowUnreachableCode: true,
     useDefineForClassFields: true,
@@ -110,16 +114,16 @@ export function createEngine(ts: TsApi, lib: string): Engine {
   let flagsKey = "{}";
   const host: TS.LanguageServiceHost = {
     getScriptFileNames: () => [...files.keys()],
-    getScriptVersion: (f) => String(files.get(f)?.version ?? 0),
+    getScriptVersion: (f) => String(files.get(f)?.version ?? (f in extras ? 1 : 0)),
     getScriptSnapshot: (f) => {
-      const file = files.get(f);
-      return file ? ts.ScriptSnapshot.fromString(file.text) : undefined;
+      const text = files.get(f)?.text ?? extras[f];
+      return text != null ? ts.ScriptSnapshot.fromString(text) : undefined;
     },
     getCurrentDirectory: () => "/",
     getCompilationSettings: () => options,
     getDefaultLibFileName: () => "/lib.d.ts",
-    fileExists: (f) => files.has(f),
-    readFile: (f) => files.get(f)?.text,
+    fileExists: (f) => files.has(f) || f in extras,
+    readFile: (f) => files.get(f)?.text ?? extras[f],
     readDirectory: () => [],
     directoryExists: () => true,
     getDirectories: () => [],
