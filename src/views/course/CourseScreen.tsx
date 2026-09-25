@@ -16,7 +16,7 @@ const courseExam = (course: Course, region: number): ExamConfig => ({
   regionNo: region + 1,
   pool: course.lessons.filter((l) => l.region === region).flatMap((l) => l.tasks.flatMap((t): ExamTask[] => (t.type === "quiz" ? [t] : []))),
   examKey: course.examBase + region,
-  fromLessons: true,
+  source: "Вопросы берутся из упражнений уроков этого региона",
   back: { view: "course", course: course.id },
   cards: { view: "course-cards", course: course.id },
 });

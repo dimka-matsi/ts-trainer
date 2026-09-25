@@ -23,7 +23,7 @@ export function WebMapView({ course }: { course: Course }) {
     <section className="wm">
       <p className="eyebrow">// браузер → собеседование</p>
       <h1>Браузер</h1>
-      <p className="lead">Как страница попадает в браузер: IP и TCP, DNS, HTTP и HTTPS, cookies, кэш и CDN, CORS, безопасность и отрисовка. Всё, что спрашивают на фронтенд-собеседованиях про сеть. Без кода: схемы обмена, вкладка «Сеть» и задания на понимание.</p>
+      <p className="lead">Как страница попадает в браузер: IP и TCP, DNS, HTTP и cookies, HTTPS и TLS, кэш и CDN, устройство браузера, отрисовка и реальное время. Всё, что спрашивают на фронтенд-собеседованиях про сеть. Без кода: схемы обмена, вкладка «Сеть» и задания на понимание. Защита — в направлении «Безопасность», ускорение — в «Оптимизации».</p>
       <div className="actions hero-actions">
         {now && (
           <button type="button" className="btn" onClick={() => navigate({ view: "course-lesson", course: course.id, id: now.id })}>

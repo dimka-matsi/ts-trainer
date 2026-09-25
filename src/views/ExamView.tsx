@@ -28,7 +28,8 @@ export interface ExamConfig {
   pool: ExamTask[];
   /** Ключ результата в progress.exams. */
   examKey: number;
-  fromLessons: boolean;
+  /** Откуда вопросы — фраза для экрана перед началом. */
+  source: string;
   back: Route;
   cards: Route;
 }
@@ -39,7 +40,7 @@ export const tsExam = (region: number): ExamConfig => ({
   regionNo: region + 1,
   pool: examPool(region),
   examKey: region,
-  fromLessons: LESSONS.some((l) => l.region === region),
+  source: LESSONS.some((l) => l.region === region) ? "Вопросы берутся из упражнений уроков и из отдельного банка экзамена" : "Вопросы берутся из банка экзамена",
   back: { view: "map" },
   cards: { view: "cards" },
 });
@@ -66,7 +67,7 @@ export function ExamView({ cfg }: { cfg: ExamConfig }) {
         {crumb}
         <h1>{cfg.name}</h1>
         <p>{Math.min(EXAM_SIZE, pool.length)} случайных вопросов по темам региона. На каждый вопрос одна попытка, объяснение появляется сразу после ответа. Чтобы сдать, нужно {EXAM_PASS}% правильных.</p>
-        <p className="how">{cfg.fromLessons ? "Вопросы берутся из упражнений уроков и из отдельного банка экзамена" : "Вопросы берутся из банка экзамена"}, всего {pool.length}. Каждая попытка — новый набор и новый порядок вариантов.</p>
+        <p className="how">{cfg.source}, всего {pool.length}. Каждая попытка — новый набор и новый порядок вариантов.</p>
         {best != null && <p className="how">Лучший результат: <b>{best}%</b>{best >= EXAM_PASS ? ", экзамен сдан" : ""}.</p>}
         <div className="actions">
           <button type="button" className="btn" onClick={() => setRun(draw(pool))}>Начать экзамен</button>
