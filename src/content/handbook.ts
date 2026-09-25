@@ -36,7 +36,7 @@ export const HANDBOOK: HandbookSection[] = [
     ["Emitting with Errors", L("b1")],
     ["Explicit Types", L("b3")],
     ["Erased Types", L("b1")],
-    ["Downleveling", T(10, "target, module, lib")],
+    ["Downleveling", L("pj3"), L("pj4")],
     ["Strictness", L("b1")],
     ["noImplicitAny", L("b2")],
     ["strictNullChecks", L("b9")],
@@ -139,8 +139,8 @@ export const HANDBOOK: HandbookSection[] = [
   ...sec("Modules", "2/modules.html", [
     ["How JavaScript Modules are Defined, Non-modules, ES Module Syntax", L("cl10")],
     ["import type, Inline type imports", L("cl10")],
-    ["CommonJS Syntax, CommonJS and ES Modules interop", T(10, "Импорт CommonJS")],
-    ["Module Resolution Options, Module Output Options", T(10, "target, module, lib")],
+    ["CommonJS Syntax, CommonJS and ES Modules interop", L("pj4")],
+    ["Module Resolution Options, Module Output Options", L("pj3"), L("pj4")],
     ["TypeScript namespaces", L("cl13")],
   ]),
   ...sec("Utility Types", "utility-types.html", [
@@ -163,25 +163,25 @@ export const HANDBOOK: HandbookSection[] = [
   ...sec("Namespaces", "namespaces.html", [["Namespaces", L("cl13")]]),
   ...sec("Namespaces and Modules", "namespaces-and-modules.html", [["Namespaces and Modules", L("cl13")]]),
   ...sec("Symbols", "symbols.html", [["Symbols, unique symbol", L("ob9")]]),
-  ...sec("Triple-Slash Directives", "triple-slash-directives.html", [["Triple-Slash Directives", T(10, "Triple-slash директивы")]]),
+  ...sec("Triple-Slash Directives", "triple-slash-directives.html", [["Triple-Slash Directives", L("pj7")]]),
   ...sec("Type Compatibility", "type-compatibility.html", [["Type Compatibility", L("b10"), L("f8")]]),
   ...sec("Type Inference", "type-inference.html", [["Best common type, Contextual Typing", L("b3")]]),
   ...sec("Variable Declaration", "variable-declarations.html", [["let, const, деструктуризация", { skip: "это синтаксис JavaScript, а не TypeScript" }]]),
   ...sec("Modules Reference", "modules/introduction.html", [
-    ["Theory, Guides, Reference", T(10, "target, module, lib")],
-    ["ESM/CJS Interoperability", T(10, "Импорт CommonJS")],
+    ["Theory, Guides, Reference", L("pj3"), L("pj4")],
+    ["ESM/CJS Interoperability", L("pj4")],
   ]),
   ...sec("Declaration Files", "declaration-files/introduction.html", [
     ["Introduction, Declaration Reference, Library Structures, Templates", L("cl11")],
-    ["Do's and Don'ts, Deep Dive, Publishing, Consumption", T(10, "Декларации для библиотеки")],
+    ["Do's and Don'ts, Deep Dive, Publishing, Consumption", L("pj5")],
   ]),
   ...sec("JavaScript", "intro-to-js-ts.html", [
-    ["JS Projects, Type Checking JavaScript Files, JSDoc Reference, .d.ts из .js", T(10, "JSDoc и проверка JS-файлов")],
+    ["JS Projects, Type Checking JavaScript Files, JSDoc Reference, .d.ts из .js", L("pj6")],
   ]),
   ...sec("Project Configuration", "tsconfig-json.html", [
-    ["What is a tsconfig.json, TSConfig Reference, tsc CLI Options", T(10, "Разбор tsconfig")],
-    ["Project References", T(10, "paths и project references")],
-    ["Integrating with Build Tools", T(10, "Компиляция и транспиляция")],
+    ["What is a tsconfig.json, TSConfig Reference, tsc CLI Options", L("pj8")],
+    ["Project References", L("pj7")],
+    ["Integrating with Build Tools", L("pj1")],
     ["Compiler Options in MSBuild, Configuring Watch, Nightly Builds", { skip: "настройка окружения, на собеседованиях не спрашивают" }],
   ]),
   ...sec("Get Started", "typescript-from-scratch.html", [
@@ -189,14 +189,14 @@ export const HANDBOOK: HandbookSection[] = [
   ]),
   ...sec("Tutorials", "migrating-from-javascript.html", [
     ["ASP.NET Core, Gulp, DOM Manipulation, Babel", { skip: "пошаговые инструкции по инструментам" }],
-    ["Migrating from JavaScript", T(10, "JSDoc и проверка JS-файлов")],
+    ["Migrating from JavaScript", L("pj6")],
   ]),
   ...sec("What's New", "release-notes/overview.html", [
     ["satisfies (4.9)", L("b11")],
     ["const type parameters (5.0)", L("g6")],
     ["NoInfer (5.4)", L("u6")],
     ["Inferred type predicates (5.5)", L("n2")],
-    ["erasableSyntaxOnly (5.8)", T(10, "Type stripping")],
+    ["erasableSyntaxOnly (5.8)", L("pj2")],
     ["Остальные заметки к версиям", { skip: "история изменений; важное для собеседований вынесено в уроки выше" }],
   ]),
 ];

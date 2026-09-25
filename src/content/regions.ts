@@ -54,18 +54,7 @@ export const REGIONS: Region[] = [
     { t: "ComponentProps и ref", q: "Как взять пропсы у `button` и пробросить `ref`?" },
     { t: "Полиморфный as-prop", q: "Как типизировать `<Box as=\"a\" href=\"...\">`?" },
   ] },
-  { name: "Компилятор и проект", kind: "soon", desc: "tsconfig, сборка и то, как TypeScript превращается в JavaScript.", topics: [
-    { t: "Компиляция и транспиляция", q: "Чем `tsc` отличается от Babel, SWC и esbuild? Что делает `isolatedModules`?" },
-    { t: "Type stripping", q: "Как Node запускает `.ts` без сборки и что запрещает `erasableSyntaxOnly`?" },
-    { t: "target, module, lib", q: "Что задают `target`, `module`, `moduleResolution` и `lib`?" },
-    { t: "Импорт CommonJS", q: "Зачем `esModuleInterop` и что будет без него?" },
-    { t: "skipLibCheck, declaration, sourceMap", q: "Что делают эти флаги и когда их включать?" },
-    { t: "paths и project references", q: "Как настроить алиасы и разбить монорепу на проекты?" },
-    { t: "Разбор tsconfig", q: "Объясни по строчкам tsconfig своего проекта." },
-    { t: "Декларации для библиотеки", q: "Как опубликовать библиотеку с типами и что такое `types` в package.json?" },
-    { t: "JSDoc и проверка JS-файлов", q: "Как постепенно перевести проект с JavaScript на TypeScript?" },
-    { t: "Triple-slash директивы", q: "Что такое `/// <reference types=\"...\" />` и когда он нужен?" },
-  ] },
+  { name: "Компилятор и проект", kind: "lessons", desc: "`tsc` и транспиляторы, запуск `.ts` в Node, `target` и `lib`, модули и импорт CommonJS, библиотеки с типами, JSDoc и миграция, `paths` и project references, разбор tsconfig и TypeScript 6 и 7." },
 ];
 
 export function regionTopics(ri: number): Topic[] {
