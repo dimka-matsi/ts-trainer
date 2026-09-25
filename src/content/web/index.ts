@@ -8,6 +8,7 @@ import { lessons as net } from "./lessons/net";
 import { lessons as realtime } from "./lessons/realtime";
 import { lessons as render } from "./lessons/render";
 import { lessons as tls } from "./lessons/tls";
+import { FOLLOW_UPS } from "./interview";
 import { makeCourse, type WebLesson, type WebRegion } from "../course/types";
 
 /** Уроки по регионам: индекс в массиве = индекс региона в WEB_REGIONS. */
@@ -57,4 +58,4 @@ const EXTRA_CARDS: Flashcard[] = [
 ];
 
 /** Курс «Браузер»: как устроены сеть и браузер. Карточки уроков — `net-lesson-<id>`, экзамены — 100 + регион. */
-export const WEB = makeCourse("web", "Браузер", REGIONS, REGION_LESSONS, EXTRA_CARDS, "net", 100);
+export const WEB = makeCourse("web", "Браузер", REGIONS, REGION_LESSONS, EXTRA_CARDS, "net", 100, { followUps: FOLLOW_UPS });
