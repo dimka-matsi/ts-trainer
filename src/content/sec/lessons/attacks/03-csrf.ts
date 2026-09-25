@@ -3,7 +3,7 @@ import type { WebLesson } from "../../../course/types";
 
 export const lesson: WebLesson = {
   id: "sec3",
-  region: 8,
+  region: 2,
   title: "Защита от CSRF",
   q: "Как защищают от CSRF: `SameSite` и CSRF-токен?",
   answer:

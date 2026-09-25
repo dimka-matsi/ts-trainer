@@ -3,7 +3,7 @@ import type { WebLesson } from "../../../course/types";
 
 export const lesson: WebLesson = {
   id: "sec2",
-  region: 8,
+  region: 2,
   title: "Защита от XSS",
   q: "Как защищаются от XSS?",
   answer:

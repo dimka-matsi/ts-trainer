@@ -3,7 +3,7 @@ import type { WebLesson } from "../../../course/types";
 
 export const lesson: WebLesson = {
   id: "cors4",
-  region: 7,
+  region: 1,
   title: "Заголовки Access-Control-*",
   q: "Какие заголовки должен вернуть сервер, чтобы разрешить запрос с другого источника?",
   answer:

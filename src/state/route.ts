@@ -4,7 +4,7 @@ import type { CourseId } from "../content/course/types";
 /** Направления продукта: у каждого своя карта и свой стиль. */
 export type Track = "ts" | CourseId;
 
-const COURSE_IDS: CourseId[] = ["web", "perf"];
+const COURSE_IDS: CourseId[] = ["web", "perf", "sec"];
 
 export type Route =
   | { view: "hub" }

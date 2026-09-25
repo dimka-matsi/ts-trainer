@@ -3,7 +3,7 @@ import type { WebLesson } from "../../../course/types";
 
 export const lesson: WebLesson = {
   id: "rnd5",
-  region: 10,
+  region: 7,
   title: "CSR, SSR, SSG и гидратация",
   q: "Чем рендеринг на клиенте отличается от серверного и статической генерации? Что такое гидратация?",
   answer:

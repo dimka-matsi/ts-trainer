@@ -3,7 +3,7 @@ import type { WebLesson } from "../../../course/types";
 
 export const lesson: WebLesson = {
   id: "cache4",
-  region: 5,
+  region: 4,
   title: "Приватный и общий кэш",
   q: "Зачем `private` и `public` в `Cache-Control`? Что такое `s-maxage`?",
   answer:

@@ -3,7 +3,7 @@ import type { WebLesson } from "../../../course/types";
 
 export const lesson: WebLesson = {
   id: "sec8",
-  region: 8,
+  region: 3,
   title: "Изоляция: COOP, COEP и CORP",
   q: "Что такое COOP, COEP и CORP и зачем нужна cross-origin isolation?",
   answer:

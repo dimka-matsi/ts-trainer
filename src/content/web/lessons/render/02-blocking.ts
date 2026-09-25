@@ -5,7 +5,7 @@ const HTML = "<head>\n  <link rel=\"stylesheet\" href=\"/style.css\">\n  <script
 
 export const lesson: WebLesson = {
   id: "rnd2",
-  region: 10,
+  region: 7,
   title: "Блокирующие ресурсы: async и defer",
   q: "Почему CSS и скрипты в `<head>` задерживают отрисовку? Чем `async` отличается от `defer`?",
   answer:

@@ -6,6 +6,7 @@ import { courseCurrent, courseLessonUnlocked, courseRegionDone } from "../../sta
 import { CardsView } from "../CardsView";
 import { ExamView, type ExamConfig } from "../ExamView";
 import { PerfMapView } from "./PerfMapView";
+import { SecMapView } from "./SecMapView";
 import { CourseLessonView } from "./CourseLessonView";
 import { WebMapView } from "./WebMapView";
 
@@ -36,7 +37,7 @@ function CourseLocked({ course, what }: { course: Course; what: string }) {
   );
 }
 
-/** Экраны курса без кода («Браузер», «Оптимизация»): карта, урок, экзамен, карточки. Карта у каждого курса своя. */
+/** Экраны курса без кода («Браузер», «Оптимизация», «Безопасность»): карта, урок, экзамен, карточки. Карта у каждого курса своя. */
 export function CourseScreen({ course, route }: { course: Course; route: Route }) {
   const { progress } = useProgress();
   if (route.view === "course-lesson") {
@@ -53,5 +54,7 @@ export function CourseScreen({ course, route }: { course: Course; route: Route }
       : <CourseLocked course={course} what={`Экзамен «${course.regions[route.region]!.name}»`} />;
   }
   if (route.view === "course-cards") return <CardsView cards={course.flashcards} regionNames={course.regions.map((r) => r.name)} />;
-  return course.id === "perf" ? <PerfMapView course={course} /> : <WebMapView course={course} />;
+  if (course.id === "perf") return <PerfMapView course={course} />;
+  if (course.id === "sec") return <SecMapView course={course} />;
+  return <WebMapView course={course} />;
 }

@@ -3,7 +3,7 @@ import type { WebLesson } from "../../../course/types";
 
 export const lesson: WebLesson = {
   id: "ck4",
-  region: 4,
+  region: 0,
   title: "Сторонние cookies",
   q: "Что такое сторонние cookies и почему браузеры их ограничивают?",
   answer:

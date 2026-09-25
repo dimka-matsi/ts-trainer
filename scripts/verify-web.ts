@@ -39,7 +39,7 @@ const CONCEPTS: { name: string; re: RegExp; at: string }[] = [
   { name: "центр сертификации", re: /центр сертификации|Let's Encrypt|Certificate Transparency|промежуточн\S* (центр|сертификат)/i, at: "tls3" },
   { name: "0-RTT", re: /0-RTT|ClientHello/, at: "tls4" },
   { name: "HSTS", re: /\bHSTS\b|Strict-Transport-Security/i, at: "tls5" },
-  { name: "cookie", re: /cookie(?!s, сессии)/i, at: "ck1" },
+  { name: "cookie", re: /cookie/i, at: "http1" },
   { name: "XSS", re: /\bXSS\b/, at: "ck2" },
   { name: "CSRF", re: /\bCSRF\b/, at: "ck3" },
   { name: "сторонние cookies", re: /сторонн\S* cookie|Partitioned|CHIPS/i, at: "ck4" },

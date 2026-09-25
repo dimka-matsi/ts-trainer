@@ -2,7 +2,7 @@ import type { WebLesson } from "../../../course/types";
 
 export const lesson: WebLesson = {
   id: "cdn1",
-  region: 6,
+  region: 5,
   title: "Как работает CDN",
   q: "Что такое CDN и почему с ним сайт открывается быстрее?",
   answer:

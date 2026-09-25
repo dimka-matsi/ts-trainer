@@ -2,7 +2,7 @@ import type { WebLesson } from "../../../course/types";
 
 export const lesson: WebLesson = {
   id: "rnd3",
-  region: 10,
+  region: 7,
   title: "Layout, paint и composite",
   q: "Что вызывает перерасчёт раскладки и почему анимировать `transform` дешевле, чем `top`?",
   answer:

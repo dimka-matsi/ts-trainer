@@ -3,7 +3,7 @@ import type { WebLesson } from "../../../course/types";
 
 export const lesson: WebLesson = {
   id: "cors3",
-  region: 7,
+  region: 1,
   title: "Простые запросы и preflight",
   q: "Когда браузер отправляет предварительный запрос OPTIONS (preflight)?",
   answer:

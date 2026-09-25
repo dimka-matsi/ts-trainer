@@ -3,7 +3,7 @@ import type { WebLesson } from "../../../course/types";
 
 export const lesson: WebLesson = {
   id: "sec7",
-  region: 8,
+  region: 3,
   title: "Заголовки защиты",
   q: "Зачем `X-Content-Type-Options: nosniff`, `Referrer-Policy` и `Permissions-Policy`?",
   answer:

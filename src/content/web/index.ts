@@ -2,36 +2,31 @@ import type { Flashcard } from "../flashcards";
 import { lessons as browser } from "./lessons/browser";
 import { lessons as cache } from "./lessons/cache";
 import { lessons as cdn } from "./lessons/cdn";
-import { lessons as cookies } from "./lessons/cookies";
-import { lessons as cors } from "./lessons/cors";
 import { lessons as dns } from "./lessons/dns";
 import { lessons as http } from "./lessons/http";
 import { lessons as net } from "./lessons/net";
 import { lessons as realtime } from "./lessons/realtime";
 import { lessons as render } from "./lessons/render";
-import { lessons as security } from "./lessons/security";
 import { lessons as tls } from "./lessons/tls";
 import { makeCourse, type WebLesson, type WebRegion } from "../course/types";
 
 /** Уроки по регионам: индекс в массиве = индекс региона в WEB_REGIONS. */
-const REGION_LESSONS: WebLesson[][] = [net, dns, http, tls, cookies, cache, cdn, cors, security, browser, render, realtime];
+const REGION_LESSONS: WebLesson[][] = [net, dns, http, tls, cache, cdn, browser, render, realtime];
 
 
 /**
  * Регионы «Браузера»: сеть и протоколы, без JavaScript. Порядок — путь запроса:
- * от IP и TCP через DNS и HTTP к кэшу, безопасности и отрисовке страницы.
+ * от IP и TCP через DNS и HTTP к кэшу и отрисовке страницы. Защита (флаги cookies, CORS, атаки, заголовки,
+ * аутентификация) — в направлении «Безопасность».
  * Темы «скоро» — вопросы, которые задают на фронтенд-собеседованиях.
  */
 const REGIONS: WebRegion[] = [
   { name: "Как работает интернет", kind: "lessons", desc: "IP-адреса и порты, уровни сети, TCP и UDP, путь запроса от URL до страницы." },
   { name: "DNS", kind: "lessons", desc: "Как имя сайта превращается в IP-адрес: путь запроса, записи, TTL, подмена и шифрование." },
-  { name: "HTTP", kind: "lessons", desc: "Запрос и ответ, методы, коды, заголовки, соединения, стили API и версии протокола." },
+  { name: "HTTP", kind: "lessons", desc: "Запрос и ответ, методы, коды, заголовки, cookies, соединения, стили API и версии протокола." },
   { name: "HTTPS и TLS", kind: "lessons", desc: "Зачем HTTPS, шифрование, сертификаты, рукопожатие TLS 1.3 и HSTS." },
-  { name: "Cookies, сессии и вход", kind: "lessons", desc: "Как сервер узнаёт пользователя: cookies и их флаги, сторонние cookies, сессии и токены, OAuth." },
   { name: "Кэширование", kind: "lessons", desc: "HTTP-кэш браузера и общие кэши: свежесть, проверка и 304, файлы с хэшем, Vary, bfcache." },
   { name: "CDN, прокси и балансировка", kind: "lessons", desc: "Серверы между пользователем и приложением: CDN и его кэш, прокси, балансировщики." },
-  { name: "CORS", kind: "lessons", desc: "Политика одного источника и как сервер разрешает чтение с других источников." },
-  { name: "Безопасность", kind: "lessons", desc: "Атаки на сайт и защита от них: XSS, CSRF, CSP, clickjacking, чужой код, заголовки, изоляция." },
   { name: "Устройство браузера", kind: "lessons", desc: "Из каких процессов состоит браузер, как он изолирует сайты и чем отличаются движки." },
   { name: "Рендеринг страницы", kind: "lessons", desc: "Путь от байтов HTML до пикселей, блокирующие ресурсы, шрифты и способы рендеринга сайта." },
   { name: "Реальное время", kind: "lessons", desc: "Как сервер отправляет данные сам: polling, Server-Sent Events, WebSocket, WebRTC." },

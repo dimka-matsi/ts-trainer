@@ -3,7 +3,7 @@ import type { WebLesson } from "../../../course/types";
 
 export const lesson: WebLesson = {
   id: "cors1",
-  region: 7,
+  region: 1,
   title: "Origin и политика одного источника",
   q: "Что такое origin и что запрещает политика одного источника?",
   answer:

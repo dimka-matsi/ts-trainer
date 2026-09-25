@@ -3,7 +3,7 @@ import type { WebLesson } from "../../../course/types";
 
 export const lesson: WebLesson = {
   id: "rt1",
-  region: 11,
+  region: 8,
   title: "Polling и long polling",
   q: "Как получать обновления от сервера без WebSocket? Чем polling отличается от long polling?",
   answer:

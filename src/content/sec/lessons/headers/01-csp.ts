@@ -5,7 +5,7 @@ const CSP = "script-src 'nonce-r4nd0m' 'strict-dynamic'; object-src 'none'; base
 
 export const lesson: WebLesson = {
   id: "sec4",
-  region: 8,
+  region: 3,
   title: "Content Security Policy",
   q: "Что делает заголовок `Content-Security-Policy`? Зачем nonce и `strict-dynamic`?",
   answer:

@@ -37,9 +37,14 @@ export function HubView() {
       route: { view: "map" }, done: PATH.filter((s) => stepDone(progress, s)).length, total: PATH.length, cards: FLASHCARDS.length,
     },
     {
-      id: "web", name: "Браузер", tagline: "Сеть, HTTP, безопасность, отрисовка",
-      about: "Как страница попадает на экран: TCP и UDP, DNS, HTTP и TLS, cookies, кэш и CDN, CORS, атаки, устройство браузера и отрисовка.",
+      id: "web", name: "Браузер", tagline: "Сеть, HTTP, кэш, отрисовка",
+      about: "Как страница попадает на экран: TCP и UDP, DNS, HTTP и TLS, cookies, кэш и CDN, устройство браузера, отрисовка и реальное время.",
       ...courseStats(COURSES.web),
+    },
+    {
+      id: "sec", name: "Безопасность", tagline: "XSS, CSRF, CORS, CSP, токены",
+      about: "Как атакуют сайт и как защищаться: флаги cookies, политика одного источника и CORS, XSS и CSRF, заголовки защиты, JWT и OAuth. Лучше после «Браузера».",
+      ...courseStats(COURSES.sec),
     },
     {
       id: "perf", name: "Оптимизация", tagline: "Метрики, сборка, сервер, React, JS-движок",

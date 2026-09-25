@@ -2,7 +2,7 @@ import type { WebLesson } from "../../../course/types";
 
 export const lesson: WebLesson = {
   id: "cache6",
-  region: 5,
+  region: 4,
   title: "Кэш «назад-вперёд» (bfcache)",
   q: "Почему кнопка «Назад» иногда показывает страницу мгновенно, а иногда грузит заново?",
   answer:

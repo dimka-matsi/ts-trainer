@@ -2,7 +2,7 @@ import type { WebLesson } from "../../../course/types";
 
 export const lesson: WebLesson = {
   id: "br2",
-  region: 9,
+  region: 6,
   title: "Изоляция сайтов и песочница",
   q: "Почему одна вкладка не может прочитать память другой? Что такое Site Isolation?",
   answer:

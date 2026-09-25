@@ -3,7 +3,7 @@ import type { WebLesson } from "../../../course/types";
 
 export const lesson: WebLesson = {
   id: "cors5",
-  region: 7,
+  region: 1,
   title: "Запросы с cookies",
   q: "Почему с cookies нельзя ответить `Access-Control-Allow-Origin: *`? Что нужно, чтобы запрос на другой источник ушёл с cookies?",
   answer:

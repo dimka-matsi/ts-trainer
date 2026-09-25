@@ -3,7 +3,7 @@ import type { WebLesson } from "../../../course/types";
 
 export const lesson: WebLesson = {
   id: "cdn2",
-  region: 6,
+  region: 5,
   title: "Кэш CDN и его сброс",
   q: "Выложили новую версию, а пользователи видят старую. Как CDN решает, что хранить, и как его сбросить?",
   answer:
