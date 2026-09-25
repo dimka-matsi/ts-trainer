@@ -2,7 +2,7 @@ import type { WebLesson } from "../../../course/types";
 
 export const lesson: WebLesson = {
   id: "rdx6",
-  region: 2,
+  region: 5,
   title: "Context + `useReducer` вместо Redux?",
   q: "Можно ли заменить Redux связкой Context + `useReducer`? Что при этом теряется?",
   answer:

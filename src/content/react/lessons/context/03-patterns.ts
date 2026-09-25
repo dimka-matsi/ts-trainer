@@ -2,7 +2,7 @@ import type { WebLesson } from "../../../course/types";
 
 export const lesson: WebLesson = {
   id: "ctx3",
-  region: 1,
+  region: 4,
   title: "Паттерны: свой хук, провайдеры и `use`",
   q: "Как правильно организовать контекст в приложении? Зачем оборачивать `useContext` в свой хук?",
   answer:

@@ -7,8 +7,8 @@ import { courseCurrent, courseLessonDone, courseLessonUnlocked, courseRegionDone
 import { Atom } from "../../ui/Atom";
 import { Md } from "../../ui/Code";
 
-/** Имя компонента региона в дереве. Индекс — индекс региона; новые регионы добавляются в конец. */
-const REGION_TAGS = ["LocalState", "ContextProvider", "ReduxStore", "ExternalStores", "ServerCache", "Architecture", "Components", "Hooks", "Rendering", "Patterns", "Testing"];
+/** Имя компонента региона в дереве. Индекс — индекс региона. */
+const REGION_TAGS = ["Components", "LocalState", "Hooks", "Reconciler", "ContextProvider", "ReduxStore", "ExternalStores", "ServerCache", "Architecture", "Profiler", "Actions", "ServerComponents", "Patterns", "Testing"];
 
 /** Карта React как вкладка Components в React DevTools: слева дерево регионов и уроков, справа пропсы выбранного региона. */
 export function ReactMapView({ course }: { course: Course }) {
@@ -38,7 +38,7 @@ export function ReactMapView({ course }: { course: Course }) {
     <section className="wm rx-map">
       <p className="eyebrow">// react → собеседование</p>
       <h1>React</h1>
-      <p className="lead">Начинаем с управления состоянием: где хранить состояние, как работают Context, Redux и Redux Toolkit, Zustand, MobX и Effector, что такое серверное состояние и TanStack Query, как выбрать инструмент под проект. Всё — с тем, как это устроено внутри React и сколько раз что перерисуется.</p>
+      <p className="lead">Всё, что спрашивают о React на собеседованиях: компоненты, состояние и хуки, как устроен рендеринг, Context, Redux, Zustand и серверное состояние, производительность, React 19 с Actions и Server Components, паттерны и тестирование. Каждая страница справочника react.dev привязана к уроку.</p>
       <div className="actions hero-actions">
         {now && (
           <button type="button" className="btn" onClick={() => navigate({ view: "course-lesson", course: course.id, id: now.id })}>

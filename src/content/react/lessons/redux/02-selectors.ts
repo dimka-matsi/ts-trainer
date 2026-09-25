@@ -2,7 +2,7 @@ import type { WebLesson } from "../../../course/types";
 
 export const lesson: WebLesson = {
   id: "rdx2",
-  region: 2,
+  region: 5,
   title: "react-redux: `useSelector` и подписки",
   q: "Как Redux подключается к React? Почему Redux вызывает меньше лишних ререндеров, чем Context?",
   answer:

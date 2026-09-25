@@ -2,7 +2,7 @@ import type { WebLesson } from "../../../course/types";
 
 export const lesson: WebLesson = {
   id: "zs1",
-  region: 3,
+  region: 6,
   title: "Zustand: хранилище-хук без провайдера",
   q: "Чем Zustand отличается от Redux и Context? Когда его выбирать?",
   answer:

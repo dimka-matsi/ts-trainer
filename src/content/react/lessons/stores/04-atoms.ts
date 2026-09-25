@@ -2,7 +2,7 @@ import type { WebLesson } from "../../../course/types";
 
 export const lesson: WebLesson = {
   id: "atm1",
-  region: 3,
+  region: 6,
   title: "Атомы: Jotai и Recoil",
   q: "Что такое атомарный подход к состоянию? Чем Jotai отличается от Zustand и Redux?",
   answer:

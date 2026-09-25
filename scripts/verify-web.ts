@@ -11,6 +11,7 @@
 import ts from "typescript";
 import { LESSONS } from "../src/content/lessons";
 import { COURSES } from "../src/content/courses";
+import { REACT_REFERENCE } from "../src/content/react/reference";
 import type { Course } from "../src/content/course/types";
 import type { HttpMessage, NetRequest, WebLesson, WebTask } from "../src/content/course/types";
 
@@ -106,8 +107,22 @@ const CONCEPTS: { name: string; re: RegExp; at: string }[] = [
   { name: "встраивание функций", re: /встраивани\S* функци|inlining/i, at: "js4" },
   { name: "поколения GC", re: /Scavenger|поколени/i, at: "js5" },
   { name: "утечки памяти", re: /WeakMap|detached|снимок кучи|снимки кучи/i, at: "js6" },
-  // React: управление состоянием
+  // React: основы, хуки и рендеринг
+  { name: "createPortal", re: /createPortal/, at: "jsx5" },
   { name: "useReducer", re: /useReducer/, at: "st2" },
+  { name: "useEffect", re: /useEffect\b/, at: "hk2" },
+  { name: "useEffectEvent", re: /useEffectEvent/, at: "hk3" },
+  { name: "ссылки", re: /useRef|useImperativeHandle|forwardRef/, at: "hk5" },
+  { name: "эффекты раскладки", re: /useLayoutEffect|useInsertionEffect/, at: "hk6" },
+  { name: "мемоизация", re: /useMemo|useCallback/, at: "hk7" },
+  { name: "useId", re: /useId\b|useDebugValue/, at: "hk8" },
+  { name: "flushSync", re: /flushSync/, at: "rn1" },
+  { name: "reconciliation", re: /reconciliation|виртуальн\S* DOM/i, at: "rn2" },
+  { name: "Fiber", re: /\bFiber\b/, at: "rn4" },
+  { name: "переходы", re: /useTransition|useDeferredValue|startTransition/, at: "rn5" },
+  { name: "Suspense", re: /\bSuspense\b|\blazy\(/, at: "rn6" },
+  { name: "Activity", re: /\bActivity\b|ViewTransition/, at: "rn7" },
+  // React: управление состоянием
   { name: "Context", re: /useContext|createContext/, at: "ctx1" },
   { name: "Redux", re: /\bRedux\b/, at: "rdx1" },
   { name: "селекторы Redux", re: /useSelector|createSelector|shallowEqual/, at: "rdx2" },
@@ -123,6 +138,13 @@ const CONCEPTS: { name: string; re: RegExp; at: string }[] = [
   { name: "staleTime и gcTime", re: /staleTime|gcTime/, at: "sq2" },
   { name: "оптимистичное обновление", re: /оптимистичн|useMutation|invalidateQueries/i, at: "sq3" },
   { name: "API RTK Query", re: /createApi|providesTags|invalidatesTags|keepUnusedDataFor/, at: "sq4" },
+  // React: Actions, сервер
+  { name: "useActionState", re: /useActionState/, at: "ac1" },
+  { name: "useFormStatus и useOptimistic", re: /useFormStatus|useOptimistic/, at: "ac2" },
+  { name: "гидратация", re: /hydrateRoot|renderToPipeableStream/, at: "ssr1" },
+  { name: "'use client'", re: /'use client'/, at: "ssr2" },
+  { name: "'use server'", re: /'use server'/, at: "ssr3" },
+  { name: "Testing Library", re: /Testing Library|getByRole|userEvent/, at: "tst1" },
 ];
 
 /** Признаки JavaScript: в «Браузере» его быть не должно. */
@@ -328,6 +350,26 @@ function checkCourse(course: Course, fail: (msg: string) => void) {
   return { lessons: WEB_LESSONS.length, cards: WEB_FLASHCARDS.length };
 }
 
+/** Сверка с react.dev: каждая страница справочника привязана к существующему уроку или карточке, либо пропущена с причиной. */
+function checkReactReference(fail: (msg: string) => void) {
+  const course = COURSES.react;
+  const cards = new Set(course.flashcards.map((c) => c.id));
+  const urls = new Set<string>();
+  for (const ref of REACT_REFERENCE) {
+    const tag = `react.dev «${ref.page}»`;
+    if (urls.has(ref.url)) fail(`${tag}: страница указана дважды`);
+    urls.add(ref.url);
+    if (!ref.covered.length) fail(`${tag}: не привязана ни к уроку, ни к карточке, и нет причины пропуска`);
+    for (const c of ref.covered) {
+      if ("lesson" in c && !course.byId[c.lesson]) fail(`${tag}: нет урока ${c.lesson}`);
+      if ("card" in c && !cards.has(c.card)) fail(`${tag}: нет карточки ${c.card}`);
+      if ("skip" in c && c.skip.trim().length < 10) fail(`${tag}: у пропуска нет внятной причины`);
+    }
+  }
+  const lessons = REACT_REFERENCE.filter((r) => r.covered.some((c) => "lesson" in c)).length;
+  console.log(`  сверка с react.dev: страниц ${REACT_REFERENCE.length}, в уроках ${lessons}, пропущено с причиной ${REACT_REFERENCE.length - lessons}`);
+}
+
 /** Проверка всех курсов без кода. id уроков и карточек не должны повторяться между курсами: прогресс общий. */
 export function checkWeb(fail: (msg: string) => void) {
   const all = Object.values(COURSES);
@@ -341,5 +383,7 @@ export function checkWeb(fail: (msg: string) => void) {
   }
   const bases = all.map((c) => c.examBase);
   if (new Set(bases).size !== bases.length) fail("у курсов одинаковая база ключей экзаменов");
-  return all.map((c) => ({ name: c.name, ...checkCourse(c, fail) }));
+  const result = all.map((c) => ({ name: c.name, ...checkCourse(c, fail) }));
+  checkReactReference(fail);
+  return result;
 }

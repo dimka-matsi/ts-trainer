@@ -2,7 +2,7 @@ import type { WebLesson } from "../../../course/types";
 
 export const lesson: WebLesson = {
   id: "eff1",
-  region: 3,
+  region: 6,
   title: "Effector: события, хранилища и эффекты",
   q: "Что такое Effector и чем он отличается от Redux? Почему о нём часто спрашивают в российских компаниях?",
   answer:

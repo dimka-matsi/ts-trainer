@@ -2,7 +2,7 @@ import type { WebLesson } from "../../../course/types";
 
 export const lesson: WebLesson = {
   id: "rdx5",
-  region: 2,
+  region: 5,
   title: "`createAsyncThunk` и нормализация",
   q: "Как в Redux Toolkit загружать данные? Что будет, если хранить всё состояние в одном большом объекте, и зачем нормализация?",
   answer:

@@ -2,7 +2,7 @@ import type { WebLesson } from "../../../course/types";
 
 export const lesson: WebLesson = {
   id: "arch1",
-  region: 5,
+  region: 8,
   title: "Как выбрать стейт-менеджер",
   q: "Как вы выбираете, где хранить состояние и какой стейт-менеджер взять в проект?",
   answer:

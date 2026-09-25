@@ -2,7 +2,7 @@ import type { WebLesson } from "../../../course/types";
 
 export const lesson: WebLesson = {
   id: "arch3",
-  region: 5,
+  region: 8,
   title: "Состояние в большом приложении",
   q: "Приложение рассчитано на 200 тысяч пользователей и большую команду. Как вы организуете управление состоянием?",
   answer:

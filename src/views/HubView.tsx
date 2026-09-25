@@ -62,8 +62,8 @@ export function HubView() {
     },
     { id: "js", name: "JavaScript", tagline: "Замыкания, this, event loop, DOM", about: "Язык и работа со страницей: асинхронность, события DOM, Web API." },
     {
-      id: "react", name: "React", tagline: "Состояние: Context, Redux, Zustand, TanStack Query",
-      about: "Начинаем с управления состоянием: useState и useReducer, Context и его ререндеры, Redux и Redux Toolkit, Zustand, MobX и Effector, серверное состояние и выбор инструмента под проект. С кодом и разбором, что и почему перерисуется.",
+      id: "react", name: "React", tagline: "Хуки, рендеринг, состояние, React 19",
+      about: "Всё, что спрашивают о React: JSX и компоненты, хуки и эффекты, как устроен рендеринг, Context, Redux, Zustand и TanStack Query, производительность и React Compiler, Actions и Server Components, паттерны и тесты. Каждая страница react.dev привязана к уроку.",
       ...courseStats(COURSES.react),
     },
     { id: "node", name: "Node.js", tagline: "Сервер, потоки, модули", about: "Event loop в Node, файлы и потоки, HTTP-сервер, npm." },
