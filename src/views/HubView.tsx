@@ -75,7 +75,7 @@ export function HubView() {
   return (
     <div className="hub">
       <header className="hub-top">
-        <span className="hub-logo">Тренажёр<small>подготовка к собеседованию</small></span>
+        <span className="hub-logo">Preflight<small>подготовка к фронтенд-собеседованию</small></span>
         <button type="button" className="hub-theme" onClick={() => setTheme(next)} aria-label={next === "light" ? "Светлая тема" : "Тёмная тема"}>
           {next === "light" ? "☀" : "☾"}
         </button>

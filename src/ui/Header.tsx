@@ -92,7 +92,7 @@ export function Header({ route }: { route: Route }) {
           <HubButton current="ts" />
           <button type="button" className="brand" onClick={() => navigate({ view: "map" })} title="Карта TypeScript">
             <span className="logo" aria-hidden="true">TS</span>
-            <span className="brand-t"><b>Тренажёр TypeScript</b><span>{sub}</span></span>
+            <span className="brand-t"><b>TypeScript</b><span>{sub}</span></span>
           </button>
         </div>
         <nav className="levels" aria-label="Навигация">

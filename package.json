@@ -1,9 +1,9 @@
 {
-  "name": "ts-trainer",
+  "name": "preflight",
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "Тренажёр TypeScript для подготовки к собеседованию",
+  "description": "Preflight — подготовка к фронтенд-собеседованию",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",

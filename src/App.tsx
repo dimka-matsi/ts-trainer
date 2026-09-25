@@ -55,7 +55,7 @@ export function App() {
   // Стиль направления: токены цвета и шрифты переключаются по data-track на <html>.
   useEffect(() => {
     document.documentElement.dataset.track = track;
-    document.title = track === "hub" ? "Тренажёр: подготовка к собеседованию" : track === "ts" ? "Тренажёр TypeScript" : `${COURSES[track].name} · Тренажёр`;
+    document.title = track === "hub" ? "Preflight — подготовка к собеседованию" : track === "ts" ? "TypeScript · Preflight" : `${COURSES[track].name} · Preflight`;
   }, [track]);
 
   return (
