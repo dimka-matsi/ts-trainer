@@ -71,7 +71,7 @@ const CONCEPTS: Concept[] = [
   { name: "ReturnType/Parameters", re: /\b(ReturnType|Parameters|InstanceType|ConstructorParameters)</, at: "u5" },
   { name: "Awaited/NoInfer", re: /\b(Awaited|NoInfer)</, at: "u6" },
   { name: "template literal type", re: /type [^=\n]+=[^\n;]*`[^`\n]*\$\{|\bas `/, at: "u8" },
-  { name: "модификаторы класса", re: /\b(private|protected|implements|abstract)\b/, at: "end7" },
+  { name: "модификаторы класса", re: /\b(private|protected|implements|abstract)\b/, at: "cl1" },
 ];
 
 const EXPECT_LINE = /^.*Expect<Equal<.*$/gm;
