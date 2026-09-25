@@ -77,6 +77,13 @@ const CONCEPTS: { name: string; re: RegExp; at: string }[] = [
   { name: "srcset", re: /srcset/i, at: "perf3" },
   { name: "loading=lazy", re: /loading=/i, at: "perf4" },
   { name: "Core Web Vitals", re: /\bLCP\b|\bINP\b|\bCLS\b|Web Vitals/, at: "perf5" },
+  { name: "tree shaking", re: /tree shaking|code splitting/i, at: "perf6" },
+  { name: "фасад виджета", re: /фасад/i, at: "perf7" },
+  { name: "Server-Timing", re: /Server-Timing/i, at: "srv1" },
+  { name: "cache stampede", re: /cache-aside|stampede/i, at: "srv2" },
+  { name: "N+1", re: /\bN\+1\b|EXPLAIN/, at: "srv3" },
+  { name: "early flush", re: /early flush|chunked/i, at: "srv4" },
+  { name: "rate limiting", re: /rate limiting|stateless/i, at: "srv5" },
 ];
 
 /** Признаки JavaScript: в «Браузере» его быть не должно. */
@@ -140,6 +147,9 @@ function checkRequest(r: NetRequest, tag: string, fail: (msg: string) => void) {
     if (len && m.body && !m.body.includes("…") && Number(len) !== Buffer.byteLength(m.body)) {
       fail(`${tag}: ${side}: Content-Length ${len}, а в теле ${Buffer.byteLength(m.body)} байт`);
     }
+  }
+  if (header(r.response, "Transfer-Encoding").some((v) => /chunked/i.test(v)) && header(r.response, "Content-Length").length) {
+    fail(`${tag}: при Transfer-Encoding: chunked заголовка Content-Length быть не должно`);
   }
   if (r.request.body && !header(r.request, "Content-Type").length) fail(`${tag}: у запроса с телом нет Content-Type`);
   for (const c of header(r.response, "Set-Cookie")) {
