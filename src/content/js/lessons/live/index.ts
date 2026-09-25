@@ -10,5 +10,8 @@ import { lesson as l8 } from "./08-event-emitter";
 import { lesson as l9 } from "./09-curry";
 import { lesson as l10 } from "./10-retry";
 import { lesson as l11 } from "./11-pool";
+import { lesson as l12 } from "./12-lru";
+import { lesson as l13 } from "./13-get-by-path";
+import { lesson as l14 } from "./14-my-promise";
 
-export const lessons: WebLesson[] = [l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, l11];
+export const lessons: WebLesson[] = [l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, l11, l12, l13, l14];

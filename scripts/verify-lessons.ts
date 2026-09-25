@@ -138,6 +138,8 @@ console.log("\nкурсы без кода");
 const courses = checkWeb(fail);
 // Код учеников может оставить промис с ошибкой без обработчика: verify не должен из-за этого падать.
 process.on("unhandledRejection", () => {});
+// Ошибка в таймере стартового кода — ожидаемый провал задания, а не падение verify.
+process.on("uncaughtException", () => {});
 await checkJsRuns(fail);
 
 console.log(failures ? `\n${failures} проблем` : `\nВсё проверено: ${LESSONS.length} уроков, ${LEVELS.length} уровней, ${EXAM_ONLY_TASKS.length} вопросов экзаменов, ${FLASHCARDS.length} карточек; ${courses.map((c) => `«${c.name}»: ${c.lessons} уроков, ${c.cards} карточек`).join("; ")}`);

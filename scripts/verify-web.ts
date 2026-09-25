@@ -158,7 +158,7 @@ const CONCEPTS: { name: string; re: RegExp; at: string }[] = [
   { name: "дескрипторы", re: /defineProperty|дескриптор|Object\.freeze|Object\.seal/, at: "obj5" },
   { name: "Map и Set", re: /\bnew (Map|Set|WeakMap|WeakSet)\b|\bWeak(Map|Set)\b|`(Map|Set)`/, at: "arr4" },
   { name: "итераторы и генераторы", re: /function\*|генератор|\byield\b|Symbol\.iterator/, at: "arr5" },
-  { name: "event loop", re: /event loop|цикл событий|стек вызовов|call stack/i, at: "asy1" },
+  { name: "event loop", re: /event loop|цикл событий/i, at: "asy1" },
   { name: "промисы", re: /\bPromise\b|промис/i, at: "asy2" },
   { name: "микрозадачи", re: /микрозадач|макрозадач|microtask|queueMicrotask/i, at: "asy3" },
   { name: "async/await", re: /\basync\b|\bawait\b/, at: "asy4" },
@@ -176,6 +176,16 @@ const CONCEPTS: { name: string; re: RegExp; at: string }[] = [
   { name: "Web Workers", re: /Web Worker|воркер|postMessage/i, at: "wa5" },
   { name: "модули", re: /\brequire\(|CommonJS|module\.exports|\bimport\(/, at: "mod1" },
   { name: "debounce и throttle", re: /debounce|throttle/i, at: "lc1" },
+  { name: "Proxy", re: /\bProxy\b|\bReflect\./, at: "obj6" },
+  { name: "Symbol.toPrimitive", re: /Symbol\.toPrimitive/, at: "obj7" },
+  { name: "Intl", re: /\bIntl\b|localeCompare/, at: "arr6" },
+  { name: "регулярные выражения", re: /регулярн|\bRegExp\b|lastIndex/, at: "arr7" },
+  { name: "асинхронные итераторы", re: /for await|async function\*|Symbol\.asyncIterator/, at: "asy7" },
+  { name: "промисификация", re: /promisify|промисифи/i, at: "asy8" },
+  { name: "Web Components", re: /Web Components|Shadow DOM|customElements/, at: "dom6" },
+  { name: "FormData", re: /\bFormData\b/, at: "dom7" },
+  { name: "History API", re: /pushState|popstate|History API/, at: "wa6" },
+  { name: "Temporal", re: /\bTemporal\b/, at: "mod5" },
 ];
 
 /** Признаки JavaScript: в «Браузере» его быть не должно. */

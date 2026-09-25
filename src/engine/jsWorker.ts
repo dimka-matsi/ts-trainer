@@ -6,6 +6,10 @@ type Request =
   | { kind: "output"; code: string }
   | { kind: "tests"; code: string; tests: [string, string][] };
 
+// Ошибка в таймере или промисе кода ученика не должна ронять воркер: проверка просто не пройдёт.
+self.addEventListener("error", (e) => e.preventDefault());
+self.addEventListener("unhandledrejection", (e) => e.preventDefault());
+
 self.onmessage = async (e: MessageEvent<Request>) => {
   const req = e.data;
   const result = req.kind === "output" ? await runOutput(req.code) : await runTests(req.code, req.tests);
