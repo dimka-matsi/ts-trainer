@@ -22,9 +22,9 @@ export function show(v: unknown, nested = false): string {
   return `{ ${entries.map(([k, x]) => `${/^[A-Za-z_$][\w$]*$/.test(k) ? k : JSON.stringify(k)}: ${show(x, true)}`).join(", ")} }`;
 }
 
-/** Код обращается к странице (DOM, окно, хранилища) — в воркере и в Node его не выполнить. */
+/** Код обращается к странице (DOM, окно, хранилища) или к сети — в воркере и в Node его не выполнить честно. */
 export const needsPage = (code: string) =>
-  /\b(document|window|localStorage|sessionStorage|navigator|requestAnimationFrame|IntersectionObserver|ResizeObserver|MutationObserver|HTMLElement|Event)\b|addEventListener/.test(code);
+  /\b(document|window|localStorage|sessionStorage|indexedDB|navigator|requestAnimationFrame|IntersectionObserver|ResizeObserver|MutationObserver|HTMLElement|Event|Worker)\b|addEventListener|\bfetch\(/.test(code);
 
 /** Строка вывода для необработанной ошибки: только имя. Тексты сообщений у движков разные. */
 const errorLine = (e: unknown) => (e instanceof Error ? `Uncaught ${e.name}` : `Uncaught ${show(e)}`);
