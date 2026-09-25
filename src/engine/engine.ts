@@ -43,6 +43,7 @@ const FLAG_NAMES = [
   "noImplicitThis", "useUnknownInCatchVariables", "noUncheckedIndexedAccess", "exactOptionalPropertyTypes",
   "noImplicitOverride", "noPropertyAccessFromIndexSignature", "noImplicitReturns", "noFallthroughCasesInSwitch",
   "verbatimModuleSyntax", "isolatedModules", "erasableSyntaxOnly", "experimentalDecorators",
+  "esModuleInterop", "allowSyntheticDefaultImports", "allowJs", "checkJs",
 ] as const;
 
 /** Разбирает строку `// @flags:` в начале кода. Неизвестные имена пропускаются. */
@@ -124,11 +125,8 @@ export function createEngine(ts: TsApi, lib: string): Engine {
     getDirectories: () => [],
   };
   const service = ts.createLanguageService(host, ts.createDocumentRegistry());
-  const sourceFile = (path: string) => {
-    const sf = service.getProgram()?.getSourceFile(path);
-    if (!sf) throw new Error(`${path} не найден в программе`);
-    return sf;
-  };
+  /** Исходник файла в программе. JS-файлов без `allowJs` в программе нет — для них undefined. */
+  const sourceFile = (path: string) => service.getProgram()?.getSourceFile(path);
   /** Файл и позиция внутри него для позиции в общем коде. */
   const locate = (pos: number) => {
     let sec = sections[0]!;
@@ -159,8 +157,9 @@ export function createEngine(ts: TsApi, lib: string): Engine {
     },
     diagnostics() {
       return sections.flatMap((sec) => {
-        const all = [...service.getSyntacticDiagnostics(sec.path), ...service.getSemanticDiagnostics(sec.path)];
         const sf = sourceFile(sec.path);
+        if (!sf) return [];
+        const all = [...service.getSyntacticDiagnostics(sec.path), ...service.getSemanticDiagnostics(sec.path)];
         return all.map((d) => {
           const lc = d.start != null ? sf.getLineAndCharacterOfPosition(d.start) : { line: 0, character: 0 };
           return {
@@ -175,11 +174,13 @@ export function createEngine(ts: TsApi, lib: string): Engine {
     },
     quickInfo(pos) {
       const { sec, at } = locate(pos);
+      if (!sourceFile(sec.path)) return null;
       const q = service.getQuickInfoAtPosition(sec.path, at);
       return q ? ts.displayPartsToString(q.displayParts) : null;
     },
     completions(pos) {
       const { sec, at } = locate(pos);
+      if (!sourceFile(sec.path)) return [];
       const res = service.getCompletionsAtPosition(sec.path, at, { includeCompletionsWithInsertText: false });
       if (!res) return [];
       return res.entries
@@ -191,6 +192,7 @@ export function createEngine(ts: TsApi, lib: string): Engine {
       const out: Declaration[] = [];
       for (const sec of sections) {
         const sf = sourceFile(sec.path);
+        if (!sf) continue;
         const push = (id: TS.Identifier) => out.push({ name: id.text, info: engine.quickInfo(sec.offset + id.getStart(sf)) ?? id.text });
         for (const st of sf.statements) {
           if ((ts.isTypeAliasDeclaration(st) || ts.isInterfaceDeclaration(st) || ts.isFunctionDeclaration(st) || ts.isClassDeclaration(st)) && st.name) {
