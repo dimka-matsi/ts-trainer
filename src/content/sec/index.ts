@@ -1,5 +1,6 @@
 import type { Flashcard } from "../flashcards";
 import { makeCourse, type WebLesson, type WebRegion } from "../course/types";
+import { FOLLOW_UPS } from "./interview";
 import { lessons as attacks } from "./lessons/attacks";
 import { lessons as auth } from "./lessons/auth";
 import { lessons as cookies } from "./lessons/cookies";
@@ -38,4 +39,4 @@ const EXTRA_CARDS: Flashcard[] = [
 ];
 
 /** Курс «Безопасность». Карточки уроков — `sec-lesson-<id>`, экзамены — 300 + регион. */
-export const SEC = makeCourse("sec", "Безопасность", REGIONS, REGION_LESSONS, EXTRA_CARDS, "sec", 300);
+export const SEC = makeCourse("sec", "Безопасность", REGIONS, REGION_LESSONS, EXTRA_CARDS, "sec", 300, { followUps: FOLLOW_UPS });
