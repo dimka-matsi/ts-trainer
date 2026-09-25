@@ -90,6 +90,12 @@ const CONCEPTS: { name: string; re: RegExp; at: string }[] = [
   { name: "content-visibility", re: /content-visibility|contain-intrinsic/i, at: "ui4" },
   { name: "виртуализация", re: /виртуализац|overscan|виртуальн\S* скролл/i, at: "ui5" },
   { name: "RUM", re: /\bRUM\b|real user monitoring/i, at: "ui6" },
+  { name: "JIT и деоптимизация", re: /байт-код|Ignition|TurboFan|деоптимиз/i, at: "js1" },
+  { name: "скрытые классы", re: /скрыт\S* класс|hidden class/i, at: "js2" },
+  { name: "inline caching", re: /inline cach|мономорф|мегаморф|полиморф/i, at: "js3" },
+  { name: "встраивание функций", re: /встраивани\S* функци|inlining/i, at: "js4" },
+  { name: "поколения GC", re: /Scavenger|поколени/i, at: "js5" },
+  { name: "утечки памяти", re: /WeakMap|detached|снимок кучи|снимки кучи/i, at: "js6" },
 ];
 
 /** Признаки JavaScript: в «Браузере» его быть не должно. */

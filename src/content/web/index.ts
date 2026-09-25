@@ -5,6 +5,7 @@ import { lessons as cdn } from "./lessons/cdn";
 import { lessons as cookies } from "./lessons/cookies";
 import { lessons as cors } from "./lessons/cors";
 import { lessons as dns } from "./lessons/dns";
+import { lessons as engine } from "./lessons/engine";
 import { lessons as http } from "./lessons/http";
 import { lessons as net } from "./lessons/net";
 import { lessons as perf } from "./lessons/perf";
@@ -17,7 +18,7 @@ import { lessons as tls } from "./lessons/tls";
 import type { WebLesson, WebRegion } from "./types";
 
 /** Уроки по регионам: индекс в массиве = индекс региона в WEB_REGIONS. */
-const REGION_LESSONS: WebLesson[][] = [net, dns, http, tls, cookies, cache, cdn, cors, security, browser, render, realtime, perf, server, ui];
+const REGION_LESSONS: WebLesson[][] = [net, dns, http, tls, cookies, cache, cdn, cors, security, browser, render, realtime, perf, server, ui, engine];
 
 /** Уроки раздела «Браузер» в порядке прохождения. */
 export const WEB_LESSONS: WebLesson[] = REGION_LESSONS.flat();
@@ -44,6 +45,7 @@ export const WEB_REGIONS: WebRegion[] = [
   { name: "Оптимизация: сеть и загрузка", kind: "lessons", desc: "Меньше байтов и кругов туда-обратно: сжатие, подсказки браузеру, картинки, ленивая загрузка, Core Web Vitals, бандл, сторонние скрипты." },
   { name: "Оптимизация: сервер", kind: "lessons", desc: "Как сократить время ответа: TTFB и Server-Timing, кэш на сервере, запросы к базе, потоковая отдача, масштабирование." },
   { name: "Оптимизация: рендеринг и интерфейс", kind: "lessons", desc: "Отзывчивая страница: главный поток и длинные задачи, Web Workers, debounce и throttle, размер DOM, виртуальный скролл, профилирование." },
+  { name: "Оптимизация: JS-движок", kind: "lessons", desc: "Что внутри V8 и как писать предсказуемый код: JIT, скрытые классы, inline caching, встраивание, сборщик мусора, утечки памяти." },
 ];
 
 /** Ключ экзамена региона в общем прогрессе: у TypeScript ключи 0…10, у «Браузера» 100 и дальше. */

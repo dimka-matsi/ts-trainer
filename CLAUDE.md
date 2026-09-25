@@ -5,7 +5,7 @@
 Направления:
 
 - **TypeScript** (`#/ts`): уроки по порядку TypeScript Handbook, песочница с настоящим компилятором, упражнения проверяет компилятор. Пиксельный стиль в синем цвете TS.
-- **Браузер** (`#/web`): сеть и протоколы — IP и порты, TCP/UDP, DNS, HTTP и HTTPS, cookies, кэш, CDN, CORS, безопасность, отрисовка страницы. **Без JavaScript**: ни в теории, ни в заданиях нет кода (verify это проверяет). JS, события DOM и Web API — в будущем направлении JavaScript. Стиль DevTools: карта как вкладка Network, урок — панель с вкладками, схема обмена по шагам и вкладка «Сеть» с водопадом.
+- **Браузер** (`#/web`): сеть и протоколы — IP и порты, TCP/UDP, DNS, HTTP и HTTPS, cookies, кэш, CDN, CORS, безопасность, отрисовка страницы и блок «Оптимизация» по уровням: сеть и загрузка, сервер, рендеринг и интерфейс, JS-движок. **Без JavaScript-кода**: ни в теории, ни в заданиях нет кода (verify это проверяет). Темы про устройство JS-движка объясняются схемами и словами. JS, события DOM и Web API — в будущем направлении JavaScript. Стиль DevTools: карта как вкладка Network, урок — панель с вкладками, схема обмена по шагам и вкладка «Сеть» с водопадом.
 - JavaScript, React, Node.js, Vue — на хабе как «скоро».
 
 Каждое направление задаёт свои токены через `:root[data-track="…"]` в `styles.css` (`hub`, `ts`, `web`); `App.tsx` ставит атрибут по маршруту.
@@ -52,7 +52,7 @@ scripts/verify-lessons.ts   проверка контента в Node
 
 ```
 src/content/web/     types.ts (WebLesson, OrderTask, MatchTask, SortTask, Flow, NetRequest), http.ts (msg — HTTP-сообщение с верным Content-Length),
-                     lessons/<регион>/ (net, dns, http, tls, cookies, cache, cdn, cors, security, browser, render, realtime, perf), index.ts (регионы, карточки)
+                     lessons/<регион>/ (net, dns, http, tls, cookies, cache, cdn, cors, security, browser, render, realtime, perf, server, ui, engine), index.ts (регионы, карточки)
 src/state/webPath.ts порядок уроков «Браузера»
 src/views/web/       WebHeader, WebMapView, WebLessonView, NetVisuals (схема и вкладка «Сеть»), WebTasks, WebScreen
 scripts/verify-web.ts   проверка контента «Браузера»
