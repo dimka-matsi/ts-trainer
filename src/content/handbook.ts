@@ -111,16 +111,16 @@ export const HANDBOOK: HandbookSection[] = [
   ...sec("Typeof Type Operator", "2/typeof-types.html", [["typeof в позиции типа", L("g3")]]),
   ...sec("Indexed Access Types", "2/indexed-access-types.html", [["T[K], T[number]", L("g1")]]),
   ...sec("Conditional Types", "2/conditional-types.html", [
-    ["Conditional Types, Conditional Type Constraints", T(6, "Conditional types и extends"), L("u4")],
-    ["Inferring Within Conditional Types", T(6, "infer"), L("u5")],
-    ["Distributive Conditional Types", T(6, "Дистрибутивность")],
+    ["Conditional Types, Conditional Type Constraints", L("tc1"), L("u4")],
+    ["Inferring Within Conditional Types", L("tc3"), L("u5")],
+    ["Distributive Conditional Types", L("tc2")],
   ]),
   ...sec("Mapped Types", "2/mapped-types.html", [
-    ["Mapped Types, Mapping Modifiers", T(6, "Mapped types и key remapping"), L("u1")],
-    ["Key Remapping via as", T(6, "Mapped types и key remapping")],
+    ["Mapped Types, Mapping Modifiers", L("tc4"), L("u1")],
+    ["Key Remapping via as", L("tc4")],
   ]),
   ...sec("Template Literal Types", "2/template-literal-types.html", [
-    ["Template Literal Types, Inference with Template Literals", T(6, "Template literal types")],
+    ["Template Literal Types, Inference with Template Literals", L("tc5")],
     ["Intrinsic String Manipulation Types", L("u8")],
   ]),
   ...sec("Classes", "2/classes.html", [

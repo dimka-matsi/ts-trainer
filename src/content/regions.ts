@@ -39,14 +39,7 @@ export const REGIONS: Region[] = [
   { name: "Объекты", kind: "lessons", desc: "Object Types: `Object`, `{}` и `object`, `readonly`, index signatures, лишние свойства, `extends` и `&`, дженерик-объекты, кортежи, readonly-массивы, символы, итераторы." },
   { name: "Кузница дженериков", kind: "lessons", desc: "`keyof` и `T[K]`, параметр-ключ, `typeof` в типах, параметры по умолчанию, дженерик-классы, `<const T>`." },
   { name: "Мастерская утилит", kind: "lessons", desc: "Все 22 утилиты из справочника Utility Types: применение и как написать свои." },
-  { name: "Башня условий", kind: "soon", desc: "Conditional, mapped и template literal types — программирование на уровне типов.", topics: [
-    { t: "Conditional types и extends", q: "Что такое conditional types?" },
-    { t: "Дистрибутивность", q: "Почему `ToArray<string | number>` даёт `string[] | number[]`?" },
-    { t: "infer", q: "Как устроен `ReturnType`? Напиши `ElementType<T>`." },
-    { t: "Mapped types и key remapping", q: "Как написать `DeepReadonly`?" },
-    { t: "Template literal types", q: "Как вытащить параметр из строки маршрута?" },
-    { t: "Рекурсивные типы", q: "Как описать JSON-значение и типизировать `get(obj, \"a.b.c\")`?" },
-  ] },
+  { name: "Башня условий", kind: "lessons", desc: "Conditional types, дистрибутивность, `infer`, mapped types и переименование ключей, template literal types, рекурсивные типы и задачи с собеседований." },
   { name: "Классы и модули", kind: "soon", desc: "Classes, Modules, Enums, Declaration Merging, `.d.ts`.", topics: [
     { t: "Поля, конструкторы и strictPropertyInitialization", q: "Почему TypeScript требует инициализировать поля класса и как это обойти?" },
     { t: "implements и extends", q: "Чем `implements` отличается от `extends`?" },
