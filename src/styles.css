@@ -832,10 +832,12 @@ button.brand{background:none; border:0; padding:0; color:inherit; font:inherit; 
   :root[data-track="hub"]:not([data-theme="light"]) .hub-card.hc-perf{background:#232428; border-color:#3a3b40; color:#e8eaed}
   :root[data-track="hub"]:not([data-theme="light"]) .hc-perf .hc-name{color:#34d77e}
   :root[data-track="hub"]:not([data-theme="light"]) .hc-perf .hc-about{color:#9aa0a6}
+  :root[data-track="hub"]:not([data-theme="light"]) .hc-perf .hc-bar{background:#3a3b40}
 }
 :root[data-track="hub"][data-theme="dark"] .hub-card.hc-perf{background:#232428; border-color:#3a3b40; color:#e8eaed}
 :root[data-track="hub"][data-theme="dark"] .hc-perf .hc-name{color:#34d77e}
 :root[data-track="hub"][data-theme="dark"] .hc-perf .hc-about{color:#9aa0a6}
+:root[data-track="hub"][data-theme="dark"] .hc-perf .hc-bar{background:#3a3b40}
 
 /* ══════════════════ Направление «Безопасность»: отчёт сканера уязвимостей ══════════════════ */
 :root[data-track="sec"]{
