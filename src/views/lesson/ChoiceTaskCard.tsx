@@ -46,7 +46,7 @@ export function ChoiceTaskCard({ task, onSolved }: Props) {
             {compiler && <><p className="where">Компилятор показывает:</p><CodeBlock code={compiler} className="code ty" /></>}
           </>
         ) : wrong.length > 0 && (
-          <p className="bad-t"><b>Не совсем.</b> Попробуй ещё раз: подумай, что компилятор знает в этой точке.</p>
+          <p className="bad-t"><b>Не совсем.</b> {predict ? "Попробуй ещё раз: подумай, что компилятор знает в этой точке." : "Попробуй ещё раз: перечитай вопрос и вспомни главное из урока."}</p>
         )}
       </div>
     </>
