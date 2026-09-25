@@ -1,4 +1,5 @@
 import type { Flashcard } from "../flashcards";
+import { FOLLOW_UPS } from "./interview";
 import { makeCourse, type WebLesson, type WebRegion } from "../course/types";
 import { lessons as bundle } from "./lessons/bundle";
 import { lessons as cases } from "./lessons/cases";
@@ -47,4 +48,4 @@ const EXTRA_CARDS: Flashcard[] = [
 ];
 
 /** Курс «Оптимизация». Карточки уроков — `opt-lesson-<id>`, экзамены — 200 + регион. */
-export const PERF = makeCourse("perf", "Оптимизация", REGIONS, REGION_LESSONS, EXTRA_CARDS, "opt", 200);
+export const PERF = makeCourse("perf", "Оптимизация", REGIONS, REGION_LESSONS, EXTRA_CARDS, "opt", 200, { followUps: FOLLOW_UPS });
