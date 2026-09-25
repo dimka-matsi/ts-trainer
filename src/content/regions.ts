@@ -42,18 +42,7 @@ export const REGIONS: Region[] = [
   { name: "Башня условий", kind: "lessons", desc: "Conditional types, дистрибутивность, `infer`, mapped types и переименование ключей, template literal types, рекурсивные типы и задачи с собеседований." },
   { name: "Классы и модули", kind: "lessons", desc: "Classes, Modules, Enums, Declaration Merging, Namespaces, Decorators: поля и модификаторы, `abstract`, `this`, миксины, `enum`, `import type`, `.d.ts` и расширение библиотек." },
   { name: "Контракты", kind: "lessons", desc: "Где заканчиваются типы и начинается проверка во время работы: данные из сети, схемы валидации, `unknown` в `catch`, `strict` и флаги сверх него, branded types, `Result` вместо исключений." },
-  { name: "TS и React", kind: "soon", desc: "Пропсы, события, хуки, дженерик-компоненты — то, что спрашивают у фронтендеров.", topics: [
-    { t: "JSX в TypeScript", q: "Что делают настройка `jsx` и расширение `.tsx`?" },
-    { t: "Пропсы и children", q: "Чем отличаются `ReactNode`, `ReactElement` и `JSX.Element`?" },
-    { t: "События", q: "Как типизировать `onChange` у инпута и `onSubmit` у формы?" },
-    { t: "useState и useReducer", q: "Как типизировать reducer, чтобы `action` сужался по `type`?" },
-    { t: "useRef", q: "Почему `useRef<HTMLInputElement>(null)` и `useRef<number>()` ведут себя по-разному?" },
-    { t: "useContext без undefined", q: "Как сделать контекст, который не надо каждый раз проверять на `undefined`?" },
-    { t: "Взаимоисключающие пропсы", q: "Как запретить передать одновременно `href` и `onClick`?" },
-    { t: "Дженерик-компоненты и хуки", q: "Как написать `<Select<T>>` или `useFetch<T>`?" },
-    { t: "ComponentProps и ref", q: "Как взять пропсы у `button` и пробросить `ref`?" },
-    { t: "Полиморфный as-prop", q: "Как типизировать `<Box as=\"a\" href=\"...\">`?" },
-  ] },
+  { name: "TS и React", kind: "lessons", desc: "JSX в `.tsx`, пропсы и `children`, события, `useState` и `useReducer`, `useRef`, контекст без `undefined`, взаимоисключающие пропсы, дженерик-компоненты, `ComponentProps` и полиморфный `as`. Проверяется настоящими типами React 19." },
   { name: "Компилятор и проект", kind: "lessons", desc: "`tsc` и транспиляторы, запуск `.ts` в Node, `target` и `lib`, модули и импорт CommonJS, библиотеки с типами, JSDoc и миграция, `paths` и project references, разбор tsconfig и TypeScript 6 и 7." },
 ];
 

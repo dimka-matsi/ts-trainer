@@ -25,7 +25,6 @@ const sec = (page: string, url: string, rows: [section: string, ...covered: Cove
   rows.map(([section, ...covered]) => ({ page, url: H + url, section, covered }));
 
 const L = (lesson: string): Coverage => ({ lesson });
-const T = (region: number, title: string): Coverage => ({ topic: [region, title] });
 
 export const HANDBOOK: HandbookSection[] = [
   ...sec("The Basics", "2/basic-types.html", [
@@ -158,7 +157,7 @@ export const HANDBOOK: HandbookSection[] = [
   ...sec("Declaration Merging", "declaration-merging.html", [["Declaration Merging", L("b6"), L("cl12")]]),
   ...sec("Enums", "enums.html", [["Numeric, string, const enums, reverse mappings", L("b8"), L("cl9")]]),
   ...sec("Iterators and Generators", "iterators-and-generators.html", [["Iterators and Generators", L("ob10")]]),
-  ...sec("JSX", "jsx.html", [["JSX", T(9, "JSX в TypeScript")]]),
+  ...sec("JSX", "jsx.html", [["JSX", L("tr1")]]),
   ...sec("Mixins", "mixins.html", [["Mixins", L("cl8")]]),
   ...sec("Namespaces", "namespaces.html", [["Namespaces", L("cl13")]]),
   ...sec("Namespaces and Modules", "namespaces-and-modules.html", [["Namespaces and Modules", L("cl13")]]),

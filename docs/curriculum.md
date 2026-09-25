@@ -4,7 +4,7 @@
 
 ## Сверка с TypeScript Handbook
 
-Каждый раздел документации привязан к уроку, уровню, теме плана на карте или помечен как пропущенный с причиной. Сама сверка лежит в `src/content/handbook.ts`, verify проверяет, что все ссылки существуют. На 24 сентября 2026: 131 раздел, 86 уже в уроках и уровнях, 38 в плане, 7 пропущено (обзорные страницы, туториалы по инструментам, синтаксис JavaScript, заметки к старым версиям).
+Каждый раздел документации привязан к уроку, уровню, теме плана на карте или помечен как пропущенный с причиной. Сама сверка лежит в `src/content/handbook.ts`, verify проверяет, что все ссылки существуют. На 25 сентября 2026: 131 раздел, 123 в уроках и уровнях, 1 закрыт карточкой (Types for Tooling — `ts-why`), 7 пропущено (обзорные страницы, туториалы по инструментам, синтаксис JavaScript, заметки к старым версиям). Все 11 регионов готовы: 98 уроков и 6 уровней.
 
 При сверке 24.09.2026 добавлены уроки: присваивания и анализ потока (na), типы `object` и `Function` (fo), деструктуризация параметров (fd), классы в дженериках и аннотации `in`/`out` (g7). В план добавлены темы: ReadonlyArray, Symbol и `unique symbol`, итераторы и генераторы (регион 4); поля и `strictPropertyInitialization`, `override`, геттеры и `static`-блоки, тип `this` и this-guards, class expressions, mixins, ES-модули и CommonJS, namespaces, декораторы (регион 8); JSX (регион 10); декларации для библиотеки, JSDoc и проверка JS, triple-slash директивы (регион 11).
 
@@ -28,14 +28,14 @@
 | 1 | Основы | [The Basics](https://www.typescriptlang.org/docs/handbook/2/basic-types.html), [Everyday Types](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html), [Type Compatibility](https://www.typescriptlang.org/docs/handbook/type-compatibility.html), [Type Inference](https://www.typescriptlang.org/docs/handbook/type-inference.html), [`satisfies`](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-9.html) | Готово: 11 уроков |
 | 2 | Болото союзов | [Narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html) | Готово: 6 уровней и 5 уроков |
 | 3 | Функции | [More on Functions](https://www.typescriptlang.org/docs/handbook/2/functions.html) | Готово: 11 уроков |
-| 4 | Объекты | [Object Types](https://www.typescriptlang.org/docs/handbook/2/objects.html) | План |
+| 4 | Объекты | [Object Types](https://www.typescriptlang.org/docs/handbook/2/objects.html) | Готово: 10 уроков |
 | 5 | Кузница дженериков | [Generics](https://www.typescriptlang.org/docs/handbook/2/generics.html), [Keyof](https://www.typescriptlang.org/docs/handbook/2/keyof-types.html), [Typeof](https://www.typescriptlang.org/docs/handbook/2/typeof-types.html), [Indexed Access](https://www.typescriptlang.org/docs/handbook/2/indexed-access-types.html) | Готово: 7 уроков |
 | 6 | Мастерская утилит | [Utility Types](https://www.typescriptlang.org/docs/handbook/utility-types.html) | Готово: 8 уроков |
-| 7 | Башня условий | [Conditional Types](https://www.typescriptlang.org/docs/handbook/2/conditional-types.html), [Mapped Types](https://www.typescriptlang.org/docs/handbook/2/mapped-types.html), [Template Literal Types](https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html) | План |
-| 8 | Классы и модули | [Classes](https://www.typescriptlang.org/docs/handbook/2/classes.html), [Modules](https://www.typescriptlang.org/docs/handbook/2/modules.html), [Enums](https://www.typescriptlang.org/docs/handbook/enums.html), [Declaration Merging](https://www.typescriptlang.org/docs/handbook/declaration-merging.html), [Decorators](https://www.typescriptlang.org/docs/handbook/decorators.html) | План |
-| 9 | Контракты | [strict-флаги](https://www.typescriptlang.org/tsconfig/#strict), паттерны типизации API, branded types | План |
-| 10 | TS и React | [React TypeScript Cheatsheet](https://react-typescript-cheatsheet.netlify.app/) | План |
-| 11 | Компилятор и проект | [tsconfig](https://www.typescriptlang.org/tsconfig/), [Modules Reference](https://www.typescriptlang.org/docs/handbook/modules/reference.html), [Project References](https://www.typescriptlang.org/docs/handbook/project-references.html) | План |
+| 7 | Башня условий | [Conditional Types](https://www.typescriptlang.org/docs/handbook/2/conditional-types.html), [Mapped Types](https://www.typescriptlang.org/docs/handbook/2/mapped-types.html), [Template Literal Types](https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html) | Готово: 7 уроков |
+| 8 | Классы и модули | [Classes](https://www.typescriptlang.org/docs/handbook/2/classes.html), [Modules](https://www.typescriptlang.org/docs/handbook/2/modules.html), [Enums](https://www.typescriptlang.org/docs/handbook/enums.html), [Declaration Merging](https://www.typescriptlang.org/docs/handbook/declaration-merging.html), [Decorators](https://www.typescriptlang.org/docs/handbook/decorators.html) | Готово: 14 уроков |
+| 9 | Контракты | [strict-флаги](https://www.typescriptlang.org/tsconfig/#strict), паттерны типизации API, branded types | Готово: 7 уроков |
+| 10 | TS и React | [React TypeScript Cheatsheet](https://react-typescript-cheatsheet.netlify.app/) | Готово: 10 уроков |
+| 11 | Компилятор и проект | [tsconfig](https://www.typescriptlang.org/tsconfig/), [Modules Reference](https://www.typescriptlang.org/docs/handbook/modules/reference.html), [Project References](https://www.typescriptlang.org/docs/handbook/project-references.html) | Готово: 8 уроков |
 
 Utility Types стоят раньше Mapped и Conditional Types намеренно: утилитами пользуются каждый день, а их внутреннее устройство разбирается в регионе 7.
 
@@ -98,7 +98,9 @@ Utility Types стоят раньше Mapped и Conditional Types намерен
 | 8 | Rest-параметры и кортежи | Spread требует известной длины, `...args: A` пробрасывает аргументы | Почему `Math.atan2(...args)` падает без `as const`? | `number[]` не подходит для фиксированного числа параметров |
 | 9 | Ковариантность и контравариантность | Результат ковариантен, параметры контравариантны под `strictFunctionTypes` | Почему параметры методов бивариантны? | Метод-сигнатура проверяется слабее свойства-функции |
 
-## Регион 4. Объекты — план
+## Регион 4. Объекты — готово, 10 уроков
+
+Уроки: `Object`, `{}` и `object` (ob1), `readonly` и `const` (ob2), index signatures (ob3), лишние свойства и слабые типы (ob4), `extends` против `&` (ob5), дженерик-объектные типы (ob6), кортежи и variadic tuples (ob7), `ReadonlyArray` (ob8), `Symbol` и `unique symbol` (ob9), итераторы и генераторы (ob10).
 
 Источник: [Object Types](https://www.typescriptlang.org/docs/handbook/2/objects.html).
 
@@ -126,7 +128,9 @@ Utility Types стоят раньше Mapped и Conditional Types намерен
 | 6 | const у параметра типа (g6) | `<const T>` выводит как `as const` (TS 5.0) | Что даёт `<const T>`? | Для массивов ограничение `readonly ...[]` |
 | 7 | Классы в дженериках и in/out (g7) | `create<T>(C: new () => T)`, аннотации вариантности (TS 4.7) | Зачем `in` и `out`? | Параметр-метод проверяется в обе стороны, аннотацию проверяют на свойстве-функции |
 
-## Регион 7. Type Manipulation — план
+## Регион 7. Башня условий — готово, 7 уроков
+
+Уроки: conditional types (tc1), дистрибутивность и `IsNever` (tc2), `infer` с ограничениями и `UnionToIntersection` (tc3), mapped types и переименование ключей (tc4), template literal types и параметры маршрута (tc5), рекурсивные типы: JSON, `DeepReadonly`, пути (tc6), задачи с собеседований: `TupleToUnion`, `Last`, типизированный EventEmitter (tc7).
 
 | Регион | Тема | Что знать | Вопрос или задача |
 | --- | --- | --- | --- |
@@ -171,7 +175,9 @@ Utility Types стоят раньше Mapped и Conditional Types намерен
 | 7 | `ThisType<T>` | 2.3 | Пустой маркерный интерфейс |
 | 8 | `Uppercase`, `Lowercase`, `Capitalize`, `Uncapitalize` | 4.1 (по памяти) | intrinsic |
 
-## Регион 8. Классы и модули — план
+## Регион 8. Классы и модули — готово, 14 уроков
+
+Уроки: поля и parameter properties (cl1), `implements` и `extends` (cl2), `override` и порядок инициализации (cl3), `private` против `#field` (cl4), абстрактные классы и construct signatures (cl5), геттеры, сеттеры и `static` (cl6), тип `this` и this-guards (cl7), миксины (cl8), `enum` против объекта `as const` (cl9), модули и `import type` (cl10), `.d.ts` и `declare` (cl11), declaration merging и расширение модулей (cl12), namespaces (cl13), декораторы (cl14).
 
 | Тема | Что знать | Вопрос на собесе |
 | --- | --- | --- |
@@ -187,7 +193,9 @@ Utility Types стоят раньше Mapped и Conditional Types намерен
 | `namespace` | Знать концепцию, в новом коде не использовать | Чем отличается от модуля? |
 | Decorators | Экспериментальные и стандартные (5.0+) | Где встречал? |
 
-## Регион 9. Контракты — план
+## Регион 9. Контракты — готово, 7 уроков
+
+Уроки: данные из сети как `unknown` (ct1), схема как единственный источник правды (ct2), `unknown` в `catch` (ct3), что включает `strict` (ct4), флаги сверх `strict` (ct5), branded types и умные конструкторы (ct6), `Result` вместо исключений (ct7).
 
 Темы: type guards и `asserts` для данных из сети, флаги `strict`, `unknown` в `catch`, ответ API без `any` (валидация в рантайме), branded types.
 
@@ -209,7 +217,9 @@ Utility Types стоят раньше Mapped и Conditional Types намерен
 
 Состав `strict` сверен с опциями компилятора TypeScript 5.9.3; для TS 6 сверить с [заметками к TS 6.0](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-6-0.html).
 
-## Регион 10. TS и React — план
+## Регион 10. TS и React — готово, 10 уроков
+
+Уроки: JSX в `.tsx` и `React.JSX` (tr1), пропсы и `children` (tr2), события (tr3), `useState` и `useReducer` (tr4), `useRef` в React 19 (tr5), контекст без `undefined` (tr6), взаимоисключающие пропсы (tr7), дженерик-компоненты (tr8), `ComponentProps` и `ref` (tr9), полиморфный `as` (tr10). Код проверяется настоящими типами `@types/react` 19.
 
 В roadmap Middle/Senior это Must know, поэтому регион идёт в порядке работ сразу после дженериков.
 
@@ -225,7 +235,9 @@ Utility Types стоят раньше Mapped и Conditional Types намерен
 | `ComponentProps`, `ref` | `ComponentProps<"button">`, `forwardRef` и `ref` как проп | Как сделать обёртку над `button`? |
 | Полиморфный `as`-prop, HOC, render props | `ElementType`, `ComponentPropsWithoutRef<C>` | Как типизировать `<Box as="a">`? |
 
-## Регион 11. Компилятор и проект — план
+## Регион 11. Компилятор и проект — готово, 8 уроков
+
+Уроки: `tsc` против Babel, esbuild и SWC и TypeScript 7 (pj1), запуск `.ts` в Node и `erasableSyntaxOnly` (pj2), `target` и `lib` (pj3), `module`, `moduleResolution` и импорт CommonJS (pj4), библиотеки с типами и `skipLibCheck` (pj5), JSDoc, `checkJs` и миграция (pj6), `paths`, project references и triple-slash (pj7), разбор tsconfig и TypeScript 6 (pj8). Версии Node и TypeScript сверены с официальными заметками к релизам 25.09.2026.
 
 | Тема | Что знать | Вопрос на собесе |
 | --- | --- | --- |
@@ -280,13 +292,15 @@ Utility Types стоят раньше Mapped и Conditional Types намерен
 
 ## Порядок дальше
 
+Все регионы готовы (25 сентября 2026). Дальше — поддерживать актуальность: сверять новые версии TypeScript (сейчас в песочнице 5.9, вышли 6.0 и 7.0) и разделы Handbook, добавлять задачи с собеседований.
+
 - [x] Регион 1: урок `satisfies`
 - [x] Регион 2: equality narrowing, type predicates, assertion functions, состояния loading / success / error
 - [x] Регион 5: Generics, `keyof`, `typeof`, indexed access
-- [ ] Регион 10: TS и React
-- [ ] Регион 7: conditional, mapped, template literal, рекурсивные типы и задачи для лайв-кодинга
+- [x] Регион 10: TS и React
+- [x] Регион 7: conditional, mapped, template literal, рекурсивные типы и задачи для лайв-кодинга
 - [x] Регион 3: функции
-- [ ] Регион 4: объекты
-- [ ] Регион 9: guards, `strict`, API без `any`, branded types
-- [ ] Регион 11: компилятор и tsconfig
-- [ ] Регион 8: классы и модули
+- [x] Регион 4: объекты
+- [x] Регион 9: guards, `strict`, API без `any`, branded types
+- [x] Регион 11: компилятор и tsconfig
+- [x] Регион 8: классы и модули
