@@ -5,5 +5,6 @@ import { lesson as l3 } from "./03-hashed-assets";
 import { lesson as l4 } from "./04-private-public";
 import { lesson as l5 } from "./05-vary-swr";
 import { lesson as l6 } from "./06-bfcache";
+import { lesson as l7 } from "./07-service-worker";
 
-export const lessons: WebLesson[] = [l1, l2, l3, l4, l5, l6];
+export const lessons: WebLesson[] = [l1, l2, l3, l4, l5, l6, l7];

@@ -4,5 +4,6 @@ import { lesson as l2 } from "./02-crypto";
 import { lesson as l3 } from "./03-certificates";
 import { lesson as l4 } from "./04-handshake";
 import { lesson as l5 } from "./05-hsts";
+import { lesson as l6 } from "./06-revocation";
 
-export const lessons: WebLesson[] = [l1, l2, l3, l4, l5];
+export const lessons: WebLesson[] = [l1, l2, l3, l4, l5, l6];
