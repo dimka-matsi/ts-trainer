@@ -12,11 +12,12 @@ import { lessons as realtime } from "./lessons/realtime";
 import { lessons as render } from "./lessons/render";
 import { lessons as security } from "./lessons/security";
 import { lessons as server } from "./lessons/server";
+import { lessons as ui } from "./lessons/ui";
 import { lessons as tls } from "./lessons/tls";
 import type { WebLesson, WebRegion } from "./types";
 
 /** Уроки по регионам: индекс в массиве = индекс региона в WEB_REGIONS. */
-const REGION_LESSONS: WebLesson[][] = [net, dns, http, tls, cookies, cache, cdn, cors, security, browser, render, realtime, perf, server];
+const REGION_LESSONS: WebLesson[][] = [net, dns, http, tls, cookies, cache, cdn, cors, security, browser, render, realtime, perf, server, ui];
 
 /** Уроки раздела «Браузер» в порядке прохождения. */
 export const WEB_LESSONS: WebLesson[] = REGION_LESSONS.flat();
@@ -42,6 +43,7 @@ export const WEB_REGIONS: WebRegion[] = [
   { name: "Реальное время", kind: "lessons", desc: "Как сервер отправляет данные сам: polling, Server-Sent Events, WebSocket, WebRTC." },
   { name: "Оптимизация: сеть и загрузка", kind: "lessons", desc: "Меньше байтов и кругов туда-обратно: сжатие, подсказки браузеру, картинки, ленивая загрузка, Core Web Vitals, бандл, сторонние скрипты." },
   { name: "Оптимизация: сервер", kind: "lessons", desc: "Как сократить время ответа: TTFB и Server-Timing, кэш на сервере, запросы к базе, потоковая отдача, масштабирование." },
+  { name: "Оптимизация: рендеринг и интерфейс", kind: "lessons", desc: "Отзывчивая страница: главный поток и длинные задачи, Web Workers, debounce и throttle, размер DOM, виртуальный скролл, профилирование." },
 ];
 
 /** Ключ экзамена региона в общем прогрессе: у TypeScript ключи 0…10, у «Браузера» 100 и дальше. */

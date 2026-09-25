@@ -84,6 +84,12 @@ const CONCEPTS: { name: string; re: RegExp; at: string }[] = [
   { name: "N+1", re: /\bN\+1\b|EXPLAIN/, at: "srv3" },
   { name: "early flush", re: /early flush|chunked/i, at: "srv4" },
   { name: "rate limiting", re: /rate limiting|stateless/i, at: "srv5" },
+  { name: "длинная задача", re: /длинн\S* задач|long task/i, at: "ui1" },
+  { name: "structured clone", re: /structured clone|transferable/i, at: "ui2" },
+  { name: "debounce и throttle", re: /debounce|throttle/i, at: "ui3" },
+  { name: "content-visibility", re: /content-visibility|contain-intrinsic/i, at: "ui4" },
+  { name: "виртуализация", re: /виртуализац|overscan|виртуальн\S* скролл/i, at: "ui5" },
+  { name: "RUM", re: /\bRUM\b|real user monitoring/i, at: "ui6" },
 ];
 
 /** Признаки JavaScript: в «Браузере» его быть не должно. */
