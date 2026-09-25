@@ -51,7 +51,8 @@ scripts/verify-lessons.ts   проверка контента в Node
 Раздел «Браузер»:
 
 ```
-src/content/web/     types.ts (WebLesson, OrderTask, MatchTask, SortTask, Flow, NetRequest), lessons/, index.ts (регионы, карточки)
+src/content/web/     types.ts (WebLesson, OrderTask, MatchTask, SortTask, Flow, NetRequest), http.ts (msg — HTTP-сообщение с верным Content-Length),
+                     lessons/<регион>/ (net, dns, http, tls, cookies, cache, cdn, cors, security, browser, render, realtime, perf), index.ts (регионы, карточки)
 src/state/webPath.ts порядок уроков «Браузера»
 src/views/web/       WebHeader, WebMapView, WebLessonView, NetVisuals (схема и вкладка «Сеть»), WebTasks, WebScreen
 scripts/verify-web.ts   проверка контента «Браузера»
@@ -89,13 +90,14 @@ scripts/verify-web.ts   проверка контента «Браузера»
 
 ## Как добавить урок «Браузера»
 
-Файл `src/content/web/lessons/NN-slug.ts`, экспорт `lesson: WebLesson`, импорт в `content/web/index.ts`. Правила текста те же, что у уроков TS, плюс:
+Файл `src/content/web/lessons/<регион>/NN-slug.ts`, экспорт `lesson: WebLesson`, импорт в `index.ts` папки региона. Новый регион — новая папка и её `lessons` в `REGION_LESSONS` в `content/web/index.ts` на индексе региона. id уроков уникальны и не совпадают с id уроков TypeScript (прогресс общий, verify это проверяет). В регионе нужно не меньше 6 вопросов `quiz` для экзамена. Правила текста те же, что у уроков TS, плюс:
 
 - У урока есть разбор: `theory.flow` (схема обмена: участники и шаги-стрелки, `lost` — потерянный пакет) и/или `theory.requests` (запросы для вкладки «Сеть»: HTTP-сообщения и фазы тайминга).
 - Задания: `quiz`, `order` (шаги в правильном порядке, интерфейс перемешает), `match` (пары, правые части не повторяются), `sort` (пункты по группам). 2–4 задания, минимум двух видов. В экзамен идут только `quiz`, поэтому вопрос не ссылается на вкладку урока.
 - verify проверяет: коды ответа и их фразы по RFC 9110, стартовые строки, `Host` в HTTP/1.1, отсутствие тела у 304 и 204, `SameSite=None` только с `Secure`, порядок фаз (Очередь, DNS, TCP, TLS, Ожидание ответа, Загрузка), TLS только с новым TCP.
 - Никакого JavaScript: `=>`, `const`, `console.` и подобное роняют verify.
-- Порядок тем: список «понятие → урок» в `verify-web.ts` (TCP, UDP, DNS — net2, рукопожатие — net3, QUIC — net4, TLS — net5…). Раньше своего урока понятие не упоминается.
+- Порядок тем: список «понятие → урок» в `verify-web.ts` (TCP, UDP, DNS — net2, рукопожатие — net3, cookie — ck1, CORS — cors1…). Раньше своего урока понятие не упоминается в тексте, схеме и заданиях. HTTP-сообщения вкладки «Сеть» — снимок настоящего обмена, их заголовки порядок тем не проверяет.
+- HTTP-сообщения собирай через `msg()` из `content/web/http.ts`: он сам ставит `Content-Type` и `Content-Length`. verify сверяет `Content-Length` с телом, проверяет префиксы cookie `__Host-` и `__Secure-`.
 - Факты о протоколах сверяются с RFC и MDN, а не по памяти.
 
 ## Как добавить уровень сортировщика

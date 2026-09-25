@@ -7,6 +7,7 @@ import { lessons as cors } from "./lessons/cors";
 import { lessons as dns } from "./lessons/dns";
 import { lessons as http } from "./lessons/http";
 import { lessons as net } from "./lessons/net";
+import { lessons as perf } from "./lessons/perf";
 import { lessons as realtime } from "./lessons/realtime";
 import { lessons as render } from "./lessons/render";
 import { lessons as security } from "./lessons/security";
@@ -14,7 +15,7 @@ import { lessons as tls } from "./lessons/tls";
 import type { WebLesson, WebRegion } from "./types";
 
 /** Уроки по регионам: индекс в массиве = индекс региона в WEB_REGIONS. */
-const REGION_LESSONS: WebLesson[][] = [net, dns, http, tls, cookies, cache, cdn, cors, security, browser, render, realtime];
+const REGION_LESSONS: WebLesson[][] = [net, dns, http, tls, cookies, cache, cdn, cors, security, browser, render, realtime, perf];
 
 /** Уроки раздела «Браузер» в порядке прохождения. */
 export const WEB_LESSONS: WebLesson[] = REGION_LESSONS.flat();
@@ -38,13 +39,7 @@ export const WEB_REGIONS: WebRegion[] = [
   { name: "Устройство браузера", kind: "lessons", desc: "Из каких процессов состоит браузер, как он изолирует сайты и чем отличаются движки." },
   { name: "Рендеринг страницы", kind: "lessons", desc: "Путь от байтов HTML до пикселей, блокирующие ресурсы, шрифты и способы рендеринга сайта." },
   { name: "Реальное время", kind: "lessons", desc: "Как сервер отправляет данные сам: polling, Server-Sent Events, WebSocket, WebRTC." },
-  { name: "Скорость загрузки", kind: "soon", desc: "Меньше байтов, меньше кругов туда-обратно, быстрее первый кадр.", topics: [
-    { t: "Сжатие", q: "Как работают gzip и Brotli и что сжимать не стоит?" },
-    { t: "Подсказки браузеру", q: "Чем отличаются `preload`, `prefetch`, `preconnect` и `dns-prefetch`?" },
-    { t: "Картинки", q: "Какие форматы картинок выбрать и как отдать разный размер под разные экраны?" },
-    { t: "Ленивая загрузка", q: "Как отложить загрузку картинок и iframe ниже первого экрана?" },
-    { t: "Core Web Vitals", q: "Что измеряют LCP, INP и CLS и как их улучшить?" },
-  ] },
+  { name: "Скорость загрузки", kind: "lessons", desc: "Меньше байтов и кругов туда-обратно: сжатие, подсказки браузеру, картинки, ленивая загрузка, Core Web Vitals." },
 ];
 
 /** Ключ экзамена региона в общем прогрессе: у TypeScript ключи 0…10, у «Браузера» 100 и дальше. */

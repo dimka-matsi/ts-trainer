@@ -72,6 +72,11 @@ const CONCEPTS: { name: string; re: RegExp; at: string }[] = [
   { name: "long polling", re: /long polling/i, at: "rt1" },
   { name: "SSE", re: /\bSSE\b|Server-Sent|event-stream/i, at: "rt2" },
   { name: "WebRTC", re: /\bSTUN\b|\bTURN\b|\bSFU\b|\bICE\b/, at: "rt4" },
+  { name: "zstd", re: /\bzstd\b/i, at: "perf1" },
+  { name: "подсказки браузеру", re: /preconnect|dns-prefetch|prefetch|Early Hints|fetchpriority/i, at: "perf2" },
+  { name: "srcset", re: /srcset/i, at: "perf3" },
+  { name: "loading=lazy", re: /loading=/i, at: "perf4" },
+  { name: "Core Web Vitals", re: /\bLCP\b|\bINP\b|\bCLS\b|Web Vitals/, at: "perf5" },
 ];
 
 /** Признаки JavaScript: в «Браузере» его быть не должно. */
@@ -79,7 +84,7 @@ const JS = /=>|\bfunction\b|\bconst\s|\blet\s|console\.|addEventListener|documen
 
 /** Коды ответа и их стандартные фразы (RFC 9110). */
 const REASONS: Record<string, string> = {
-  "100": "Continue", "101": "Switching Protocols",
+  "100": "Continue", "101": "Switching Protocols", "103": "Early Hints",
   "200": "OK", "201": "Created", "202": "Accepted", "204": "No Content", "206": "Partial Content",
   "301": "Moved Permanently", "302": "Found", "303": "See Other", "304": "Not Modified", "307": "Temporary Redirect", "308": "Permanent Redirect",
   "400": "Bad Request", "401": "Unauthorized", "403": "Forbidden", "404": "Not Found", "405": "Method Not Allowed", "409": "Conflict", "410": "Gone", "413": "Content Too Large", "415": "Unsupported Media Type", "422": "Unprocessable Content", "429": "Too Many Requests",
