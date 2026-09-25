@@ -77,7 +77,7 @@ export function LessonView({ lesson }: { lesson: Lesson }) {
           <button type="button" className="btn ghost" onClick={() => navigate({ view: "exam", region: lesson.region })}>Итоговый экзамен региона</button>
         )}
         {after && (
-          <button type="button" className="btn" disabled={!finished} onClick={() => navigate(stepRoute(after))}>
+          <button type="button" className={`btn${finished ? "" : " ghost"}`} onClick={() => navigate(stepRoute(after))}>
             Дальше: {after.title}
           </button>
         )}
@@ -98,8 +98,7 @@ export function LessonView({ lesson }: { lesson: Lesson }) {
           <span>{finished ? "Урок пройден" : `Упражнения: ${solved} из ${lesson.tasks.length}`}</span>
         </div>
         {after && (
-          <button type="button" className="btn small" disabled={!finished} onClick={() => navigate(stepRoute(after))}
-            title={finished ? undefined : "Откроется после всех упражнений"}>
+          <button type="button" className={`btn small${finished ? "" : " ghost"}`} onClick={() => navigate(stepRoute(after))}>
             Дальше
           </button>
         )}

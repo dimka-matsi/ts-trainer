@@ -66,7 +66,7 @@ export function MapView() {
         </div>
       )}
       <div className="legend">
-        <span>✓ изучено</span><span>● открыто</span><span><i className="lock" aria-hidden="true" /> откроется после предыдущих тем</span>
+        <span>✓ изучено</span><span>● открыто</span><span>○ в разработке</span>
       </div>
       <div className="regions">
         {REGIONS.map((r, ri) => {

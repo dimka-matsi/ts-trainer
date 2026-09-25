@@ -11,9 +11,9 @@ export type Step =
   | { kind: "level"; index: number; region: number; title: string };
 
 /**
- * Путь обучения — порядок, в котором открываются шаги: регионы по порядку карты,
- * внутри региона-сортировщика сначала уровни, потом уроки. Регионы «скоро» пропускаются:
- * пройти их пока нельзя.
+ * Путь обучения — рекомендуемый порядок шагов: регионы по порядку карты, внутри региона-сортировщика сначала
+ * уровни, потом уроки. Проходить темы можно в любом порядке, путь только подсказывает следующую. Регионы «скоро»
+ * пропускаются: пройти их пока нельзя.
  */
 export const PATH: Step[] = REGIONS.flatMap((r, region): Step[] => {
   if (r.kind === "soon") return [];
@@ -27,14 +27,12 @@ export const PATH: Step[] = REGIONS.flatMap((r, region): Step[] => {
 export const lessonDone = (p: Progress, lesson: Lesson) => lesson.tasks.every((_, i) => p.lessons[lesson.id]?.[i]);
 export const stepDone = (p: Progress, s: Step) => (s.kind === "lesson" ? lessonDone(p, s.lesson) : (p.stars[s.index] ?? 0) > 0);
 
-/** Первый непройденный шаг: он и все пройденные открыты, остальные закрыты. */
+/** Первый непройденный шаг — рекомендуемая следующая тема. */
 export const currentStep = (p: Progress): Step | undefined => PATH.find((s) => !stepDone(p, s));
 
-/** Шаг открыт, если он пройден или все шаги до него пройдены. */
-export function stepUnlocked(p: Progress, s: Step): boolean {
-  if (stepDone(p, s)) return true;
-  const i = PATH.indexOf(s);
-  return PATH.slice(0, i).every((x) => stepDone(p, x));
+/** Шаг открыт всегда: темы можно проходить в любом порядке. Прогресс нужен только для подсказок и экзаменов. */
+export function stepUnlocked(_p: Progress, s: Step): boolean {
+  return PATH.includes(s);
 }
 
 /** Какой шаг нужно пройти, чтобы открыть этот: первый непройденный перед ним. */
@@ -64,7 +62,7 @@ export const regionDone = (p: Progress, region: number) => {
   return steps.length > 0 && steps.every((s) => stepDone(p, s));
 };
 
-/** Регион открыт, если открыт его первый шаг. */
+/** Регион открыт, если в нём есть темы. */
 export const regionUnlocked = (p: Progress, region: number) => {
   const first = regionSteps(region)[0];
   return first ? stepUnlocked(p, first) : false;

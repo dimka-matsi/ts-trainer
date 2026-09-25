@@ -124,7 +124,7 @@ export function CourseLessonView({ course, lesson }: { course: Course; lesson: W
           <span className="dt-status-gap" />
           {examReady && <button type="button" className="btn ghost small" onClick={() => navigate({ view: "course-exam", course: course.id, region: lesson.region })}>Итоговый экзамен</button>}
           {after && (
-            <button type="button" className="btn small" disabled={!finished} title={finished ? undefined : "Откроется после всех упражнений"}
+            <button type="button" className={`btn small${finished ? "" : " ghost"}`}
               onClick={() => navigate({ view: "course-lesson", course: course.id, id: after.id })}>
               Дальше: {after.title}
             </button>

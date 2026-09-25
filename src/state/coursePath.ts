@@ -2,13 +2,12 @@ import type { Course, WebLesson } from "../content/course/types";
 import type { Flashcard } from "../content/flashcards";
 import type { Progress } from "./progress";
 
-/** Путь обучения курсов «Браузер» и «Оптимизация»: уроки открываются по порядку, как в TypeScript. */
+/** Путь обучения курсов на общем движке: рекомендуемый порядок уроков. Открыты все уроки, порядок только подсказывает следующий. */
 export const courseLessonDone = (p: Progress, l: WebLesson) => l.tasks.every((_, i) => p.lessons[l.id]?.[i]);
 
-export function courseLessonUnlocked(c: Course, p: Progress, l: WebLesson): boolean {
-  if (courseLessonDone(p, l)) return true;
-  const i = c.lessons.indexOf(l);
-  return c.lessons.slice(0, i).every((x) => courseLessonDone(p, x));
+/** Урок открыт всегда: разделы можно проходить в любом порядке. */
+export function courseLessonUnlocked(c: Course, _p: Progress, l: WebLesson): boolean {
+  return c.byId[l.id] === l;
 }
 
 export const courseCurrent = (c: Course, p: Progress) => c.lessons.find((l) => !courseLessonDone(p, l));
