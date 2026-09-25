@@ -15,11 +15,13 @@ export const lesson: WebLesson = {
       "Как с этим жить. Смотреть поддержку на caniuse.com и MDN. Метка Baseline говорит, что возможность работает во всех основных движках. Проект Interop — договорённость Apple, Google, Mozilla и Microsoft каждый год вместе чинить различия. Тестировать хотя бы в Chromium и Safari, а для новых возможностей делать запасной вариант, например через `@supports` в CSS.",
     ],
     flow: {
-      actors: ["Chrome, Edge,\nЯндекс", "Blink + V8", "Safari,\nвсе браузеры iOS", "WebKit +\nJavaScriptCore", "Firefox", "Gecko +\nSpiderMonkey"],
+      actors: ["Стандарт\nW3C, WHATWG", "Blink\nChrome, Edge, Яндекс", "WebKit\nSafari, все браузеры iOS", "Gecko\nFirefox"],
       steps: [
-        { from: 0, to: 1, label: "один движок" },
-        { from: 2, to: 3, label: "один движок" },
-        { from: 4, to: 5, label: "один движок" },
+        { from: 0, to: 0, label: "новое свойство CSS описано в стандарте" },
+        { from: 0, to: 1, label: "реализовано в Blink", note: "в Chrome уже работает" },
+        { from: 0, to: 3, label: "реализовано в Gecko через несколько месяцев" },
+        { from: 0, to: 2, label: "реализовано в WebKit позже всех", note: "до этого не работает ни в одном браузере на iPhone" },
+        { from: 0, to: 0, label: "работает во всех трёх движках", note: "метка Baseline: можно пользоваться без запасного варианта" },
       ],
     },
     keys: [
