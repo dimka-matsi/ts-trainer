@@ -36,17 +36,7 @@ export const REGIONS: Region[] = [
     { t: "Состояния loading / success / error", lesson: "n4", q: "Как описать состояние запроса, чтобы не было «данных без успеха»?" },
   ] },
   { name: "Функции", kind: "lessons", desc: "More on Functions: сигнатуры, дженерик-функции, перегрузки, `this`, `void` и `never`, async, rest-параметры, вариантность." },
-  { name: "Объекты", kind: "soon", desc: "Object Types: `readonly`, index signatures, `extends` и `&`, кортежи, `Object` против `object`.", topics: [
-    { t: "Object, {} и object", q: "Чем отличаются `Object`, `{}` и `object`?" },
-    { t: "readonly и index signatures", q: "Защищает ли `readonly` вложенные объекты? Чем `readonly` отличается от `const`?" },
-    { t: "Excess property checks", q: "Почему лишнее поле ловится в литерале, но не в переменной?" },
-    { t: "extends против &", q: "Чем `extends` отличается от пересечения?" },
-    { t: "Generic object types", q: "Зачем дженерик-интерфейсы вроде `Box<T>`?" },
-    { t: "Кортежи и variadic tuples", q: "Чем кортеж отличается от массива? Что такое `[...T, U]`?" },
-    { t: "ReadonlyArray и readonly-кортежи", q: "Как запретить изменять массив, который передали в функцию?" },
-    { t: "Symbol и unique symbol", q: "Что такое `unique symbol` и зачем символы как ключи?" },
-    { t: "Итераторы и генераторы", q: "Как типизировать генератор и что такое `Iterable<T>`?" },
-  ] },
+  { name: "Объекты", kind: "lessons", desc: "Object Types: `Object`, `{}` и `object`, `readonly`, index signatures, лишние свойства, `extends` и `&`, дженерик-объекты, кортежи, readonly-массивы, символы, итераторы." },
   { name: "Кузница дженериков", kind: "lessons", desc: "`keyof` и `T[K]`, параметр-ключ, `typeof` в типах, параметры по умолчанию, дженерик-классы, `<const T>`." },
   { name: "Мастерская утилит", kind: "lessons", desc: "Все 22 утилиты из справочника Utility Types: применение и как написать свои." },
   { name: "Башня условий", kind: "soon", desc: "Conditional, mapped и template literal types — программирование на уровне типов.", topics: [

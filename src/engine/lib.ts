@@ -13,6 +13,7 @@ export const LIB_FILES = [
   "lib.es2015.symbol.d.ts",
   "lib.es2015.symbol.wellknown.d.ts",
   "lib.es2015.iterable.d.ts",
+  "lib.es2015.generator.d.ts",
   "lib.es2015.core.d.ts",
   "lib.es2015.collection.d.ts",
   "lib.es2015.promise.d.ts",

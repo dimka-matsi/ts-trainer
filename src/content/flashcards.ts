@@ -1154,7 +1154,8 @@ const LESSON_CARDS: Flashcard[] = LESSONS.filter((l) => !CARD_QUESTIONS.has(l.q)
   level: l.region === 0 ? "junior" : "middle",
   q: l.q,
   a: l.answer,
-  code: LESSON_EXAMPLES[l.id],
+  // Короткий пример для карточки; если его нет — пример из теории урока, он уже проверен компилятором.
+  code: LESSON_EXAMPLES[l.id] ?? l.theory.example,
 }));
 
 export const FLASHCARDS: Flashcard[] = [...LESSON_CARDS, ...CARDS];

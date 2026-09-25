@@ -5,6 +5,7 @@ import es5 from "typescript/lib/lib.es5.d.ts?raw";
 import symbol from "typescript/lib/lib.es2015.symbol.d.ts?raw";
 import symbolWellknown from "typescript/lib/lib.es2015.symbol.wellknown.d.ts?raw";
 import iterable from "typescript/lib/lib.es2015.iterable.d.ts?raw";
+import generator from "typescript/lib/lib.es2015.generator.d.ts?raw";
 import core from "typescript/lib/lib.es2015.core.d.ts?raw";
 import collection from "typescript/lib/lib.es2015.collection.d.ts?raw";
 import promise from "typescript/lib/lib.es2015.promise.d.ts?raw";
@@ -15,6 +16,6 @@ import { buildLib } from "./lib";
 
 // Порядок совпадает с LIB_FILES в lib.ts.
 export const LIB = buildLib([
-  decorators, decoratorsLegacy, es5, symbol, symbolWellknown, iterable,
+  decorators, decoratorsLegacy, es5, symbol, symbolWellknown, iterable, generator,
   core, collection, promise, arrayInclude, object2017, string2017,
 ]);
