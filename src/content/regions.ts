@@ -58,13 +58,7 @@ export const REGIONS: Region[] = [
     { t: "Namespaces", q: "Что такое `namespace` и нужен ли он в новом коде?" },
     { t: "Декораторы", q: "Что такое декораторы и чем стандартные отличаются от `experimentalDecorators`?" },
   ] },
-  { name: "Контракты", kind: "soon", desc: "Где заканчивается TypeScript и начинается рантайм: guards, `strict`, данные из сети, branded types.", topics: [
-    { t: "Type guards и asserts", q: "Как проверить данные из сети и не соврать компилятору?" },
-    { t: "strict и полезные флаги", q: "Что включает `strict` и чего в нём нет?" },
-    { t: "unknown в catch", q: "Почему в `catch (e)` тип `unknown` и как с ним работать?" },
-    { t: "API без any", q: "Сервер вернул не ту форму данных. Как типизировать ответ API без `any`?" },
-    { t: "Branded types", q: "Как получить номинальную типизацию?" },
-  ] },
+  { name: "Контракты", kind: "lessons", desc: "Где заканчиваются типы и начинается проверка во время работы: данные из сети, схемы валидации, `unknown` в `catch`, `strict` и флаги сверх него, branded types, `Result` вместо исключений." },
   { name: "TS и React", kind: "soon", desc: "Пропсы, события, хуки, дженерик-компоненты — то, что спрашивают у фронтендеров.", topics: [
     { t: "JSX в TypeScript", q: "Что делают настройка `jsx` и расширение `.tsx`?" },
     { t: "Пропсы и children", q: "Чем отличаются `ReactNode`, `ReactElement` и `JSX.Element`?" },
