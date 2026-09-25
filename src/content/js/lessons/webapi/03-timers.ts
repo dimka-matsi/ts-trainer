@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "wa3",
   region: 7,
+  level: "junior",
   title: "Таймеры и requestAnimationFrame",
   q: "Чем `setInterval` отличается от рекурсивного `setTimeout`? Зачем нужен `requestAnimationFrame`?",
   answer:

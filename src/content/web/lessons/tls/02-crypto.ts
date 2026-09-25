@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "tls2",
   region: 3,
+  level: "middle",
   title: "Симметричное и асимметричное шифрование",
   q: "Чем симметричное шифрование отличается от асимметричного и почему TLS использует оба?",
   answer:

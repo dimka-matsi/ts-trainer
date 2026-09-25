@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "lc3",
   region: 9,
+  level: "middle",
   title: "deepClone",
   q: "Напиши глубокое копирование объекта. Как обработать даты, `Map`, `Set` и циклические ссылки?",
   answer:

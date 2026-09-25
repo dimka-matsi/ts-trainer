@@ -6,6 +6,7 @@ const STREAM = "retry: 3000\n\nid: 42\nevent: order\ndata: {\"status\":\"отп�
 export const lesson: WebLesson = {
   id: "rt2",
   region: 8,
+  level: "middle",
   title: "Server-Sent Events",
   q: "Что такое Server-Sent Events и когда их хватит вместо WebSocket?",
   answer:

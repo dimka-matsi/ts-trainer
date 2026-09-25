@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "lc13",
   region: 9,
+  level: "middle",
   title: "get по пути: `a.b[0].c`",
   q: "Напиши `get(obj, path, defaultValue)`, как в lodash: достать вложенное значение по строке `\"a.b[0].c\"`.",
   answer:

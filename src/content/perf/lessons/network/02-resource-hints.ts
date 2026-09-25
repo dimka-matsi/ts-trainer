@@ -6,6 +6,7 @@ const HEAD = "<link rel=\"preconnect\" href=\"https://cdn.shop.ru\" crossorigin>
 export const lesson: WebLesson = {
   id: "perf2",
   region: 1,
+  level: "middle",
   title: "preload, prefetch, preconnect",
   q: "Чем отличаются `preload`, `prefetch`, `preconnect` и `dns-prefetch`?",
   answer:

@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "arr1",
   region: 4,
+  level: "junior",
   title: "map, filter, reduce и другие методы перебора",
   q: "Чем отличаются `forEach`, `map`, `filter` и `reduce`? Что вернёт каждый?",
   answer:

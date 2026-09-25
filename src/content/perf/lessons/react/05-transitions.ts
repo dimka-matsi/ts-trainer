@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "rx5",
   region: 5,
+  level: "middle",
   title: "useTransition и useDeferredValue",
   q: "Как сделать, чтобы ввод не тормозил, пока React перерисовывает большой список? Зачем `useTransition` и `useDeferredValue`?",
   answer:

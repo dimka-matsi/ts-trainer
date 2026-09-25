@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "ui6",
   region: 0,
+  level: "middle",
   title: "Как искать тормоза",
   q: "Как найти, почему страница медленная? Чем лабораторные замеры отличаются от данных реальных пользователей?",
   answer:

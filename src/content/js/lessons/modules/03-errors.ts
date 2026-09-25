@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "mod3",
   region: 8,
+  level: "junior",
   title: "Обработка ошибок",
   q: "Как работают `try`, `catch` и `finally`? Поймает ли `try/catch` ошибку из `setTimeout` или промиса?",
   answer:

@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "dom2",
   region: 6,
+  level: "junior",
   title: "Всплытие и погружение событий",
   q: "Что такое всплытие и погружение событий? Чем `event.target` отличается от `event.currentTarget`?",
   answer:

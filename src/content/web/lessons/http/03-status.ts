@@ -4,6 +4,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "http3",
   region: 2,
+  level: "junior",
   title: "Коды ответа",
   q: "Чем 401 отличается от 403, 301 от 302 и 307, а 502 от 504?",
   answer:

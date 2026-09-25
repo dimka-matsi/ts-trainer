@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "asy6",
   region: 5,
+  level: "middle",
   title: "Разбор: задачи на порядок вывода",
   q: "Что выведет код, где смешаны `setTimeout`, промисы и `async/await`? Как рассуждать?",
   answer:

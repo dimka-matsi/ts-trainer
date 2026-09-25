@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "http7",
   region: 2,
+  level: "middle",
   title: "HTTP/1.1, HTTP/2 и HTTP/3",
   q: "Что изменилось в HTTP/2 и HTTP/3 и зачем?",
   answer:

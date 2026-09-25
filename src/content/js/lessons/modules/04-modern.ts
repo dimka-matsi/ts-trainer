@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "mod4",
   region: 8,
+  level: "middle",
   title: "Что нового в ES2020–ES2025",
   q: "Какие новые возможности JavaScript последних лет ты используешь?",
   answer:

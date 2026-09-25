@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "mod2",
   region: 8,
+  level: "middle",
   title: "Строгий режим",
   q: "Что такое строгий режим и что он меняет?",
   answer:

@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "ck9",
   region: 4,
+  level: "senior",
   title: "Двухфакторная аутентификация и passkeys",
   q: "Какие бывают вторые факторы? Что такое passkeys и почему они защищают от фишинга?",
   answer:

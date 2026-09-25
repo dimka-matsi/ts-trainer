@@ -4,6 +4,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "ck4",
   region: 0,
+  level: "middle",
   title: "Сторонние cookies",
   q: "Что такое сторонние cookies и почему браузеры их ограничивают?",
   answer:

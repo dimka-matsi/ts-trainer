@@ -4,6 +4,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "perf1",
   region: 1,
+  level: "junior",
   title: "Сжатие: gzip, Brotli и zstd",
   q: "Как работает сжатие ответов? Чем Brotli лучше gzip и что сжимать не стоит?",
   answer:

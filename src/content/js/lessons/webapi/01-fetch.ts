@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "wa1",
   region: 7,
+  level: "middle",
   title: "fetch и отмена запросов",
   q: "Как работает `fetch`? Отклонится ли промис при ответе 404? Как отменить запрос?",
   answer:

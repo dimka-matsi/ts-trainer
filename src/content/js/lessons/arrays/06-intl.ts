@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "arr6",
   region: 4,
+  level: "middle",
   title: "Intl: сортировка строк, числа и множественное число",
   q: "Как правильно отсортировать строки на русском, отформатировать число и выбрать форму слова: «1 файл, 2 файла, 5 файлов»?",
   answer:

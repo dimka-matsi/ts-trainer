@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "jsx3",
   region: 0,
+  level: "junior",
   title: "Условия, списки и ключи",
   q: "Как рендерить списки и зачем нужен `key`? Почему нельзя брать индекс массива в качестве ключа?",
   answer:

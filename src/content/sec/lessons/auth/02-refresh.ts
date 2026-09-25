@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "ck6",
   region: 4,
+  level: "middle",
   title: "Access- и refresh-токены",
   q: "Зачем нужны два токена — access и refresh — и как обновить короткий токен?",
   answer:

@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "lc6",
   region: 9,
+  level: "middle",
   title: "memoize",
   q: "Напиши `memoize(fn)`. Как построить ключ кэша и когда мемоизация вредна?",
   answer:

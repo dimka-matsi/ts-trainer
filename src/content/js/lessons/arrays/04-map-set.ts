@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "arr4",
   region: 4,
+  level: "middle",
   title: "Map, Set, WeakMap и WeakSet",
   q: "Чем `Map` отличается от объекта, а `Set` — от массива? Зачем нужны `WeakMap` и `WeakSet`?",
   answer:

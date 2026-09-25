@@ -6,6 +6,7 @@ const HTML = "<img src=\"/img/hero.avif\" fetchpriority=\"high\" width=\"1200\" 
 export const lesson: WebLesson = {
   id: "perf4",
   region: 1,
+  level: "junior",
   title: "Ленивая загрузка",
   q: "Как отложить загрузку картинок и iframe ниже первого экрана? Какую картинку лениво грузить нельзя?",
   answer:

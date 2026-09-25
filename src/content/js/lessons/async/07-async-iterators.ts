@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "asy7",
   region: 5,
+  level: "senior",
   title: "Асинхронные генераторы и for await",
   q: "Что такое асинхронный итератор и `for await...of`? Когда они нужны?",
   answer:

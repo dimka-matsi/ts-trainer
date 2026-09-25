@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "sq4",
   region: 7,
+  level: "middle",
   title: "RTK Query и выбор библиотеки",
   q: "Что такое RTK Query и чем он отличается от TanStack Query? Что выбрать?",
   answer:

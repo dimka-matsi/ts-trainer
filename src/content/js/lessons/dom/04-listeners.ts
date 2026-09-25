@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "dom4",
   region: 6,
+  level: "middle",
   title: "addEventListener: опции, preventDefault и снятие",
   q: "Какие опции есть у `addEventListener`? Как правильно снять обработчик и чем `preventDefault` отличается от `stopPropagation`?",
   answer:

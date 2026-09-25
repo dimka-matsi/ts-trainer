@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "hk4",
   region: 2,
+  level: "middle",
   title: "Когда эффект не нужен",
   q: "Когда `useEffect` не нужен? Какие ошибки с эффектами делают чаще всего?",
   answer:

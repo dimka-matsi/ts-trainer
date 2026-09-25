@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "mbx1",
   region: 6,
+  level: "senior",
   title: "MobX: наблюдаемые объекты",
   q: "В чём разница между Redux и MobX? Как MobX понимает, какой компонент перерисовать?",
   answer:

@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "rdx3",
   region: 5,
+  level: "middle",
   title: "Middleware и асинхронность: thunk и saga",
   q: "Как в Redux работать с асинхронными запросами? Что такое middleware и чем thunk отличается от saga?",
   answer:

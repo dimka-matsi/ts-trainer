@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "dns1",
   region: 1,
+  level: "junior",
   title: "Путь DNS-запроса",
   q: "Как браузер находит IP-адрес по имени сайта? Расскажи путь DNS-запроса.",
   answer:

@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "bnd4",
   region: 2,
+  level: "middle",
   title: "Полифилы, browserslist и цель сборки",
   q: "Как полифилы и настройки поддержки браузеров влияют на размер бандла?",
   answer:

@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "dom7",
   region: 6,
+  level: "middle",
   title: "Формы: события, FormData и проверка",
   q: "Чем событие `input` отличается от `change`? Как собрать данные формы и проверить их без библиотек?",
   answer:

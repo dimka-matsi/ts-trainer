@@ -13,6 +13,7 @@ const img = (name: string, start: number, size: string, wait: number, load: numb
 export const lesson: WebLesson = {
   id: "case2",
   region: 7,
+  level: "middle",
   title: "Лента с картинками как в Instagram",
   q: "Приложение как Instagram: лента с большим количеством картинок, и всё долго грузится. Что будете делать?",
   answer:

@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "case4",
   region: 7,
+  level: "senior",
   title: "Тяжёлая таблица в админке",
   q: "Таблица на 20 000 строк с фильтрами и сортировкой тормозит: ввод в фильтр залипает, прокрутка дёргается. Что будете делать?",
   answer:

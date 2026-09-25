@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "bnd1",
   region: 2,
+  level: "middle",
   title: "Как работает сборщик: webpack",
   q: "Что делает webpack? Что такое точка входа, граф модулей, лоадеры, плагины и чанки?",
   answer:

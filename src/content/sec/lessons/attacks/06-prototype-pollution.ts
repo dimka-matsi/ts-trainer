@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "sec10",
   region: 2,
+  level: "senior",
   title: "Prototype pollution",
   q: "Что такое prototype pollution и чем она опасна?",
   answer:

@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "arr7",
   region: 4,
+  level: "middle",
   title: "Регулярные выражения",
   q: "Как работают регулярные выражения в JavaScript? Какие подвохи у флага `g`?",
   answer:

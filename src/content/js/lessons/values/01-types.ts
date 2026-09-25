@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "val1",
   region: 0,
+  level: "junior",
   title: "Восемь типов и typeof",
   q: "Какие типы данных есть в JavaScript? Что вернёт `typeof null` и почему?",
   answer:

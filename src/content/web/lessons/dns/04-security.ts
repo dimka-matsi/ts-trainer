@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "dns4",
   region: 1,
+  level: "senior",
   title: "Подмена DNS, DNS over HTTPS и DNSSEC",
   q: "Что такое DNS over HTTPS и чем опасна подмена DNS-ответа?",
   answer:

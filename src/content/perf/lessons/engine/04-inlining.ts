@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "js4",
   region: 6,
+  level: "senior",
   title: "Встраивание функций и деоптимизация",
   q: "Что такое встраивание функций (inlining) и почему код может внезапно стать медленнее?",
   answer:

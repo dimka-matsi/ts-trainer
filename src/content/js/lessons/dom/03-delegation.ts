@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "dom3",
   region: 6,
+  level: "middle",
   title: "Делегирование событий",
   q: "Что такое делегирование событий и зачем оно нужно?",
   answer:

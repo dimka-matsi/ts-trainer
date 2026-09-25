@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "tls4",
   region: 3,
+  level: "senior",
   title: "Рукопожатие TLS 1.3",
   q: "Что происходит при рукопожатии TLS и сколько оно длится?",
   answer:

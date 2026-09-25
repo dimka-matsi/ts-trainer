@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "rp1",
   region: 9,
+  level: "middle",
   title: "Как найти лишние ререндеры: Profiler",
   q: "Как найти, какие компоненты перерисовываются лишний раз и сколько это стоит? Что такое `<Profiler>`?",
   answer:

@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "lc11",
   region: 9,
+  level: "senior",
   title: "Ограничение параллельности: пул промисов",
   q: "Нужно загрузить 100 файлов, но не больше 3 одновременно. Напиши `runWithLimit(tasks, limit)`.",
   answer:

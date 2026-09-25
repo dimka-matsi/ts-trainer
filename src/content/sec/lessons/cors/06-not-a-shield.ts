@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "cors6",
   region: 1,
+  level: "middle",
   title: "CORS не защищает сервер",
   q: "Защищает ли CORS от CSRF? Почему запрос из curl проходит без CORS? Как обходят CORS в разработке?",
   answer:

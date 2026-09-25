@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "fun2",
   region: 2,
+  level: "middle",
   title: "Как определяется this",
   q: "Как определяется `this` в JavaScript? Чем отличаются `call`, `apply` и `bind`?",
   answer:

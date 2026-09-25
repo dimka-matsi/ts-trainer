@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "rn5",
   region: 3,
+  level: "senior",
   title: "useTransition, useDeferredValue и startTransition",
   q: "Зачем нужны `useTransition` и `useDeferredValue`? Чем они отличаются?",
   answer:

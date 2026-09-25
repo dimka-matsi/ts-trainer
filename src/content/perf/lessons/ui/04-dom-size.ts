@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "ui4",
   region: 4,
+  level: "middle",
   title: "Размер DOM и content-visibility",
   q: "Почему большой DOM замедляет страницу и как помогают `content-visibility` и `contain`?",
   answer:

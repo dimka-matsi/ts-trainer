@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "js2",
   region: 6,
+  level: "senior",
   title: "Скрытые классы",
   q: "Что такое скрытые классы (hidden classes, shapes) и почему важен порядок полей объекта?",
   answer:

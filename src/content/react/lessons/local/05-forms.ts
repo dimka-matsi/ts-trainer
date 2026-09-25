@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "st5",
   region: 1,
+  level: "junior",
   title: "Формы: управляемые и неуправляемые поля",
   q: "Чем управляемое поле отличается от неуправляемого? Что выбрать?",
   answer:

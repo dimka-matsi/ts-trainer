@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "obj5",
   region: 3,
+  level: "middle",
   title: "Дескрипторы, геттеры и заморозка",
   q: "Что такое дескриптор свойства? Чем `Object.freeze` отличается от `Object.seal`?",
   answer:

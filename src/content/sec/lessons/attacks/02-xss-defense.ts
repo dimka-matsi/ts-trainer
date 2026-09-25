@@ -4,6 +4,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "sec2",
   region: 2,
+  level: "junior",
   title: "Защита от XSS",
   q: "Как защищаются от XSS?",
   answer:

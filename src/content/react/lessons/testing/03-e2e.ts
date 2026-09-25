@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "tst3",
   region: 13,
+  level: "middle",
   title: "E2E-тесты: Playwright и пирамида тестов",
   q: "Чем E2E-тесты отличаются от модульных и компонентных? Как писать их так, чтобы они не были нестабильными?",
   answer:

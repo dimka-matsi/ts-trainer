@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "case5",
   region: 7,
+  level: "senior",
   title: "«Кнопка отвечает через полсекунды»: разбор INP",
   q: "У страницы плохой INP: после клика по фильтру интерфейс замирает на 600 мс. Как найти причину и исправить?",
   answer:

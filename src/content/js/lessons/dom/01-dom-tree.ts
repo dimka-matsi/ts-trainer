@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "dom1",
   region: 6,
+  level: "junior",
   title: "DOM: дерево, поиск и изменение",
   q: "Что такое DOM? Чем `querySelectorAll` отличается от `getElementsByClassName`, а `textContent` — от `innerHTML`?",
   answer:

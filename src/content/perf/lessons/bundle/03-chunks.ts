@@ -13,6 +13,7 @@ const js = (name: string, start: number, size: string, wait = 30): NetRequest =>
 export const lesson: WebLesson = {
   id: "bnd2",
   region: 2,
+  level: "middle",
   title: "Чанки: splitChunks и динамический импорт",
   q: "Как webpack делит код на чанки? Что делают динамический `import()` и `splitChunks`?",
   answer:

@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "st4",
   region: 1,
+  level: "middle",
   title: "Виды состояния: интерфейс, клиент, сервер",
   q: "Какие бывают виды состояния во фронтенде и почему данные с сервера — особый случай?",
   answer:

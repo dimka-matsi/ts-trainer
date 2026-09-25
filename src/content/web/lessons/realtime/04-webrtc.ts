@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "rt4",
   region: 8,
+  level: "senior",
   title: "WebRTC",
   q: "Как два браузера связываются напрямую? Зачем серверы STUN и TURN?",
   answer:

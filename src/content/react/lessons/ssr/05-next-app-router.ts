@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "ssr5",
   region: 11,
+  level: "senior",
   title: "Next.js App Router",
   q: "Как устроен App Router в Next.js? Что делают `layout`, `page`, `loading` и `error`, и как в нём кэшируются данные?",
   answer:

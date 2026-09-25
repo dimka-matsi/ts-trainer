@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "rp2",
   region: 9,
+  level: "senior",
   title: "React Compiler",
   q: "Что такое React Compiler и что он меняет в работе с `useMemo`, `useCallback` и `memo`?",
   answer:

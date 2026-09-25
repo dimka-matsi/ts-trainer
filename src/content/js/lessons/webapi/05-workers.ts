@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "wa5",
   region: 7,
+  level: "senior",
   title: "Web Workers и Service Workers",
   q: "Что такое Web Worker? Чем он отличается от Service Worker? Как передаются данные между потоками?",
   answer:

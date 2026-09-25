@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "dom8",
   region: 6,
+  level: "middle",
   title: "Размеры, координаты и прокрутка",
   q: "Чем отличаются `offsetWidth`, `clientWidth`, `scrollWidth` и `getBoundingClientRect`? Чем `clientX` отличается от `pageX`?",
   answer:

@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "net5",
   region: 0,
+  level: "junior",
   title: "Что происходит после ввода URL",
   q: "Что происходит, когда вводишь адрес сайта в браузере и нажимаешь Enter?",
   answer:

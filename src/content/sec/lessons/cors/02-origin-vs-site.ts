@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "cors2",
   region: 1,
+  level: "middle",
   title: "Same-origin и same-site",
   q: "Чем «тот же источник» (same-origin) отличается от «того же сайта» (same-site)?",
   answer:

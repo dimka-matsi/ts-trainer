@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "ssr1",
   region: 11,
+  level: "senior",
   title: "SSR, гидратация и стриминг",
   q: "Что такое SSR и гидратация? Откуда берутся ошибки гидратации и что даёт потоковый рендеринг?",
   answer:

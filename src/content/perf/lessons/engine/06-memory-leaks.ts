@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "js6",
   region: 6,
+  level: "middle",
   title: "Утечки памяти",
   q: "Откуда берутся утечки памяти во фронтенде и как их найти?",
   answer:

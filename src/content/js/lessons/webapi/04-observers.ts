@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "wa4",
   region: 7,
+  level: "middle",
   title: "IntersectionObserver, ResizeObserver, MutationObserver",
   q: "Зачем нужны `IntersectionObserver`, `ResizeObserver` и `MutationObserver`? Почему они лучше обработчика `scroll`?",
   answer:

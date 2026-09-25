@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "rn4",
   region: 3,
+  level: "senior",
   title: "Fiber и конкурентный рендеринг",
   q: "Что такое Fiber? Что изменил конкурентный рендеринг в React 18?",
   answer:

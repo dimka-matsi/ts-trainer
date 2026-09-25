@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "hk5",
   region: 2,
+  level: "middle",
   title: "useRef, ref как проп и useImperativeHandle",
   q: "Что такое `useRef` и чем ref отличается от состояния? Как передать ref в свой компонент?",
   answer:

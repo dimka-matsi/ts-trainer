@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "tls3",
   region: 3,
+  level: "middle",
   title: "Сертификаты и цепочка доверия",
   q: "Как браузер проверяет, что сертификат сайта настоящий?",
   answer:

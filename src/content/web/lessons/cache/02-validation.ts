@@ -6,6 +6,7 @@ const CSS = "body{margin:0;font-family:system-ui}";
 export const lesson: WebLesson = {
   id: "cache2",
   region: 4,
+  level: "middle",
   title: "ETag и 304 Not Modified",
   q: "Как браузер проверяет, изменился ли файл, не скачивая его заново?",
   answer:

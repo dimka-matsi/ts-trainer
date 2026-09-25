@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "dns2",
   region: 1,
+  level: "junior",
   title: "Типы DNS-записей",
   q: "Какие типы DNS-записей ты знаешь? На что указывает MX и чем CNAME отличается от A?",
   answer:

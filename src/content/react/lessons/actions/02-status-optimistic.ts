@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "ac2",
   region: 10,
+  level: "middle",
   title: "`useFormStatus` и `useOptimistic`",
   q: "Зачем нужны `useFormStatus` и `useOptimistic`? Какие у них подвохи?",
   answer:

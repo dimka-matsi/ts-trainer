@@ -4,6 +4,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "case3",
   region: 7,
+  level: "senior",
   title: "Медленная первая загрузка SPA",
   q: "Одностраничное приложение на React первый раз открывается 6 секунд. Что будете делать?",
   answer:

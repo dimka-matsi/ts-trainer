@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "ac3",
   region: 10,
+  level: "middle",
   title: "Что нового в React 18 и 19",
   q: "Что изменилось в React 18 и React 19? Что появилось в 19.2 и 19.3?",
   answer:

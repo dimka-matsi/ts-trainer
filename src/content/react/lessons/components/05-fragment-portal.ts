@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "jsx5",
   region: 0,
+  level: "middle",
   title: "Fragment, порталы и StrictMode",
   q: "Зачем нужны Fragment, порталы и StrictMode?",
   answer:

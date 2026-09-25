@@ -4,6 +4,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "ck1",
   region: 2,
+  level: "junior",
   title: "Как устроены cookies",
   q: "Как сервер ставит cookie и когда браузер её отправляет? Что задают `Domain`, `Path` и `Max-Age`?",
   answer:

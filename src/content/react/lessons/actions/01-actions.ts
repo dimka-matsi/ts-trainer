@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "ac1",
   region: 10,
+  level: "middle",
   title: "Actions: `<form action>` и `useActionState`",
   q: "Что такое Actions в React 19? Как работают `<form action={…}>` и `useActionState`?",
   answer:

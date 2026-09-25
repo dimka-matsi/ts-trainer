@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "bnd3",
   region: 2,
+  level: "middle",
   title: "Vite против webpack",
   q: "Чем Vite отличается от webpack и почему dev-сервер Vite стартует мгновенно?",
   answer:

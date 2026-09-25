@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "fun3",
   region: 2,
+  level: "junior",
   title: "Стрелочные функции",
   q: "Чем стрелочная функция отличается от обычной?",
   answer:

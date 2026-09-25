@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "obj2",
   region: 3,
+  level: "middle",
   title: "Прототипы и цепочка прототипов",
   q: "Что такое прототип и прототипное наследование? Чем `__proto__` отличается от `prototype`?",
   answer:

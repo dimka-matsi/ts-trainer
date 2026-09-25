@@ -4,6 +4,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "sec6",
   region: 3,
+  level: "middle",
   title: "Subresource Integrity и чужой код",
   q: "Как убедиться, что скрипт с CDN не подменили? Чем опасны зависимости из npm?",
   answer:

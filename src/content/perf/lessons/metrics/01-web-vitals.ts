@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "perf5",
   region: 0,
+  level: "junior",
   title: "Core Web Vitals",
   q: "Что измеряют LCP, INP и CLS и как их улучшить?",
   answer:

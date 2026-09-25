@@ -4,6 +4,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "tls5",
   region: 3,
+  level: "middle",
   title: "HSTS",
   q: "Зачем заголовок `Strict-Transport-Security` и что такое HSTS preload?",
   answer:

@@ -4,6 +4,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "perf9",
   region: 1,
+  level: "middle",
   title: "Мгновенные переходы: Speculation Rules",
   q: "Как сделать переход на следующую страницу мгновенным без SPA? Что такое Speculation Rules?",
   answer:

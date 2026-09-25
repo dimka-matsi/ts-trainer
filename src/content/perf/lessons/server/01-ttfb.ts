@@ -4,6 +4,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "srv1",
   region: 3,
+  level: "middle",
   title: "TTFB и Server-Timing",
   q: "Что такое TTFB, из чего он складывается и как понять, где сервер тратит время?",
   answer:

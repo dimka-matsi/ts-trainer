@@ -1,5 +1,6 @@
 import type { Flashcard } from "../flashcards";
 import { makeCourse, type WebLesson, type WebRegion } from "../course/types";
+import { FOLLOW_UPS } from "./interview";
 import { lessons as arrays } from "./lessons/arrays";
 import { lessons as async } from "./lessons/async";
 import { lessons as dom } from "./lessons/dom";
@@ -54,15 +55,10 @@ const EXTRA_CARDS: Flashcard[] = [
     a: "Память освобождается автоматически по достижимости: объект жив, пока до него можно дойти по ссылкам от корней — глобальных переменных, стека вызовов, активных замыканий. Базовый алгоритм — mark-and-sweep: пометить всё достижимое и удалить остальное. Движки делят кучу на поколения: молодые объекты собираются часто и быстро, пережившие — реже. Циклические ссылки не мешают сборке, если весь цикл недостижим.",
   },
   {
-    id: "js-node-event-loop", region: 5, level: "senior",
-    q: "Чем event loop в Node.js отличается от браузерного?",
-    a: "В Node.js event loop построен на libuv и идёт по фазам: таймеры, отложенные колбэки ввода-вывода, опрос ввода-вывода, `setImmediate`, закрытие ресурсов. Между колбэками выполняются очередь `process.nextTick` и затем микрозадачи промисов — `nextTick` раньше. Отрисовки нет. Порядок `setTimeout(fn, 0)` и `setImmediate` в основном скрипте не определён, а внутри колбэка ввода-вывода `setImmediate` всегда раньше.",
-  },
-  {
     id: "js-memory-leaks", region: 7, level: "middle",
     q: "Какие бывают утечки памяти во фронтенде и как их найти?",
     a: "Типичные утечки: забытые таймеры и `setInterval`, обработчики событий на `window` и `document`, которые не сняли при уходе со страницы или размонтировании, отсоединённые элементы DOM, на которые осталась ссылка, растущие кэши и массивы без ограничения, замыкания, держащие большие данные. Находят во вкладке Memory в DevTools: снимки кучи до и после действия и поиск объектов, которые должны были исчезнуть. Лечат очисткой в эффектах, `AbortController` для обработчиков и `WeakMap` для кэшей.",
   },
 ];
 
-export const JS = makeCourse("js", "JavaScript", REGIONS, REGION_LESSONS, EXTRA_CARDS, "jsc", 500, { withCode: true, runnable: true });
+export const JS = makeCourse("js", "JavaScript", REGIONS, REGION_LESSONS, EXTRA_CARDS, "jsc", 500, { withCode: true, runnable: true, followUps: FOLLOW_UPS });

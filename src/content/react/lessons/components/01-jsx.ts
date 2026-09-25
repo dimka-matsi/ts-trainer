@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "jsx1",
   region: 0,
+  level: "junior",
   title: "JSX и элементы",
   q: "Что такое JSX и во что он превращается? Чем компонент отличается от элемента?",
   answer:

@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "scp1",
   region: 1,
+  level: "junior",
   title: "var, let и const",
   q: "Чем отличаются `var`, `let` и `const`?",
   answer:

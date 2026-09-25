@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "val3",
   region: 0,
+  level: "junior",
   title: "Приведение типов",
   q: "Как работает приведение типов в JavaScript? Почему `1 + \"2\"` — это `\"12\"`, а `\"5\" - 2` — это `3`?",
   answer:

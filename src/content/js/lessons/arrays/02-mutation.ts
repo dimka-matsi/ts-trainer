@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "arr2",
   region: 4,
+  level: "junior",
   title: "Мутирующие методы и toSorted",
   q: "Какие методы массива меняют исходный массив? Почему `[10, 1, 2].sort()` даёт `[1, 10, 2]`?",
   answer:

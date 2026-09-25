@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "ck7",
   region: 4,
+  level: "senior",
   title: "OAuth 2.0 и OpenID Connect",
   q: "Как работает вход через Google? Что такое OAuth 2.0, authorization code и PKCE?",
   answer:

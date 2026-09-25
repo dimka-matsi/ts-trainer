@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "ui2",
   region: 4,
+  level: "middle",
   title: "Web Workers",
   q: "Что такое Web Worker, когда он нужен и какие у него ограничения?",
   answer:

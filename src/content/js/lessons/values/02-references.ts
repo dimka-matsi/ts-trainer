@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "val2",
   region: 0,
+  level: "junior",
   title: "Примитивы и ссылки",
   q: "Чем примитивы отличаются от объектов при присваивании, сравнении и передаче в функцию?",
   answer:

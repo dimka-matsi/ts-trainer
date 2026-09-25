@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "sec9",
   region: 2,
+  level: "middle",
   title: "Инъекции на сервере и SSRF",
   q: "Что такое SQL-инъекция и SSRF? Как от них защищаются?",
   answer:

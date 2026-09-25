@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "net3",
   region: 0,
+  level: "middle",
   title: "TCP: рукопожатие и надёжная доставка",
   q: "Как TCP устанавливает соединение и за счёт чего гарантирует доставку?",
   answer:

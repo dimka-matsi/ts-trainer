@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "rnd1",
   region: 7,
+  level: "junior",
   title: "Critical rendering path",
   q: "Что происходит от получения HTML до первого кадра на экране?",
   answer:

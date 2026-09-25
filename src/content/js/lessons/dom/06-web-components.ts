@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "dom6",
   region: 6,
+  level: "senior",
   title: "Web Components и Shadow DOM",
   q: "Что такое Web Components? Зачем нужен Shadow DOM?",
   answer:

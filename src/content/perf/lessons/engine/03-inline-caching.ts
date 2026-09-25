@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "js3",
   region: 6,
+  level: "senior",
   title: "Inline caching",
   q: "Что такое inline caching и чем мономорфный доступ отличается от мегаморфного?",
   answer:

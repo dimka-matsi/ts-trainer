@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "val8",
   region: 0,
+  level: "middle",
   title: "Symbol",
   q: "Что такое `Symbol` и зачем он нужен?",
   answer:

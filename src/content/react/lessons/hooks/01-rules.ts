@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "hk1",
   region: 2,
+  level: "junior",
   title: "Правила хуков",
   q: "Какие есть правила хуков и почему хуки нельзя вызывать в условиях?",
   answer:

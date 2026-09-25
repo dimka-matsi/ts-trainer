@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "pb1",
   region: 0,
+  level: "middle",
   title: "Бюджеты производительности",
   q: "Что такое бюджет производительности и как не дать сайту снова стать медленным?",
   answer:

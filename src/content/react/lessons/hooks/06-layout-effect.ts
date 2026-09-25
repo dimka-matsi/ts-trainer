@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "hk6",
   region: 2,
+  level: "senior",
   title: "useLayoutEffect и useInsertionEffect",
   q: "Чем `useLayoutEffect` отличается от `useEffect`? Когда нужен `useInsertionEffect`?",
   answer:

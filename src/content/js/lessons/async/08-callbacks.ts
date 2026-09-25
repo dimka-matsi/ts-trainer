@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "asy8",
   region: 5,
+  level: "middle",
   title: "Колбэки, callback hell и промисификация",
   q: "Что такое callback hell? Как превратить функцию с колбэком в функцию с промисом?",
   answer:

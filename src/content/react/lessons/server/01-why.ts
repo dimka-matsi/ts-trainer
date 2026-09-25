@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "sq1",
   region: 7,
+  level: "middle",
   title: "Серверное состояние: почему не `useEffect` + `useState`",
   q: "Почему данные с сервера лучше не загружать вручную в `useEffect` и не хранить в Redux? Что дают библиотеки вроде TanStack Query?",
   answer:

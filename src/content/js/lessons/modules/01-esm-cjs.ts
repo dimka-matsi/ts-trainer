@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "mod1",
   region: 8,
+  level: "middle",
   title: "ES-модули и CommonJS",
   q: "Чем ES-модули отличаются от CommonJS?",
   answer:

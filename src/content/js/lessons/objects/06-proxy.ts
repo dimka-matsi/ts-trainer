@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "obj6",
   region: 3,
+  level: "senior",
   title: "Proxy и Reflect",
   q: "Что такое `Proxy` и `Reflect`? Где их применяют?",
   answer:

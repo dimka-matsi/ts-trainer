@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "rx4",
   region: 5,
+  level: "middle",
   title: "React.lazy и Suspense",
   q: "Как в React загружать компоненты по требованию? Что делают `React.lazy` и `Suspense`?",
   answer:

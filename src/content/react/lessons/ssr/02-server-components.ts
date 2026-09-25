@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "ssr2",
   region: 11,
+  level: "senior",
   title: "Server Components и `'use client'`",
   q: "Что такое React Server Components? Чем они отличаются от SSR и клиентских компонентов?",
   answer:

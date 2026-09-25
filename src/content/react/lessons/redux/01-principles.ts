@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "rdx1",
   region: 5,
+  level: "middle",
   title: "Redux: принципы и поток данных",
   q: "Как устроен Redux? Какие у него три принципа и какой паттерн он реализует?",
   answer:

@@ -4,6 +4,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "ck2",
   region: 0,
+  level: "junior",
   title: "Флаги HttpOnly и Secure",
   q: "От чего защищают флаги `HttpOnly` и `Secure`?",
   answer:

@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "lc5",
   region: 9,
+  level: "middle",
   title: "flatten",
   q: "Напиши `flatten(arr, depth)` — развернуть вложенные массивы на заданную глубину, без встроенного `flat`.",
   answer:

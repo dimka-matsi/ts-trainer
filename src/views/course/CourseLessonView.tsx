@@ -4,6 +4,7 @@ import { useProgress } from "../../state/progress";
 import { navigate } from "../../state/route";
 import { useToast } from "../../state/toast";
 import { courseLessonAfter, courseLessonDone, courseRegionDone } from "../../state/coursePath";
+import { LEVEL_NAME } from "../../content/flashcards";
 import { CodeBlock, Md } from "../../ui/Code";
 import { ChoiceTaskCard } from "../lesson/ChoiceTaskCard";
 import { FlowDiagram, NetworkPanel } from "./NetVisuals";
@@ -48,7 +49,7 @@ export function CourseLessonView({ course, lesson }: { course: Course; lesson: W
   return (
     <section className="wl">
       <p className="crumb">{course.regions[lesson.region]!.name} › урок {idx + 1} из {inRegion.length}</p>
-      <h1>{lesson.title}</h1>
+      <h1>{lesson.title} <span className={`lvl ${lesson.level}`}>{LEVEL_NAME[lesson.level]}</span></h1>
       <div className="qbox"><b>Как спрашивают на собеседовании</b><Md text={lesson.q} /></div>
 
       <div className="dt-panel">
@@ -101,6 +102,18 @@ export function CourseLessonView({ course, lesson }: { course: Course; lesson: W
                 <summary>Показать пример ответа</summary>
                 <div className="tbody"><p><Md text={lesson.answer} /></p></div>
               </details>
+              {!!lesson.followUps?.length && (
+                <div className="followups">
+                  <h3>Уточняющие вопросы</h3>
+                  <p className="how">Так интервьюер углубляется, когда базовый ответ уже прозвучал. Ответь вслух, потом открой образец.</p>
+                  {lesson.followUps.map((f, i) => (
+                    <details key={i} className="theory followup">
+                      <summary><span className={`lvl ${f.level}`}>{LEVEL_NAME[f.level]}</span> <Md text={f.q} /></summary>
+                      <div className="tbody"><p><Md text={f.a} /></p></div>
+                    </details>
+                  ))}
+                </div>
+              )}
             </div>
           )}
         </div>

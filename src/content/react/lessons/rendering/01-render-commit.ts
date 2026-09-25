@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "rn1",
   region: 3,
+  level: "middle",
   title: "Рендер и коммит",
   q: "Что происходит, когда React обновляет экран? Что такое фазы render и commit и что вызывает ререндер?",
   answer:

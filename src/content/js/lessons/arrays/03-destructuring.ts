@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "arr3",
   region: 4,
+  level: "junior",
   title: "Деструктуризация, spread и rest",
   q: "Как работает деструктуризация массивов и объектов? Чем spread отличается от rest?",
   answer:

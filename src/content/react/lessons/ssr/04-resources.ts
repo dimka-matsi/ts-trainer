@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "ssr4",
   region: 11,
+  level: "senior",
   title: "Метаданные, ресурсы и `cache`",
   q: "Как в React 19 управлять `<title>`, стилями и предзагрузкой ресурсов? Зачем нужны `cache` и `cacheSignal`?",
   answer:

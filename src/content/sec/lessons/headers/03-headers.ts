@@ -4,6 +4,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "sec7",
   region: 3,
+  level: "middle",
   title: "Заголовки защиты",
   q: "Зачем `X-Content-Type-Options: nosniff`, `Referrer-Policy` и `Permissions-Policy`?",
   answer:

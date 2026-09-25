@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "tst2",
   region: 13,
+  level: "middle",
   title: "Асинхронность, `act`, моки и хуки в тестах",
   q: "Как тестировать асинхронные компоненты, запросы к API и свои хуки? Зачем нужен `act`?",
   answer:

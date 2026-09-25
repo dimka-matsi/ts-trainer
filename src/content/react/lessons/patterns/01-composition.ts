@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "pt1",
   region: 12,
+  level: "middle",
   title: "Композиция и составные компоненты",
   q: "Что такое композиция в React? Как устроены составные компоненты (compound components)?",
   answer:

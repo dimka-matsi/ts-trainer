@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "lc12",
   region: 9,
+  level: "senior",
   title: "LRU-кэш",
   q: "Напиши LRU-кэш с методами `get` и `put` за O(1).",
   answer:

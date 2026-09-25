@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "br4",
   region: 6,
+  level: "middle",
   title: "Жизнь вкладки: фон, заморозка и выгрузка",
   q: "Что браузер делает с вкладкой в фоне? Почему таймеры в фоне срабатывают реже, а вкладка иногда перезагружается сама?",
   answer:

@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "st6",
   region: 1,
+  level: "middle",
   title: "Формы с React Hook Form и схемой zod",
   q: "Зачем нужна библиотека форм вроде React Hook Form? Как устроена валидация по схеме?",
   answer:

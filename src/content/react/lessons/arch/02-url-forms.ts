@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "arch2",
   region: 8,
+  level: "middle",
   title: "Адрес страницы, формы и сохранение состояния",
   q: "Что хранить в адресе страницы, а что в хранилище? Как быть с формами и сохранением состояния между перезагрузками?",
   answer:

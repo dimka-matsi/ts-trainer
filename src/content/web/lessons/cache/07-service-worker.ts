@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "cache7",
   region: 4,
+  level: "middle",
   title: "Service Worker и Cache API",
   q: "Что такое Service Worker? Какие стратегии кэширования он позволяет и как работает сайт без сети?",
   answer:

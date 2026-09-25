@@ -4,6 +4,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "http4",
   region: 2,
+  level: "junior",
   title: "Заголовки",
   q: "Какие заголовки запроса и ответа ты знаешь? Зачем `Content-Type`, `Accept`, `Authorization`, `Location`?",
   answer:

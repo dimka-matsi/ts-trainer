@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "ssr3",
   region: 11,
+  level: "senior",
   title: "Server Functions и `'use server'`",
   q: "Что такое Server Functions и директива `'use server'`? Какие у них риски безопасности?",
   answer:

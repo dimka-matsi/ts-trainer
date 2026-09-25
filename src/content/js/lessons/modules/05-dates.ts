@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "mod5",
   region: 8,
+  level: "middle",
   title: "Даты: Date, часовые пояса и Temporal",
   q: "Какие подвохи у `Date`? Что такое Temporal?",
   answer:

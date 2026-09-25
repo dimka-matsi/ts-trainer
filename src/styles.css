@@ -1184,3 +1184,10 @@ button.brand{background:none; border:0; padding:0; color:inherit; font:inherit; 
 .hc-js .hc-art::before{content:"> typeof null\A< 'object'"; white-space:pre}
 .hc-js .hc-bar{background:rgba(0,0,0,.14)}
 .hc-js .hc-bar i{background:#1f1f1f}
+
+/* Уточняющие вопросы урока */
+.followups{margin-top:18px}
+.followups h3{margin:0 0 4px; font-size:16px}
+.followup summary{display:flex; gap:8px; align-items:baseline}
+.followup summary .lvl{flex:none; font-size:11.5px}
+h1 .lvl{font-size:12px; vertical-align:middle; font-weight:600; letter-spacing:0}

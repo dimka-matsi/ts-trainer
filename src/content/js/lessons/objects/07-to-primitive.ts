@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "obj7",
   region: 3,
+  level: "middle",
   title: "Как объект становится примитивом",
   q: "Как объект превращается в примитив? Почему `[] == ![]` — это `true`?",
   answer:

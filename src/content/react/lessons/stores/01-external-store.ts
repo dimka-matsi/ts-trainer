@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "ext1",
   region: 6,
+  level: "senior",
   title: "`useSyncExternalStore`: как хранилища подключаются к React",
   q: "Как внешние стейт-менеджеры подключаются к React? Что такое tearing и зачем `useSyncExternalStore`?",
   answer:

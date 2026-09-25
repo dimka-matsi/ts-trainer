@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "pt2",
   region: 12,
+  level: "middle",
   title: "HOC, render props и хуки",
   q: "Что такое HOC и render props? Чем их заменили хуки и где они ещё нужны?",
   answer:

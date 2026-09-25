@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "wa2",
   region: 7,
+  level: "junior",
   title: "localStorage, sessionStorage, cookies и IndexedDB",
   q: "Чем отличаются `localStorage`, `sessionStorage`, cookies и IndexedDB? Что где хранить?",
   answer:

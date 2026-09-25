@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "obj4",
   region: 3,
+  level: "middle",
   title: "Классы: сахар над прототипами",
   q: "Чем классы в JavaScript отличаются от функций-конструкторов? Как работают `extends`, `super`, статические и приватные поля?",
   answer:

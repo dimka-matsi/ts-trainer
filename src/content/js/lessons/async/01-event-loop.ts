@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "asy1",
   region: 5,
+  level: "middle",
   title: "Однопоточность, стек вызовов и event loop",
   q: "Как работает event loop? Почему `setTimeout(fn, 0)` не выполняется сразу?",
   answer:

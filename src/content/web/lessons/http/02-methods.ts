@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "http2",
   region: 2,
+  level: "junior",
   title: "Методы: безопасность и идемпотентность",
   q: "Чем GET отличается от POST? Какие методы безопасные, а какие идемпотентные?",
   answer:

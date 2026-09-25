@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "val6",
   region: 0,
+  level: "junior",
   title: "Поверхностное и глубокое копирование",
   q: "Чем поверхностная копия отличается от глубокой? Как глубоко скопировать объект и чем плох `JSON.parse(JSON.stringify(obj))`?",
   answer:

@@ -4,6 +4,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "srv6",
   region: 3,
+  level: "senior",
   title: "Код на краю сети: edge-функции",
   q: "Что такое edge-функции? Когда выполнение кода рядом с пользователем ускоряет сайт, а когда замедляет?",
   answer:

@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "sec11",
   region: 2,
+  level: "senior",
   title: "postMessage и iframe sandbox",
   q: "Как безопасно общаться с iframe и другими окнами через `postMessage`? Зачем атрибут `sandbox`?",
   answer:

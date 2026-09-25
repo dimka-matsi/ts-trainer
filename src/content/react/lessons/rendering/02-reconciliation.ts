@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "rn2",
   region: 3,
+  level: "middle",
   title: "Виртуальный DOM и reconciliation",
   q: "Что такое виртуальный DOM и как React решает, что поменять в настоящем DOM?",
   answer:

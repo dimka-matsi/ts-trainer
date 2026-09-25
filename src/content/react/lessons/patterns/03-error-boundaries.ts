@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "pt3",
   region: 12,
+  level: "middle",
   title: "Границы ошибок",
   q: "Что такое error boundary? Какие ошибки она ловит, а какие нет?",
   answer:

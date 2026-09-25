@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "rn7",
   region: 3,
+  level: "senior",
   title: "Activity и ViewTransition",
   q: "Что такое `<Activity>` и `<ViewTransition>` из React 19.2 и 19.3?",
   answer:

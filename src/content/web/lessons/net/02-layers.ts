@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "net2",
   region: 0,
+  level: "junior",
   title: "Уровни сети: TCP/IP и OSI",
   q: "Расскажи про модель OSI или TCP/IP. На каком уровне работают HTTP, TCP и IP?",
   answer:

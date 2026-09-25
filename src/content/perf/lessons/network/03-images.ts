@@ -6,6 +6,7 @@ const HTML = "<img\n  src=\"/img/sofa-800.jpg\"\n  srcset=\"/img/sofa-400.avif 4
 export const lesson: WebLesson = {
   id: "perf3",
   region: 1,
+  level: "junior",
   title: "Картинки: форматы и размеры",
   q: "Какие форматы картинок выбрать и как отдать разный размер под разные экраны?",
   answer:

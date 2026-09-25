@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "scp4",
   region: 1,
+  level: "middle",
   title: "Задача про цикл и setTimeout",
   q: "Что выведет `for (var i = 0; i < 3; i++) setTimeout(() => console.log(i))`? Почему и как исправить?",
   answer:

@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "rn3",
   region: 3,
+  level: "middle",
   title: "Позиция в дереве: сохранение и сброс состояния",
   q: "Когда React сохраняет состояние компонента, а когда сбрасывает? Почему нельзя объявлять компонент внутри другого компонента?",
   answer:

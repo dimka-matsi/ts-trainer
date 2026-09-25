@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "tst1",
   region: 13,
+  level: "junior",
   title: "React Testing Library: что и как тестировать",
   q: "Как тестировать компоненты React? Какие запросы в Testing Library выбирать и почему не тестируют детали реализации?",
   answer:

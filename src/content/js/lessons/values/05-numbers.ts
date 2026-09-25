@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "val5",
   region: 0,
+  level: "middle",
   title: "Числа: 0.1 + 0.2 и BigInt",
   q: "Почему `0.1 + 0.2 !== 0.3`? Как правильно считать деньги и что такое `BigInt`?",
   answer:

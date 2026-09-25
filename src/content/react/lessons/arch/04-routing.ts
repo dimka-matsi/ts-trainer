@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "arch4",
   region: 8,
+  level: "middle",
   title: "Маршрутизация: React Router и загрузчики данных",
   q: "Как устроена маршрутизация в React? Что такое вложенные маршруты и загрузчики данных?",
   answer:

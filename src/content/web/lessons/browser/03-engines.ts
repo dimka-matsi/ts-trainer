@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "br3",
   region: 6,
+  level: "middle",
   title: "Движки браузеров",
   q: "Что такое Blink, WebKit и Gecko и почему сайт может выглядеть в браузерах по-разному?",
   answer:

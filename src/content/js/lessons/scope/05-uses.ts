@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "scp5",
   region: 1,
+  level: "middle",
   title: "Где пригодятся замыкания: приватность, фабрики, IIFE",
   q: "Где на практике используют замыкания? Что такое IIFE и паттерн «модуль»?",
   answer:

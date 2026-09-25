@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "tls6",
   region: 3,
+  level: "senior",
   title: "Отзыв сертификатов и короткие сроки",
   q: "Что делать, если закрытый ключ сертификата украли? Как браузер узнаёт об отзыве?",
   answer:

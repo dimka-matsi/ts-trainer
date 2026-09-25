@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "obj3",
   region: 3,
+  level: "middle",
   title: "Что делает new",
   q: "Что происходит при вызове функции с `new`?",
   answer:

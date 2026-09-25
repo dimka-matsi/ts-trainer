@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "arr5",
   region: 4,
+  level: "middle",
   title: "for...of, итераторы и генераторы",
   q: "Чем `for...in` отличается от `for...of`? Что такое итератор и генератор?",
   answer:

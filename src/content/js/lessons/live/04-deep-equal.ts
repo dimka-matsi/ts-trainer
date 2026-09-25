@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "lc4",
   region: 9,
+  level: "middle",
   title: "deepEqual и shallowEqual",
   q: "Напиши глубокое сравнение двух значений. Чем оно отличается от поверхностного?",
   answer:

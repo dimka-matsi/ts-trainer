@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "asy2",
   region: 5,
+  level: "middle",
   title: "Промисы",
   q: "Что такое промис? Какие у него состояния и как работают цепочки `then`, `catch` и `finally`?",
   answer:

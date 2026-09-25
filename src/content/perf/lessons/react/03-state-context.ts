@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "rx3",
   region: 5,
+  level: "middle",
   title: "Состояние и контекст",
   q: "Где держать состояние, чтобы не было лишних ререндеров? Почему контекст может тормозить?",
   answer:

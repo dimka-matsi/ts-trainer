@@ -237,10 +237,24 @@ function proseText(l: WebLesson): string[] {
   return [l.title, l.q, l.answer, ...l.theory.p, l.theory.code ?? "", ...l.theory.keys, ...flow, ...l.tasks.flatMap(taskText)];
 }
 
-/** Весь текст урока вместе с HTTP-сообщениями вкладки «Сеть». */
+/** Весь текст урока вместе с HTTP-сообщениями вкладки «Сеть» и уточняющими вопросами. */
 function lessonText(l: WebLesson): string[] {
   const reqs = (l.theory.requests ?? []).flatMap((r) => [r.name, ...messageText(r.request), ...messageText(r.response)]);
-  return [...proseText(l), ...reqs];
+  // Уточняющие вопросы намеренно заходят дальше урока, поэтому порядок тем для них не проверяется, а запрет JavaScript — да.
+  const more = (l.followUps ?? []).flatMap((f) => [f.q, f.a]);
+  return [...proseText(l), ...reqs, ...more];
+}
+
+/** Уточняющие вопросы: хотя бы два, уровня middle или senior, вопрос с «?», ответ на 2–5 предложений. */
+function checkFollowUps(l: WebLesson, fail: (msg: string) => void) {
+  const list = l.followUps ?? [];
+  if (list.length < 2) fail(`${l.id}: уточняющих вопросов ${list.length}, нужно хотя бы два`);
+  for (const f of list) {
+    if (f.level === "junior") fail(`${l.id}: уточняющий вопрос «${f.q}» — junior, нужны middle или senior`);
+    if (!f.q.trim().endsWith("?")) fail(`${l.id}: уточняющий вопрос без знака вопроса: «${f.q}»`);
+    const sentences = f.a.split(/[.!?](?:\s|$)/).filter((s) => s.trim()).length;
+    if (sentences < 2 || sentences > 6) fail(`${l.id}: ответ на «${f.q}» — ${sentences} предложений, нужно 2–5`);
+  }
 }
 
 /** Синтаксические ошибки примера кода (TSX). Типы не проверяем: библиотек вроде Redux в проекте нет. */
@@ -342,6 +356,8 @@ function checkCourse(course: Course, fail: (msg: string) => void) {
     // В курсе с запуском кода разбором служит сам пример: его выполняют и смотрят вывод.
     if (!flow && !requests?.length && !(course.runnable && lesson.theory.code)) fail(`${tag}: нет ни схемы, ни запросов, ни примера для запуска`);
     if (lesson.tasks.length < 2 || lesson.tasks.length > 4) fail(`${tag}: заданий ${lesson.tasks.length}, нужно 2–4`);
+    // Уточняющие вопросы обязательны в курсах, где их уже начали писать.
+    if (course.lessons.some((l) => l.followUps?.length)) checkFollowUps(lesson, fail);
     if (new Set(lesson.tasks.map((t) => t.type)).size < 2) fail(`${tag}: все задания одного вида`);
 
     if (flow) {

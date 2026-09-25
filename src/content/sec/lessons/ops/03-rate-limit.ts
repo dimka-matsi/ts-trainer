@@ -4,6 +4,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "up3",
   region: 5,
+  level: "middle",
   title: "Лимит запросов, боты и DDoS",
   q: "Как защитить API от перебора, ботов и перегрузки?",
   answer:

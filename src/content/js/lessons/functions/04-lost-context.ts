@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "fun4",
   region: 2,
+  level: "middle",
   title: "Потеря контекста и bind",
   q: "Что такое потеря контекста? Как её исправить?",
   answer:

@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "fun1",
   region: 2,
+  level: "junior",
   title: "Способы объявить функцию и параметры",
   q: "Чем Function Declaration отличается от Function Expression? Как работают параметры по умолчанию и rest-параметры?",
   answer:

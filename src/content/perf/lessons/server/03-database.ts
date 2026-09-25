@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "srv3",
   region: 3,
+  level: "middle",
   title: "База данных: N+1, индексы, пагинация",
   q: "Что такое проблема N+1 и как ускоряют запросы к базе данных?",
   answer:

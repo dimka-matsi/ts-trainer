@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "ctx1",
   region: 4,
+  level: "middle",
   title: "Context: данные без пропсов",
   q: "Что такое React Context и как он работает? Это стейт-менеджер?",
   answer:

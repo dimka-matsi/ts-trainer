@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "wa6",
   region: 7,
+  level: "middle",
   title: "URL, History API и роутинг на клиенте",
   q: "Как работает роутинг в SPA? Что делают `pushState` и событие `popstate`?",
   answer:

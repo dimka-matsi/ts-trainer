@@ -4,6 +4,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "rt5",
   region: 8,
+  level: "middle",
   title: "Push-уведомления",
   q: "Как работают push-уведомления в браузере, когда сайт закрыт?",
   answer:

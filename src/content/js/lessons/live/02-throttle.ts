@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "lc2",
   region: 9,
+  level: "middle",
   title: "throttle",
   q: "Напиши `throttle(fn, ms)`. Чем он отличается от debounce?",
   answer:

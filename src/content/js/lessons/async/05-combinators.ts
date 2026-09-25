@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "asy5",
   region: 5,
+  level: "middle",
   title: "Promise.all, allSettled, race и any",
   q: "Чем отличаются `Promise.all`, `Promise.allSettled`, `Promise.race` и `Promise.any`?",
   answer:

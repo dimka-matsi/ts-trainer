@@ -4,6 +4,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "rnd4",
   region: 7,
+  level: "middle",
   title: "Шрифты: FOIT, FOUT и font-display",
   q: "Что такое FOIT и FOUT и зачем `font-display`?",
   answer:

@@ -2,7 +2,7 @@
  * Формат курсов без кода — «Браузер», «Оптимизация» и «Безопасность». Задания — вопросы, порядок шагов, пары и группы,
  * разбор — схема обмена и вкладка «Сеть».
  */
-import type { Flashcard } from "../flashcards";
+import type { CardLevel, Flashcard } from "../flashcards";
 import type { QuizTask } from "../types";
 
 /** Расставить шаги по порядку. `items` записаны в правильном порядке, интерфейс их перемешивает. */
@@ -73,10 +73,22 @@ export interface NetRequest {
   start: number;
 }
 
+/** Уточняющий вопрос собеседования к уроку: так углубляются, когда базовый ответ уже прозвучал. */
+export interface FollowUp {
+  level: CardLevel;
+  q: string;
+  /** Ответ вслух на 2–4 предложения. */
+  a: string;
+}
+
 export interface WebLesson {
   id: string;
   /** Индекс региона в WEB_REGIONS. */
   region: number;
+  /** Уровень главного вопроса урока: junior — основы, middle — механизмы и приёмы, senior — устройство и архитектура. */
+  level: CardLevel;
+  /** Уточняющие вопросы уровня middle и senior. Задаются в `interview.ts` курса. */
+  followUps?: FollowUp[];
   title: string;
   q: string;
   answer: string;
@@ -119,8 +131,8 @@ export interface Course {
 }
 
 /** Собирает курс: уроки идут регион за регионом, индекс массива — индекс региона. */
-export function makeCourse(id: CourseId, name: string, regions: WebRegion[], byRegion: WebLesson[][], extraCards: Flashcard[], cardPrefix: string, examBase: number, opts: { withCode?: boolean; runnable?: boolean } = {}): Course {
-  const lessons = byRegion.flat();
+export function makeCourse(id: CourseId, name: string, regions: WebRegion[], byRegion: WebLesson[][], extraCards: Flashcard[], cardPrefix: string, examBase: number, opts: { withCode?: boolean; runnable?: boolean; followUps?: Record<string, FollowUp[]> } = {}): Course {
+  const lessons = byRegion.flat().map((l) => ({ ...l, followUps: opts.followUps?.[l.id] ?? l.followUps ?? [] }));
   return {
     id,
     name,
@@ -128,7 +140,10 @@ export function makeCourse(id: CourseId, name: string, regions: WebRegion[], byR
     lessons,
     byId: Object.fromEntries(lessons.map((l) => [l.id, l])),
     flashcards: [
-      ...lessons.map((l): Flashcard => ({ id: `${cardPrefix}-lesson-${l.id}`, region: l.region, level: "junior", q: l.q, a: l.answer })),
+      ...lessons.flatMap((l): Flashcard[] => [
+        { id: `${cardPrefix}-lesson-${l.id}`, region: l.region, level: l.level, q: l.q, a: l.answer },
+        ...(l.followUps ?? []).map((f, i): Flashcard => ({ id: `${cardPrefix}-lesson-${l.id}-${i + 1}`, region: l.region, level: f.level, q: f.q, a: f.a })),
+      ]),
       ...extraCards,
     ],
     examBase,

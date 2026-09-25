@@ -4,6 +4,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "up1",
   region: 5,
+  level: "middle",
   title: "Загрузка файлов",
   q: "Какие риски у загрузки файлов пользователями и как их закрыть?",
   answer:

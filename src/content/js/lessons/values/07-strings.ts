@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "val7",
   region: 0,
+  level: "junior",
   title: "Строки, Unicode и шаблонные строки",
   q: "Почему `\"😀\".length` равен 2? Как устроены строки в JavaScript?",
   answer:

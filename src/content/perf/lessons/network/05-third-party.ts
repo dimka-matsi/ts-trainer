@@ -4,6 +4,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "perf7",
   region: 1,
+  level: "middle",
   title: "Сторонние скрипты",
   q: "Как сторонние скрипты — аналитика, чаты, реклама — замедляют сайт и что с этим делать?",
   answer:

@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "hk2",
   region: 2,
+  level: "junior",
   title: "useEffect: синхронизация с внешним миром",
   q: "Как работает `useEffect`? Когда он запускается, что делает массив зависимостей и зачем функция очистки?",
   answer:

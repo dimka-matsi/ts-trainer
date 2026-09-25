@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "st2",
   region: 1,
+  level: "middle",
   title: "useReducer: когда состояния много",
   q: "Когда стоит использовать `useReducer` вместо `useState`?",
   answer:

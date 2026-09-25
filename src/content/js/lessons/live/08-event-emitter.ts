@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "lc8",
   region: 9,
+  level: "senior",
   title: "EventEmitter",
   q: "Напиши `EventEmitter` с методами `on`, `off`, `once` и `emit`.",
   answer:

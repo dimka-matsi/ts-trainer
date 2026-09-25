@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "st1",
   region: 1,
+  level: "junior",
   title: "useState: состояние и ререндер",
   q: "Как работает `useState`? Почему после трёх вызовов `setCount(count + 1)` подряд счётчик вырастет только на 1?",
   answer:

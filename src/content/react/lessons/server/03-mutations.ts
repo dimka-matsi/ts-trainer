@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "sq3",
   region: 7,
+  level: "middle",
   title: "Мутации, инвалидация и оптимистичные обновления",
   q: "Как обновить данные на экране после изменения на сервере? Как сделать оптимистичное обновление?",
   answer:

@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "hk7",
   region: 2,
+  level: "middle",
   title: "useMemo, useCallback и memo",
   q: "Зачем нужны `useMemo`, `useCallback` и `memo`? Когда они бесполезны?",
   answer:

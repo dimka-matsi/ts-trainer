@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "val4",
   region: 0,
+  level: "junior",
   title: "== и ===, NaN и Object.is",
   q: "Чем `==` отличается от `===`? Почему `NaN !== NaN` и что такое `Object.is`?",
   answer:

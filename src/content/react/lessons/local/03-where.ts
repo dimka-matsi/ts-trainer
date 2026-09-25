@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "st3",
   region: 1,
+  level: "junior",
   title: "Где держать состояние",
   q: "Где должно жить состояние? Что такое подъём состояния и props drilling?",
   answer:

@@ -4,6 +4,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "sec12",
   region: 3,
+  level: "senior",
   title: "Trusted Types",
   q: "Что такое Trusted Types и как они защищают от DOM XSS?",
   answer:

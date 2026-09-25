@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "lc7",
   region: 9,
+  level: "senior",
   title: "Promise.all своими руками",
   q: "Напиши свою версию `Promise.all`.",
   answer:

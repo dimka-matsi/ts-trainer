@@ -17,6 +17,7 @@ const reused: NetRequest["timing"] = [["Очередь", 2], ["Ожидание 
 export const lesson: WebLesson = {
   id: "http5",
   region: 2,
+  level: "middle",
   title: "Соединения и keep-alive",
   q: "Почему браузер не открывает новое соединение на каждый запрос? Что такое keep-alive?",
   answer:

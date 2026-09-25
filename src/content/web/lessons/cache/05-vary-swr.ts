@@ -4,6 +4,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "cache5",
   region: 4,
+  level: "middle",
   title: "Vary и stale-while-revalidate",
   q: "Зачем заголовок `Vary` и что даёт `stale-while-revalidate`?",
   answer:

@@ -4,6 +4,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "rt3",
   region: 8,
+  level: "middle",
   title: "WebSocket",
   q: "Как открывается WebSocket и чем он отличается от HTTP?",
   answer:

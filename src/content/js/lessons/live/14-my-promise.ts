@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "lc14",
   region: 9,
+  level: "senior",
   title: "Свой Promise",
   q: "Напиши упрощённую реализацию `Promise` с `then` и `catch`.",
   answer:

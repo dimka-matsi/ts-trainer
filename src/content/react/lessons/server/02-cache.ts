@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "sq2",
   region: 7,
+  level: "middle",
   title: "TanStack Query: ключи, `staleTime` и `gcTime`",
   q: "Как работает кэш TanStack Query? Чем `staleTime` отличается от `gcTime`?",
   answer:

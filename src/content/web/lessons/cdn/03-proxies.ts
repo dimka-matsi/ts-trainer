@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "cdn3",
   region: 5,
+  level: "middle",
   title: "Прямой и обратный прокси",
   q: "Чем прямой прокси отличается от обратного? Зачем nginx перед приложением?",
   answer:

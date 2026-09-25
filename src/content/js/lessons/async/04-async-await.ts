@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "asy4",
   region: 5,
+  level: "middle",
   title: "async и await",
   q: "Как работают `async` и `await`? Что происходит с кодом после `await`?",
   answer:

@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "http1",
   region: 2,
+  level: "junior",
   title: "Устройство запроса и ответа",
   q: "Из чего состоит HTTP-запрос и HTTP-ответ?",
   answer:

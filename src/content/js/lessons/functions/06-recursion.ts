@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "fun6",
   region: 2,
+  level: "middle",
   title: "Рекурсия и переполнение стека",
   q: "Что такое рекурсия? Почему глубокая рекурсия падает и как этого избежать?",
   answer:

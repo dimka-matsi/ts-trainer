@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "lc9",
   region: 9,
+  level: "middle",
   title: "curry",
   q: "Напиши универсальный `curry(fn)`, чтобы работали `f(1)(2)(3)`, `f(1, 2)(3)` и `f(1)(2, 3)`.",
   answer:

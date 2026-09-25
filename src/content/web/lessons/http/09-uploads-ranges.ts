@@ -4,6 +4,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "http8",
   region: 2,
+  level: "middle",
   title: "Загрузка файлов и Range-запросы",
   q: "Как файл уходит на сервер в HTTP? Как видео перематывается, не скачиваясь целиком?",
   answer:

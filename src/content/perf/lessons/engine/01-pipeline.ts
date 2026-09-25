@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "js1",
   region: 6,
+  level: "senior",
   title: "Как движок выполняет код",
   q: "Как V8 выполняет JavaScript? Что такое интерпретатор, JIT-компиляция и оптимизирующий компилятор?",
   answer:

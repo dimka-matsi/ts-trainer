@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "fun5",
   region: 2,
+  level: "middle",
   title: "Функции высшего порядка, каррирование, композиция",
   q: "Что такое функция высшего порядка, чистая функция и каррирование?",
   answer:

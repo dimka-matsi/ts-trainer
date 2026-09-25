@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "hk8",
   region: 2,
+  level: "middle",
   title: "Свои хуки, useId и useDebugValue",
   q: "Как писать свои хуки? Что они переиспользуют — логику или состояние? Зачем нужен `useId`?",
   answer:

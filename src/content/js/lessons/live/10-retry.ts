@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "lc10",
   region: 9,
+  level: "senior",
   title: "retry с экспоненциальной паузой",
   q: "Напиши `retry(fn, attempts, delay)`: повторить асинхронную операцию при ошибке, с растущей паузой между попытками.",
   answer:

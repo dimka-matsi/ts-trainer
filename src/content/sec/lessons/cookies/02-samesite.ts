@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "ck3",
   region: 0,
+  level: "middle",
   title: "SameSite и CSRF",
   q: "Чем отличаются `SameSite=Strict`, `Lax` и `None`? Что такое CSRF?",
   answer:

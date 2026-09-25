@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "scp2",
   region: 1,
+  level: "middle",
   title: "Поднятие и временная мёртвая зона",
   q: "Что такое hoisting (поднятие)? Что такое временная мёртвая зона (TDZ)?",
   answer:

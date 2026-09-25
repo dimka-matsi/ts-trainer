@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "jsx6",
   region: 0,
+  level: "middle",
   title: "Стили: CSS Modules, CSS-in-JS и Tailwind",
   q: "Какие есть способы стилизовать React-компоненты? Чем они отличаются и что выбрать сегодня?",
   answer:

@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "ck8",
   region: 4,
+  level: "middle",
   title: "Пароли: хранение и защита от перебора",
   q: "Как правильно хранить пароли? Как защититься от перебора?",
   answer:

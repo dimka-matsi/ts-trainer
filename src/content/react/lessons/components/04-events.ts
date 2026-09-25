@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "jsx4",
   region: 0,
+  level: "junior",
   title: "События",
   q: "Как работают события в React? Что такое SyntheticEvent и делегирование событий?",
   answer:

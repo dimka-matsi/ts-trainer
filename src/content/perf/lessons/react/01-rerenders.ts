@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "rx1",
   region: 5,
+  level: "middle",
   title: "Когда React перерисовывает",
   q: "Когда компонент React перерисовывается (ререндер) и как найти лишние ререндеры?",
   answer:

@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "rdx4",
   region: 5,
+  level: "middle",
   title: "Redux Toolkit: `createSlice`, Immer и `configureStore`",
   q: "Что такое Redux Toolkit и почему это стандарт? Как в `createSlice` можно «мутировать» состояние?",
   answer:

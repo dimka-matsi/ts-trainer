@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "jsx2",
   region: 0,
+  level: "junior",
   title: "Пропсы и чистые компоненты",
   q: "Что такое пропсы и почему компонент должен быть чистой функцией?",
   answer:

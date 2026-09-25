@@ -6,6 +6,7 @@ const HTML = "<!doctype html><head><link rel=\"stylesheet\" href=\"/style.css\">
 export const lesson: WebLesson = {
   id: "srv4",
   region: 3,
+  level: "senior",
   title: "Потоковая отдача HTML",
   q: "Зачем отдавать HTML потоком и что такое early flush?",
   answer:

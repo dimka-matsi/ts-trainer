@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "rp3",
   region: 9,
+  level: "middle",
   title: "Приёмы против лишних ререндеров",
   q: "Какие есть способы избежать лишних ререндеров, не расставляя `memo` везде?",
   answer:

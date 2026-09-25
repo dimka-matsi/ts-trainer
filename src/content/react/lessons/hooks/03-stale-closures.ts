@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "hk3",
   region: 2,
+  level: "middle",
   title: "Устаревшие замыкания и `useEffectEvent`",
   q: "Что такое устаревшее замыкание (stale closure) в хуках? Почему `setInterval` в эффекте видит старое значение и как это исправить?",
   answer:

@@ -6,6 +6,7 @@ const JWT = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1IiwiZXhwIjoxNzkwMD
 export const lesson: WebLesson = {
   id: "ck5",
   region: 4,
+  level: "middle",
   title: "Сессия или JWT и где хранить токен",
   q: "Чем сессия в cookie отличается от JWT? Где безопаснее хранить токен?",
   answer:

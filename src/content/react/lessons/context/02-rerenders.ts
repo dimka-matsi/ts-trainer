@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "ctx2",
   region: 4,
+  level: "middle",
   title: "Context и лишние ререндеры",
   q: "Почему Context может тормозить? Что происходит с потребителями, когда меняется `value`?",
   answer:

@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "br1",
   region: 6,
+  level: "middle",
   title: "Процессы браузера",
   q: "Зачем браузеру отдельные процессы: главный, вкладок, GPU, сети?",
   answer:

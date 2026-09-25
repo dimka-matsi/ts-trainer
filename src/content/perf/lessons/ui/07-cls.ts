@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "ui7",
   region: 4,
+  level: "middle",
   title: "CLS: откуда сдвиги и как их убрать",
   q: "Откуда берутся сдвиги макета и как снизить CLS?",
   answer:

@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "dns3",
   region: 1,
+  level: "middle",
   title: "TTL и кэш DNS",
   q: "Почему после смены IP-адреса сайт у части пользователей ещё открывается со старого сервера?",
   answer:

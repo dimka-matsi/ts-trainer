@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "rn6",
   region: 3,
+  level: "middle",
   title: "Suspense, lazy и use",
   q: "Как работают `Suspense` и `lazy`? Как в React 19 прочитать промис через `use`?",
   answer:

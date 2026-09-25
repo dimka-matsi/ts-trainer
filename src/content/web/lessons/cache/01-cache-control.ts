@@ -4,6 +4,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "cache1",
   region: 4,
+  level: "junior",
   title: "Cache-Control",
   q: "Чем `no-cache` отличается от `no-store`? Что значит `max-age`?",
   answer:

@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "up2",
   region: 5,
+  level: "middle",
   title: "Секреты и личные данные во фронтенде",
   q: "Можно ли хранить API-ключ в коде фронтенда? Где ещё фронтенд случайно раскрывает данные?",
   answer:

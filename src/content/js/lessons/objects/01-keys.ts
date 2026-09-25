@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "obj1",
   region: 3,
+  level: "middle",
   title: "Свойства, ключи и их порядок",
   q: "Какими бывают ключи объекта и в каком порядке они перебираются? Чем `??` отличается от `||`?",
   answer:

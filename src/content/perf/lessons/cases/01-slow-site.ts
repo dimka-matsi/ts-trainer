@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "case1",
   region: 7,
+  level: "middle",
   title: "«Сайт тормозит»: от симптома к причине",
   q: "Вам говорят: «сайт тормозит». Как будете искать причину и что исправлять?",
   answer:

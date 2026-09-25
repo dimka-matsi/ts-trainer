@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "dom5",
   region: 6,
+  level: "middle",
   title: "Загрузка страницы: DOMContentLoaded, async и defer",
   q: "Чем отличаются `DOMContentLoaded` и `load`? Чем `<script async>` отличается от `<script defer>`?",
   answer:

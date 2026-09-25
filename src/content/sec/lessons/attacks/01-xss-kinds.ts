@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "sec1",
   region: 2,
+  level: "junior",
   title: "XSS: хранимый, отражённый и DOM-based",
   q: "Что такое XSS? Чем хранимый XSS отличается от отражённого и DOM-based?",
   answer:

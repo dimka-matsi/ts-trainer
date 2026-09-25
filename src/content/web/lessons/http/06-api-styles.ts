@@ -4,6 +4,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "http6",
   region: 2,
+  level: "middle",
   title: "REST, GraphQL и gRPC",
   q: "Что такое REST? Когда выбирают GraphQL или gRPC?",
   answer:

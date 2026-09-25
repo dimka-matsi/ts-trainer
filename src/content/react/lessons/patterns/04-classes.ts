@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "pt4",
   region: 12,
+  level: "middle",
   title: "Классовые компоненты и жизненный цикл",
   q: "Как устроены классовые компоненты и их жизненный цикл? Как методы жизненного цикла соответствуют хукам и почему от классов ушли?",
   answer:

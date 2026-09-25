@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "tls1",
   region: 3,
+  level: "junior",
   title: "Зачем HTTPS и атака «человек посередине»",
   q: "От чего защищает HTTPS? Что такое атака «человек посередине»?",
   answer:

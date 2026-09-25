@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "scp3",
   region: 1,
+  level: "middle",
   title: "Лексическое окружение и замыкания",
   q: "Что такое замыкание? Как функция находит переменные?",
   answer:

@@ -4,6 +4,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "cache3",
   region: 4,
+  level: "middle",
   title: "Статика с хэшем в имени",
   q: "Как кэшировать файлы сборки на год и при этом сразу отдавать новую версию?",
   answer:

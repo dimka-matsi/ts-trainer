@@ -4,6 +4,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "ck10",
   region: 4,
+  level: "middle",
   title: "Авторизация: права доступа и IDOR",
   q: "Чем аутентификация отличается от авторизации? Что такое IDOR и почему скрытая кнопка — не защита?",
   answer:

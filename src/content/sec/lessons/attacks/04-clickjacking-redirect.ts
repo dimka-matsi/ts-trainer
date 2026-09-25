@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "sec5",
   region: 2,
+  level: "middle",
   title: "Clickjacking и открытый редирект",
   q: "Как запретить показывать сайт в чужом iframe? Чем опасен открытый редирект?",
   answer:

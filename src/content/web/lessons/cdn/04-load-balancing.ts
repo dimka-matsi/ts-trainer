@@ -3,6 +3,7 @@ import type { WebLesson } from "../../../course/types";
 export const lesson: WebLesson = {
   id: "cdn4",
   region: 5,
+  level: "middle",
   title: "Балансировка нагрузки",
   q: "Как балансировщик распределяет запросы и чем L4 отличается от L7?",
   answer:
