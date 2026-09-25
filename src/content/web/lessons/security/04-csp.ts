@@ -1,5 +1,5 @@
-import { msg } from "../../http";
-import type { WebLesson } from "../../types";
+import { msg } from "../../../course/http";
+import type { WebLesson } from "../../../course/types";
 
 const CSP = "script-src 'nonce-r4nd0m' 'strict-dynamic'; object-src 'none'; base-uri 'none'; frame-ancestors 'self'";
 

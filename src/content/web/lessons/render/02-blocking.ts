@@ -1,5 +1,5 @@
-import { msg } from "../../http";
-import type { WebLesson } from "../../types";
+import { msg } from "../../../course/http";
+import type { WebLesson } from "../../../course/types";
 
 const HTML = "<head>\n  <link rel=\"stylesheet\" href=\"/style.css\">\n  <script src=\"/legacy.js\"></script>\n  <script defer src=\"/app.js\"></script>\n  <script async src=\"/analytics.js\"></script>\n</head>";
 

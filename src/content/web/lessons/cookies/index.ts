@@ -1,4 +1,4 @@
-import type { WebLesson } from "../../types";
+import type { WebLesson } from "../../../course/types";
 import { lesson as l1 } from "./01-basics";
 import { lesson as l2 } from "./02-httponly-secure";
 import { lesson as l3 } from "./03-samesite";

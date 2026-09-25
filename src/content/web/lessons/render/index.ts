@@ -1,4 +1,4 @@
-import type { WebLesson } from "../../types";
+import type { WebLesson } from "../../../course/types";
 import { lesson as l1 } from "./01-critical-path";
 import { lesson as l2 } from "./02-blocking";
 import { lesson as l3 } from "./03-layout-paint-composite";

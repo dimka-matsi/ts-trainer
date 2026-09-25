@@ -1,10 +1,11 @@
-import { WEB_FLASHCARDS, WEB_LESSONS } from "../content/web";
+import { COURSES } from "../content/courses";
+import type { Course } from "../content/course/types";
 import { FLASHCARDS } from "../content/flashcards";
 import { PATH, stepDone } from "../state/path";
 import { useProgress } from "../state/progress";
 import { navigate, type Route } from "../state/route";
 import { setTheme, useTheme } from "../state/theme";
-import { webLessonDone } from "../state/webPath";
+import { courseLessonDone } from "../state/coursePath";
 
 interface TrackCard {
   id: string;
@@ -20,6 +21,12 @@ interface TrackCard {
 /** Главный экран: выбор направления. У каждого направления своя карта и свой стиль. */
 export function HubView() {
   const { progress } = useProgress();
+  const courseStats = (c: Course): Pick<TrackCard, "route" | "done" | "total" | "cards"> => ({
+    route: { view: "course", course: c.id },
+    done: c.lessons.filter((l) => courseLessonDone(progress, l)).length,
+    total: c.lessons.length,
+    cards: c.flashcards.length,
+  });
   const theme = useTheme();
   const next = theme === "dark" ? "light" : "dark";
 
@@ -30,9 +37,14 @@ export function HubView() {
       route: { view: "map" }, done: PATH.filter((s) => stepDone(progress, s)).length, total: PATH.length, cards: FLASHCARDS.length,
     },
     {
-      id: "web", name: "Браузер", tagline: "Сеть, HTTP, безопасность, оптимизация",
-      about: "Как страница попадает на экран: TCP и UDP, DNS, HTTP и TLS, cookies, кэш и CDN, CORS, атаки, отрисовка и оптимизация от сети до JS-движка.",
-      route: { view: "web" }, done: WEB_LESSONS.filter((l) => webLessonDone(progress, l)).length, total: WEB_LESSONS.length, cards: WEB_FLASHCARDS.length,
+      id: "web", name: "Браузер", tagline: "Сеть, HTTP, безопасность, отрисовка",
+      about: "Как страница попадает на экран: TCP и UDP, DNS, HTTP и TLS, cookies, кэш и CDN, CORS, атаки, устройство браузера и отрисовка.",
+      ...courseStats(COURSES.web),
+    },
+    {
+      id: "perf", name: "Оптимизация", tagline: "Измерение, сеть, сервер, интерфейс, JS-движок",
+      about: "Как сделать сайт быстрым и доказать это цифрами: Core Web Vitals, загрузка, TTFB, длинные задачи, скрытые классы и сборщик мусора. Лучше после «Браузера».",
+      ...courseStats(COURSES.perf),
     },
     { id: "js", name: "JavaScript", tagline: "Замыкания, this, event loop, DOM", about: "Язык и работа со страницей: асинхронность, события DOM, Web API." },
     { id: "react", name: "React", tagline: "Компоненты, хуки, рендеринг", about: "Состояние, эффекты, мемоизация, архитектура компонентов." },

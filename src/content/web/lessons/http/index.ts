@@ -1,4 +1,4 @@
-import type { WebLesson } from "../../types";
+import type { WebLesson } from "../../../course/types";
 import { lesson as l1 } from "./01-messages";
 import { lesson as l2 } from "./02-methods";
 import { lesson as l3 } from "./03-status";

@@ -1,5 +1,5 @@
-import { msg } from "../../http";
-import type { WebLesson } from "../../types";
+import { msg } from "../../../course/http";
+import type { WebLesson } from "../../../course/types";
 
 const STREAM = "retry: 3000\n\nid: 42\nevent: order\ndata: {\"status\":\"отправлен\"}\n\nid: 43\nevent: order\ndata: {\"status\":\"курьер в пути\"}\n\n";
 

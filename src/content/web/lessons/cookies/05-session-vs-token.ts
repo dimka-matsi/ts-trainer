@@ -1,5 +1,5 @@
-import { json, msg } from "../../http";
-import type { WebLesson } from "../../types";
+import { json, msg } from "../../../course/http";
+import type { WebLesson } from "../../../course/types";
 
 const JWT = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1IiwiZXhwIjoxNzkwMDAwMDAwfQ.подпись";
 

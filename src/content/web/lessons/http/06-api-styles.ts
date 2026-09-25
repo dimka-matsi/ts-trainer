@@ -1,5 +1,5 @@
-import { json, msg } from "../../http";
-import type { WebLesson } from "../../types";
+import { json, msg } from "../../../course/http";
+import type { WebLesson } from "../../../course/types";
 
 export const lesson: WebLesson = {
   id: "http6",

@@ -5,31 +5,24 @@ import { lessons as cdn } from "./lessons/cdn";
 import { lessons as cookies } from "./lessons/cookies";
 import { lessons as cors } from "./lessons/cors";
 import { lessons as dns } from "./lessons/dns";
-import { lessons as engine } from "./lessons/engine";
 import { lessons as http } from "./lessons/http";
 import { lessons as net } from "./lessons/net";
-import { lessons as perf } from "./lessons/perf";
 import { lessons as realtime } from "./lessons/realtime";
 import { lessons as render } from "./lessons/render";
 import { lessons as security } from "./lessons/security";
-import { lessons as server } from "./lessons/server";
-import { lessons as ui } from "./lessons/ui";
 import { lessons as tls } from "./lessons/tls";
-import type { WebLesson, WebRegion } from "./types";
+import { makeCourse, type WebLesson, type WebRegion } from "../course/types";
 
 /** Уроки по регионам: индекс в массиве = индекс региона в WEB_REGIONS. */
-const REGION_LESSONS: WebLesson[][] = [net, dns, http, tls, cookies, cache, cdn, cors, security, browser, render, realtime, perf, server, ui, engine];
+const REGION_LESSONS: WebLesson[][] = [net, dns, http, tls, cookies, cache, cdn, cors, security, browser, render, realtime];
 
-/** Уроки раздела «Браузер» в порядке прохождения. */
-export const WEB_LESSONS: WebLesson[] = REGION_LESSONS.flat();
-export const WEB_LESSON_BY_ID: Record<string, WebLesson> = Object.fromEntries(WEB_LESSONS.map((l) => [l.id, l]));
 
 /**
  * Регионы «Браузера»: сеть и протоколы, без JavaScript. Порядок — путь запроса:
  * от IP и TCP через DNS и HTTP к кэшу, безопасности и отрисовке страницы.
  * Темы «скоро» — вопросы, которые задают на фронтенд-собеседованиях.
  */
-export const WEB_REGIONS: WebRegion[] = [
+const REGIONS: WebRegion[] = [
   { name: "Как работает интернет", kind: "lessons", desc: "IP-адреса и порты, уровни сети, TCP и UDP, путь запроса от URL до страницы." },
   { name: "DNS", kind: "lessons", desc: "Как имя сайта превращается в IP-адрес: путь запроса, записи, TTL, подмена и шифрование." },
   { name: "HTTP", kind: "lessons", desc: "Запрос и ответ, методы, коды, заголовки, соединения, стили API и версии протокола." },
@@ -42,14 +35,7 @@ export const WEB_REGIONS: WebRegion[] = [
   { name: "Устройство браузера", kind: "lessons", desc: "Из каких процессов состоит браузер, как он изолирует сайты и чем отличаются движки." },
   { name: "Рендеринг страницы", kind: "lessons", desc: "Путь от байтов HTML до пикселей, блокирующие ресурсы, шрифты и способы рендеринга сайта." },
   { name: "Реальное время", kind: "lessons", desc: "Как сервер отправляет данные сам: polling, Server-Sent Events, WebSocket, WebRTC." },
-  { name: "Оптимизация: сеть и загрузка", kind: "lessons", desc: "Меньше байтов и кругов туда-обратно: сжатие, подсказки браузеру, картинки, ленивая загрузка, Core Web Vitals, бандл, сторонние скрипты." },
-  { name: "Оптимизация: сервер", kind: "lessons", desc: "Как сократить время ответа: TTFB и Server-Timing, кэш на сервере, запросы к базе, потоковая отдача, масштабирование." },
-  { name: "Оптимизация: рендеринг и интерфейс", kind: "lessons", desc: "Отзывчивая страница: главный поток и длинные задачи, Web Workers, debounce и throttle, размер DOM, виртуальный скролл, профилирование." },
-  { name: "Оптимизация: JS-движок", kind: "lessons", desc: "Что внутри V8 и как писать предсказуемый код: JIT, скрытые классы, inline caching, встраивание, сборщик мусора, утечки памяти." },
 ];
-
-/** Ключ экзамена региона в общем прогрессе: у TypeScript ключи 0…10, у «Браузера» 100 и дальше. */
-export const WEB_EXAM_KEY = (region: number) => 100 + region;
 
 /** Флеш-карточки «Браузера»: вопросы уроков и дополнительные. id начинаются с `net-`. */
 const EXTRA_CARDS: Flashcard[] = [
@@ -75,13 +61,5 @@ const EXTRA_CARDS: Flashcard[] = [
   },
 ];
 
-export const WEB_FLASHCARDS: Flashcard[] = [
-  ...WEB_LESSONS.map((l): Flashcard => ({
-    id: `net-lesson-${l.id}`,
-    region: l.region,
-    level: "junior",
-    q: l.q,
-    a: l.answer,
-  })),
-  ...EXTRA_CARDS,
-];
+/** Курс «Браузер»: как устроены сеть и браузер. Карточки уроков — `net-lesson-<id>`, экзамены — 100 + регион. */
+export const WEB = makeCourse("web", "Браузер", REGIONS, REGION_LESSONS, EXTRA_CARDS, "net", 100);

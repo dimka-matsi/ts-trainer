@@ -133,8 +133,8 @@ LEVELS.forEach((level, i) => {
   });
 });
 
-console.log("\nраздел «Браузер»");
-const web = checkWeb(fail);
+console.log("\nкурсы без кода");
+const courses = checkWeb(fail);
 
-console.log(failures ? `\n${failures} проблем` : `\nВсё проверено: ${LESSONS.length} уроков, ${LEVELS.length} уровней, ${EXAM_ONLY_TASKS.length} вопросов экзаменов, ${FLASHCARDS.length} карточек; «Браузер»: ${web.lessons} уроков, ${web.cards} карточек`);
+console.log(failures ? `\n${failures} проблем` : `\nВсё проверено: ${LESSONS.length} уроков, ${LEVELS.length} уровней, ${EXAM_ONLY_TASKS.length} вопросов экзаменов, ${FLASHCARDS.length} карточек; ${courses.map((c) => `«${c.name}»: ${c.lessons} уроков, ${c.cards} карточек`).join("; ")}`);
 process.exit(failures ? 1 : 0);

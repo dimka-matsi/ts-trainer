@@ -1,7 +1,10 @@
 import { useSyncExternalStore } from "react";
+import type { CourseId } from "../content/course/types";
 
 /** Направления продукта: у каждого своя карта и свой стиль. */
-export type Track = "ts" | "web";
+export type Track = "ts" | CourseId;
+
+const COURSE_IDS: CourseId[] = ["web", "perf"];
 
 export type Route =
   | { view: "hub" }
@@ -12,20 +15,22 @@ export type Route =
   | { view: "cards" }
   | { view: "interview" }
   | { view: "progress" }
-  | { view: "web" }
-  | { view: "web-lesson"; id: string }
-  | { view: "web-exam"; region: number }
-  | { view: "web-cards" };
+  | { view: "course"; course: CourseId }
+  | { view: "course-lesson"; course: CourseId; id: string }
+  | { view: "course-exam"; course: CourseId; region: number }
+  | { view: "course-cards"; course: CourseId };
 
 function parse(hash: string): Route {
   if (hash === "" || hash === "#" || hash === "#/") return { view: "hub" };
   if (hash === "#/ts") return { view: "map" };
-  if (hash === "#/web") return { view: "web" };
-  if (hash === "#/web/cards") return { view: "web-cards" };
-  const webLesson = /^#\/web\/lesson\/([\w-]+)$/.exec(hash);
-  if (webLesson) return { view: "web-lesson", id: webLesson[1]! };
-  const webExam = /^#\/web\/exam\/(\d+)$/.exec(hash);
-  if (webExam) return { view: "web-exam", region: Number(webExam[1]) - 1 };
+  const c = /^#\/(\w+)(?:\/(lesson|exam|cards)(?:\/([\w-]+))?)?$/.exec(hash);
+  const course = COURSE_IDS.find((id) => id === c?.[1]);
+  if (c && course) {
+    if (!c[2]) return { view: "course", course };
+    if (c[2] === "cards") return { view: "course-cards", course };
+    if (c[2] === "lesson" && c[3]) return { view: "course-lesson", course, id: c[3] };
+    if (c[2] === "exam" && /^\d+$/.test(c[3] ?? "")) return { view: "course-exam", course, region: Number(c[3]) - 1 };
+  }
   const level = /^#\/level\/(\d+)$/.exec(hash);
   if (level) return { view: "level", index: Number(level[1]) - 1 };
   const lesson = /^#\/lesson\/([\w-]+)$/.exec(hash);
@@ -40,7 +45,7 @@ function parse(hash: string): Route {
 
 /** К какому направлению относится экран: от этого зависит стиль (data-track на <html>). */
 export const trackOf = (route: Route): Track | "hub" =>
-  route.view === "hub" ? "hub" : route.view.startsWith("web") ? "web" : "ts";
+  route.view === "hub" ? "hub" : "course" in route ? route.course : "ts";
 
 export function routeHref(route: Route): string {
   if (route.view === "level") return `#/level/${route.index + 1}`;
@@ -50,10 +55,10 @@ export function routeHref(route: Route): string {
   if (route.view === "interview") return "#/interview";
   if (route.view === "progress") return "#/progress";
   if (route.view === "map") return "#/ts";
-  if (route.view === "web") return "#/web";
-  if (route.view === "web-lesson") return `#/web/lesson/${route.id}`;
-  if (route.view === "web-exam") return `#/web/exam/${route.region + 1}`;
-  if (route.view === "web-cards") return "#/web/cards";
+  if (route.view === "course") return `#/${route.course}`;
+  if (route.view === "course-lesson") return `#/${route.course}/lesson/${route.id}`;
+  if (route.view === "course-exam") return `#/${route.course}/exam/${route.region + 1}`;
+  if (route.view === "course-cards") return `#/${route.course}/cards`;
   return "#/";
 }
 

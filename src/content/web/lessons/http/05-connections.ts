@@ -1,5 +1,5 @@
-import { msg } from "../../http";
-import type { NetRequest, WebLesson } from "../../types";
+import { msg } from "../../../course/http";
+import type { NetRequest, WebLesson } from "../../../course/types";
 
 /** Картинка с того же сервера: новая или переиспользованная связь видна по фазам. */
 const img = (n: number, start: number, timing: NetRequest["timing"]): NetRequest => ({

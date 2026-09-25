@@ -9,8 +9,9 @@
  *  - порядок тем: понятие не встречается раньше урока, где его объясняют.
  */
 import { LESSONS } from "../src/content/lessons";
-import { WEB_FLASHCARDS, WEB_LESSONS, WEB_REGIONS } from "../src/content/web";
-import type { HttpMessage, NetRequest, WebLesson, WebTask } from "../src/content/web/types";
+import { COURSES } from "../src/content/courses";
+import type { Course } from "../src/content/course/types";
+import type { HttpMessage, NetRequest, WebLesson, WebTask } from "../src/content/course/types";
 
 /** Где понятие объясняют впервые. Раньше этого урока его не упоминают. */
 const CONCEPTS: { name: string; re: RegExp; at: string }[] = [
@@ -84,7 +85,7 @@ const CONCEPTS: { name: string; re: RegExp; at: string }[] = [
   { name: "N+1", re: /\bN\+1\b|EXPLAIN/, at: "srv3" },
   { name: "early flush", re: /early flush|chunked/i, at: "srv4" },
   { name: "rate limiting", re: /rate limiting|stateless/i, at: "srv5" },
-  { name: "длинная задача", re: /длинн\S* задач|long task/i, at: "ui1" },
+  { name: "длинная задача", re: /длинн\S* задач|long task/i, at: "ui6" },
   { name: "structured clone", re: /structured clone|transferable/i, at: "ui2" },
   { name: "debounce и throttle", re: /debounce|throttle/i, at: "ui3" },
   { name: "content-visibility", re: /content-visibility|contain-intrinsic/i, at: "ui4" },
@@ -184,7 +185,11 @@ function checkRequest(r: NetRequest, tag: string, fail: (msg: string) => void) {
   if (!has("Ожидание ответа") || !has("Загрузка")) fail(`${tag}: у запроса нет ожидания ответа или загрузки`);
 }
 
-export function checkWeb(fail: (msg: string) => void) {
+function checkCourse(course: Course, fail: (msg: string) => void) {
+  const WEB_LESSONS = course.lessons;
+  const WEB_REGIONS = course.regions;
+  const WEB_FLASHCARDS = course.flashcards;
+  console.log(`курс «${course.name}»`);
   const order = WEB_LESSONS.map((l) => l.id);
   if (new Set(order).size !== order.length) fail("id уроков «Браузера» повторяются");
   // Прогресс хранится по id урока, поэтому id не должны совпадать с уроками TypeScript.
@@ -257,7 +262,7 @@ export function checkWeb(fail: (msg: string) => void) {
     }
   }
 
-  console.log("карточки «Браузера»");
+  console.log(`карточки «${course.name}»`);
   const ids = new Set<string>();
   const questions = new Set<string>();
   for (const card of WEB_FLASHCARDS) {
@@ -269,4 +274,20 @@ export function checkWeb(fail: (msg: string) => void) {
     if (m) fail(`карточка ${card.id}: в «Браузере» не должно быть JavaScript`);
   }
   return { lessons: WEB_LESSONS.length, cards: WEB_FLASHCARDS.length };
+}
+
+/** Проверка всех курсов без кода. id уроков и карточек не должны повторяться между курсами: прогресс общий. */
+export function checkWeb(fail: (msg: string) => void) {
+  const all = Object.values(COURSES);
+  const seen = new Map<string, string>();
+  for (const c of all) {
+    for (const id of [...c.lessons.map((l) => l.id), ...c.flashcards.map((f) => f.id)]) {
+      const other = seen.get(id);
+      if (other && other !== c.id) fail(`${id}: такой id уже есть в курсе «${other}»`);
+      seen.set(id, c.id);
+    }
+  }
+  const bases = all.map((c) => c.examBase);
+  if (new Set(bases).size !== bases.length) fail("у курсов одинаковая база ключей экзаменов");
+  return all.map((c) => ({ name: c.name, ...checkCourse(c, fail) }));
 }

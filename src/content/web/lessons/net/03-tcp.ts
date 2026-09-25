@@ -1,4 +1,4 @@
-import type { WebLesson } from "../../types";
+import type { WebLesson } from "../../../course/types";
 
 export const lesson: WebLesson = {
   id: "net3",

@@ -18,8 +18,9 @@ import { ProgressView } from "./views/ProgressView";
 import { MapView } from "./views/MapView";
 import { SorterView } from "./views/SorterView";
 import { HubView } from "./views/HubView";
-import { WebHeader } from "./views/web/WebHeader";
-import { WebScreen } from "./views/web/WebScreen";
+import { COURSES } from "./content/courses";
+import { CourseHeader } from "./views/course/CourseHeader";
+import { CourseScreen } from "./views/course/CourseScreen";
 
 function Screen({ route }: { route: Route }) {
   const { progress } = useProgress();
@@ -54,7 +55,7 @@ export function App() {
   // Стиль направления: токены цвета и шрифты переключаются по data-track на <html>.
   useEffect(() => {
     document.documentElement.dataset.track = track;
-    document.title = track === "web" ? "Браузер · Тренажёр" : track === "hub" ? "Тренажёр: подготовка к собеседованию" : "Тренажёр TypeScript";
+    document.title = track === "hub" ? "Тренажёр: подготовка к собеседованию" : track === "ts" ? "Тренажёр TypeScript" : `${COURSES[track].name} · Тренажёр`;
   }, [track]);
 
   return (
@@ -63,9 +64,9 @@ export function App() {
         <EngineProvider>
           {track === "hub" ? <HubView /> : (
             <>
-              {track === "web" ? <WebHeader route={route} /> : <Header route={route} />}
+              {track === "ts" ? <Header route={route} /> : <CourseHeader course={COURSES[track]} route={route} />}
               <div className="wrap">
-                <main>{track === "web" ? <WebScreen route={route} /> : <Screen route={route} />}</main>
+                <main>{track === "ts" ? <Screen route={route} /> : <CourseScreen course={COURSES[track]} route={route} />}</main>
               </div>
             </>
           )}
