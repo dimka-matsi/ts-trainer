@@ -24,20 +24,20 @@ import { lessons as testing } from "./lessons/testing";
 const REGION_LESSONS: WebLesson[][] = [components, local, hooks, rendering, context, redux, stores, server, arch, perf, actions, ssr, patterns, testing];
 
 const REGIONS: WebRegion[] = [
-  { name: "Компоненты и JSX", kind: "lessons", desc: "JSX и элементы, пропсы и чистые компоненты, условия, списки и ключи, события, Fragment, порталы и StrictMode." },
-  { name: "Состояние в компоненте", kind: "lessons", desc: "`useState` и `useReducer`, где держать состояние, подъём состояния и props drilling, формы, виды состояния: интерфейс, клиентское, серверное." },
+  { name: "Компоненты и JSX", kind: "lessons", desc: "JSX и элементы, пропсы и чистые компоненты, условия, списки и ключи, события, Fragment, порталы и StrictMode, способы стилизации." },
+  { name: "Состояние в компоненте", kind: "lessons", desc: "`useState` и `useReducer`, где держать состояние, подъём состояния и props drilling, формы, виды состояния: интерфейс, клиентское, серверное, формы с React Hook Form и zod." },
   { name: "Хуки и эффекты", kind: "lessons", desc: "Правила хуков, `useEffect` и очистка, устаревшие замыкания и `useEffectEvent`, когда эффект не нужен, ссылки, эффекты раскладки, мемоизация, свои хуки." },
   { name: "Рендеринг", kind: "lessons", desc: "Рендер и коммит, виртуальный DOM и reconciliation, состояние и позиция в дереве, Fiber и конкурентный рендеринг, переходы, Suspense, Activity и ViewTransition." },
   { name: "Context", kind: "lessons", desc: "Как работает контекст, почему он перерисовывает всех потребителей и как это лечить, свой хук и провайдеры, `use` из React 19." },
   { name: "Redux и Redux Toolkit", kind: "lessons", desc: "Принципы Redux и Flux, `useSelector` и подписки, middleware, thunk и saga, Redux Toolkit с Immer, `createAsyncThunk` и нормализация, Context + `useReducer` вместо Redux." },
   { name: "Zustand, MobX и другие", kind: "lessons", desc: "Как хранилища подключаются к React через `useSyncExternalStore`, Zustand, MobX, атомы Jotai и Effector." },
   { name: "Серверное состояние", kind: "lessons", desc: "Почему данные с сервера — это кэш, TanStack Query: ключи, `staleTime` и `gcTime`, мутации и оптимистичные обновления, RTK Query." },
-  { name: "Выбор и архитектура", kind: "lessons", desc: "Как выбрать инструмент для состояния, что хранить в адресе страницы и формах, как устроить состояние в большом приложении." },
+  { name: "Выбор и архитектура", kind: "lessons", desc: "Как выбрать инструмент для состояния, что хранить в адресе страницы и формах, как устроить состояние в большом приложении, маршрутизация и загрузчики данных." },
   { name: "Производительность", kind: "lessons", desc: "Как найти лишние ререндеры: Profiler и DevTools, React Compiler, приёмы без мемоизации." },
   { name: "Формы и Actions", kind: "lessons", desc: "Actions и `<form action>`, `useActionState`, `useFormStatus`, `useOptimistic`, что нового в React 18 и 19." },
-  { name: "Сервер и Server Components", kind: "lessons", desc: "SSR, гидратация и стриминг, Server Components и `'use client'`, Server Functions и `'use server'`, метаданные, ресурсы и `cache`." },
+  { name: "Сервер и Server Components", kind: "lessons", desc: "SSR, гидратация и стриминг, Server Components и `'use client'`, Server Functions и `'use server'`, метаданные, ресурсы и `cache`, Next.js App Router." },
   { name: "Паттерны", kind: "lessons", desc: "Композиция и составные компоненты, HOC, render props и хуки, границы ошибок, классовые компоненты и жизненный цикл." },
-  { name: "Тестирование", kind: "lessons", desc: "React Testing Library: что и как тестировать, запросы и события, асинхронность, `act` и моки запросов." },
+  { name: "Тестирование", kind: "lessons", desc: "React Testing Library: что и как тестировать, запросы и события, асинхронность, `act` и моки запросов, E2E-тесты на Playwright." },
 ];
 
 /** Дополнительные карточки: частые вопросы собеседований, которые не стали отдельным уроком. id начинаются с `react-`. */

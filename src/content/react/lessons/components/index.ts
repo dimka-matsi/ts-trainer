@@ -4,5 +4,6 @@ import { lesson as l2 } from "./02-props";
 import { lesson as l3 } from "./03-lists";
 import { lesson as l4 } from "./04-events";
 import { lesson as l5 } from "./05-fragment-portal";
+import { lesson as l6 } from "./06-styles";
 
-export const lessons: WebLesson[] = [l1, l2, l3, l4, l5];
+export const lessons: WebLesson[] = [l1, l2, l3, l4, l5, l6];
