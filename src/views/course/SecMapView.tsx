@@ -13,6 +13,7 @@ const SEVERITY: { label: string; cls: string }[] = [
   { label: "CRITICAL", cls: "critical" },
   { label: "HIGH", cls: "high" },
   { label: "CRITICAL", cls: "critical" },
+  { label: "MEDIUM", cls: "medium" },
 ];
 
 /** Карта «Безопасности» как отчёт сканера уязвимостей: категории угроз и находки-уроки со статусом. */

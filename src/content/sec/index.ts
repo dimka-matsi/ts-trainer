@@ -5,20 +5,22 @@ import { lessons as auth } from "./lessons/auth";
 import { lessons as cookies } from "./lessons/cookies";
 import { lessons as cors } from "./lessons/cors";
 import { lessons as headers } from "./lessons/headers";
+import { lessons as ops } from "./lessons/ops";
 
 /**
  * «Безопасность»: как атакуют сайт и как от этого защищаются. Опирается на «Браузер» (HTTP, cookies, TLS),
  * поэтому механизмы там, здесь — угрозы и защита. Порядок: флаги cookies → политика одного источника и CORS →
- * атаки → заголовки защиты → аутентификация, где всё собирается вместе.
+ * атаки → заголовки защиты → аутентификация, где всё собирается вместе → эксплуатация: файлы, секреты, нагрузка.
  */
-const REGION_LESSONS: WebLesson[][] = [cookies, cors, attacks, headers, auth];
+const REGION_LESSONS: WebLesson[][] = [cookies, cors, attacks, headers, auth, ops];
 
 const REGIONS: WebRegion[] = [
   { name: "Cookies и их флаги", kind: "lessons", desc: "Как защитить cookie: `HttpOnly`, `Secure`, `SameSite`, сторонние cookies и `Partitioned`." },
   { name: "CORS", kind: "lessons", desc: "Политика одного источника и как сервер разрешает чтение с других источников." },
-  { name: "Атаки", kind: "lessons", desc: "XSS и защита от него, CSRF и CSRF-токены, clickjacking и открытый редирект." },
-  { name: "Заголовки защиты", kind: "lessons", desc: "Content Security Policy, Subresource Integrity и чужой код, nosniff и Referrer-Policy, изоляция COOP и COEP." },
-  { name: "Аутентификация", kind: "lessons", desc: "Сессия или JWT и где хранить токен, access- и refresh-токены, OAuth 2.0 и OpenID Connect." },
+  { name: "Атаки", kind: "lessons", desc: "XSS и защита от него, CSRF и CSRF-токены, clickjacking и открытый редирект, инъекции на сервере и SSRF, prototype pollution, `postMessage` и `sandbox`." },
+  { name: "Заголовки защиты", kind: "lessons", desc: "Content Security Policy, Subresource Integrity и чужой код, nosniff и Referrer-Policy, изоляция COOP и COEP, Trusted Types." },
+  { name: "Аутентификация", kind: "lessons", desc: "Сессия или JWT и где хранить токен, access- и refresh-токены, OAuth 2.0 и OpenID Connect, хранение паролей, двухфакторная аутентификация и passkeys, права доступа и IDOR." },
+  { name: "Эксплуатация", kind: "lessons", desc: "Загрузка файлов, секреты и личные данные во фронтенде, лимит запросов, боты и DDoS." },
 ];
 
 /** Дополнительные карточки: частые вопросы собеседований, которые не стали отдельным уроком. id начинаются с `sec-`. */
@@ -32,11 +34,6 @@ const EXTRA_CARDS: Flashcard[] = [
     id: "sec-client-validation", region: 2, level: "junior",
     q: "Достаточно ли проверять данные формы на фронтенде?",
     a: "Нет. Проверка на фронтенде — удобство для пользователя: быстрая подсказка без запроса. Злоумышленник отправит запрос напрямую, минуя интерфейс, поэтому всё, что важно для безопасности, проверяет сервер: права, формат, лимиты. Фронтенд и сервер проверяют одно и то же, но доверять можно только серверу.",
-  },
-  {
-    id: "sec-secrets-frontend", region: 4, level: "middle",
-    q: "Можно ли хранить секретный API-ключ в коде фронтенда?",
-    a: "Нет: всё, что попало в бандл, видит любой пользователь в DevTools, даже если переменная называлась «секретной» в `.env`. На фронтенде допустимы только публичные ключи с ограничениями по домену. Секретные ключи живут на сервере, а фронтенд обращается к своему серверу, который сам ходит во внешний API.",
   },
 ];
 
