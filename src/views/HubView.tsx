@@ -23,7 +23,7 @@ interface TrackCard {
 }
 
 /** Ширина живых карточек в сетке из 12 колонок: главная широкая, дальше «ёлочкой». */
-const SPANS = [7, 5, 4, 4, 4];
+const SPANS = [7, 5, 4, 4, 4, 6];
 
 /** Главный экран: выбор направления. У каждого направления своя карта и свой стиль. */
 export function HubView() {
@@ -60,7 +60,11 @@ export function HubView() {
       about: "Как сделать сайт быстрым и доказать это цифрами: Core Web Vitals, webpack и чанки, TTFB, ререндеры React, виртуализация, скрытые классы и разбор задач с собеседований. Лучше после «Браузера».",
       ...courseStats(COURSES.perf),
     },
-    { id: "js", name: "JavaScript", tagline: "Замыкания, this, event loop, DOM", about: "Язык и работа со страницей: асинхронность, события DOM, Web API." },
+    {
+      id: "js", name: "JavaScript", tagline: "Замыкания, this, event loop, live coding",
+      about: "Типы и приведение, области видимости и замыкания, this и прототипы, event loop и промисы, DOM и события, Web API и модули. Задания «что выведет» проверяются запуском кода, в конце — задачи live coding.",
+      ...courseStats(COURSES.js),
+    },
     {
       id: "react", name: "React", tagline: "Хуки, рендеринг, состояние, React 19",
       about: "Всё, что спрашивают о React: JSX и компоненты, хуки и эффекты, как устроен рендеринг, Context, Redux, Zustand и TanStack Query, производительность и React Compiler, Actions и Server Components, паттерны и тесты. Каждая страница react.dev привязана к уроку.",

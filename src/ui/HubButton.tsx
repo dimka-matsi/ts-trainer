@@ -2,7 +2,7 @@ import type { CourseId } from "../content/course/types";
 import { navigate } from "../state/route";
 
 /** Плитки хаба в том же порядке, что карточки на главном экране. */
-const TILES: ("ts" | CourseId)[] = ["ts", "web", "sec", "perf", "react"];
+const TILES: ("ts" | CourseId)[] = ["ts", "web", "sec", "perf", "react", "js"];
 
 /**
  * Кнопка возврата на хаб: мини-копия главного экрана из плиток цветов направлений.

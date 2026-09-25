@@ -7,12 +7,14 @@ import { courseLessonAfter, courseLessonDone, courseRegionDone } from "../../sta
 import { CodeBlock, Md } from "../../ui/Code";
 import { ChoiceTaskCard } from "../lesson/ChoiceTaskCard";
 import { FlowDiagram, NetworkPanel } from "./NetVisuals";
+import { needsPage } from "../../engine/jsRunner";
+import { RunnableCode, RunTaskCard } from "./RunTaskCard";
 import { MatchTaskCard, OrderTaskCard, SortTaskCard } from "./WebTasks";
 
 type Panel = "theory" | "flow" | "network" | "tasks" | "answer";
 
 const kindLabel = (t: WebTask) =>
-  t.type === "quiz" ? "Вопрос" : t.type === "order" ? "Расставь по порядку" : t.type === "match" ? "Сопоставь" : "Разложи по группам";
+  t.type === "run" ? "Напиши код" : t.type === "quiz" ? (t.output ? "Что выведет" : "Вопрос") : t.type === "order" ? "Расставь по порядку" : t.type === "match" ? "Сопоставь" : "Разложи по группам";
 
 /** Урок курса без кода: разделы — вкладки как в DevTools, внизу строка состояния с прогрессом. */
 export function CourseLessonView({ course, lesson }: { course: Course; lesson: WebLesson }) {
@@ -60,7 +62,7 @@ export function CourseLessonView({ course, lesson }: { course: Course; lesson: W
           {panel === "theory" && (
             <div className="tbody wl-theory">
               {lesson.theory.p.map((p, i) => <p key={i}><Md text={p} /></p>)}
-              {lesson.theory.code && <CodeBlock code={lesson.theory.code} />}
+              {lesson.theory.code && (course.runnable && !needsPage(lesson.theory.code) ? <RunnableCode code={lesson.theory.code} /> : <CodeBlock code={lesson.theory.code} />)}
               <div className="keys"><b>Главное</b><ul>{lesson.theory.keys.map((k, i) => <li key={i}><Md text={k} /></li>)}</ul></div>
               {visual && <div className="actions"><button type="button" className="btn" onClick={() => setPanel(visual)}>{visual === "flow" ? "Разобрать по шагам на схеме" : "Открыть вкладку «Сеть»"}</button></div>}
             </div>
@@ -87,6 +89,7 @@ export function CourseLessonView({ course, lesson }: { course: Course; lesson: W
               {task.type === "order" ? <OrderTaskCard task={task} onSolved={() => solve(i)} />
                 : task.type === "match" ? <MatchTaskCard task={task} onSolved={() => solve(i)} />
                 : task.type === "sort" ? <SortTaskCard task={task} onSolved={() => solve(i)} />
+                : task.type === "run" ? <RunTaskCard task={task} onSolved={() => solve(i)} />
                 : <ChoiceTaskCard task={task} onSolved={() => solve(i)} />}
             </article>
           ))}

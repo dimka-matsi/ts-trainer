@@ -29,7 +29,7 @@ export function CourseHeader({ course, route }: { course: Course; route: Route }
     cards: course.flashcards,
     unlocked: (p, id) => { const l = course.byId[id]; return !!l && courseLessonUnlocked(course, p, l); },
     go: (id) => navigate({ view: "course-lesson", course: course.id, id }),
-    placeholder: course.id === "web" ? "Например: DNS, keep-alive, ETag" : course.id === "sec" ? "Например: XSS, SameSite, CSP" : course.id === "react" ? "Например: Context, useSelector, staleTime" : "Например: LCP, чанки, React.memo",
+    placeholder: course.id === "web" ? "Например: DNS, keep-alive, ETag" : course.id === "sec" ? "Например: XSS, SameSite, CSP" : course.id === "react" ? "Например: Context, useSelector, staleTime" : course.id === "js" ? "Например: замыкание, this, event loop" : "Например: LCP, чанки, React.memo",
   }), [course]);
 
   // «/» открывает поиск, если фокус не в поле ввода.

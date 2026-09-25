@@ -14,6 +14,7 @@ import { COURSES } from "../src/content/courses";
 import { REACT_REFERENCE } from "../src/content/react/reference";
 import type { Course } from "../src/content/course/types";
 import type { HttpMessage, NetRequest, WebLesson, WebTask } from "../src/content/course/types";
+import { needsPage, runOutput, runTests } from "../src/engine/jsRunner";
 
 /** Где понятие объясняют впервые. Раньше этого урока его не упоминают. */
 const CONCEPTS: { name: string; re: RegExp; at: string }[] = [
@@ -168,6 +169,7 @@ const taskText = (t: WebTask) =>
   t.type === "quiz" ? [t.q, ...t.opts, t.why, t.code ?? "", t.example ?? ""]
     : t.type === "order" ? [t.q, ...t.items, t.why]
     : t.type === "match" ? [t.q, ...t.pairs.flat(), t.why]
+    : t.type === "run" ? [t.goal, t.hint, t.code, t.solution]
     : [t.q, ...t.groups, ...t.items.map(([s]) => s), t.why];
 
 const messageText = (m: HttpMessage) => [m.line, ...m.headers.map(([k, v]) => `${k}: ${v}`), m.body ?? ""];
@@ -197,10 +199,11 @@ function syntaxErrors(code: string): string[] {
 /** Все примеры кода урока: теория, код к вопросам и к объяснениям. */
 const lessonCode = (l: WebLesson): [string, string][] => [
   ...(l.theory.code ? [["теория", l.theory.code] as [string, string]] : []),
-  ...l.tasks.flatMap((t, i): [string, string][] => t.type !== "quiz" ? [] : [
-    ...(t.code ? [[`задание ${i + 1}`, t.code] as [string, string]] : []),
-    ...(t.example ? [[`задание ${i + 1}, пример`, t.example] as [string, string]] : []),
-  ]),
+  ...l.tasks.flatMap((t, i): [string, string][] => t.type === "run" ? [[`задание ${i + 1}`, t.code], [`задание ${i + 1}, решение`, t.solution]]
+    : t.type !== "quiz" ? [] : [
+      ...(t.code ? [[`задание ${i + 1}`, t.code] as [string, string]] : []),
+      ...(t.example ? [[`задание ${i + 1}, пример`, t.example] as [string, string]] : []),
+    ]),
 ];
 
 const header = (m: HttpMessage, name: string) => m.headers.filter(([k]) => k.toLowerCase() === name.toLowerCase()).map(([, v]) => v);
@@ -279,7 +282,8 @@ function checkCourse(course: Course, fail: (msg: string) => void) {
     const { p, keys, flow, requests } = lesson.theory;
     if (p.length < 3 || p.length > 4) fail(`${tag}: в теории ${p.length} абзацев, нужно 3–4`);
     if (keys.length !== 3) fail(`${tag}: главных пунктов ${keys.length}, нужно ровно 3`);
-    if (!flow && !requests?.length) fail(`${tag}: нет ни схемы, ни запросов для разбора`);
+    // В курсе с запуском кода разбором служит сам пример: его выполняют и смотрят вывод.
+    if (!flow && !requests?.length && !(course.runnable && lesson.theory.code)) fail(`${tag}: нет ни схемы, ни запросов, ни примера для запуска`);
     if (lesson.tasks.length < 2 || lesson.tasks.length > 4) fail(`${tag}: заданий ${lesson.tasks.length}, нужно 2–4`);
     if (new Set(lesson.tasks.map((t) => t.type)).size < 2) fail(`${tag}: все задания одного вида`);
 
@@ -318,6 +322,10 @@ function checkCourse(course: Course, fail: (msg: string) => void) {
       if (task.type === "quiz") {
         if (task.a < 0 || task.a >= task.opts.length) fail(`${t}: индекс ответа вне вариантов`);
         if (new Set(task.opts).size !== task.opts.length) fail(`${t}: варианты повторяются`);
+        if (task.output && (!course.runnable || !task.code)) fail(`${t}: вопрос «что выведет» нужен код и курс с запуском кода`);
+      } else if (task.type === "run") {
+        if (!course.runnable) fail(`${t}: задания с запуском кода есть только в курсе с запуском`);
+        if (task.tests.length < 2) fail(`${t}: проверок меньше двух`);
       } else if (task.type === "order") {
         if (task.items.length < 3) fail(`${t}: меньше трёх шагов`);
         if (new Set(task.items).size !== task.items.length) fail(`${t}: шаги повторяются`);
@@ -368,6 +376,46 @@ function checkReactReference(fail: (msg: string) => void) {
   }
   const lessons = REACT_REFERENCE.filter((r) => r.covered.some((c) => "lesson" in c)).length;
   console.log(`  сверка с react.dev: страниц ${REACT_REFERENCE.length}, в уроках ${lessons}, пропущено с причиной ${REACT_REFERENCE.length - lessons}`);
+}
+
+/**
+ * Выполняет код курсов с запуском: вопрос «что выведет» — верный вариант совпадает с настоящим выводом,
+ * остальные нет; «напиши код» — эталон проходит все проверки и запреты, стартовый код проваливает хоть одну проверку.
+ * Пример теории должен выполняться без необработанных ошибок, кроме строк с пометкой `// ошибка`.
+ */
+export async function checkJsRuns(fail: (msg: string) => void) {
+  let outputs = 0, runs = 0;
+  for (const course of Object.values(COURSES).filter((c) => c.runnable)) {
+    for (const lesson of course.lessons) {
+      const theory = lesson.theory.code;
+      if (theory && !/\/\/ ошибка/.test(theory) && !needsPage(theory)) {
+        const out = await runOutput(theory);
+        const err = out.find((l) => l.startsWith("Uncaught "));
+        if (err) fail(`${lesson.id}, теория: пример падает с ${err} — пометь строку «// ошибка» или поправь код`);
+      }
+      for (const [i, task] of lesson.tasks.entries()) {
+        const t = `${lesson.id} [${i + 1}] ${task.type}`;
+        if (task.type === "quiz" && task.output && task.code) {
+          outputs++;
+          if (needsPage(task.code)) { fail(`${t}: код «что выведет» обращается к странице, его не выполнить`); continue; }
+          const real = (await runOutput(task.code)).join("\n");
+          if (task.opts[task.a] !== real) fail(`${t}: код выводит\n${real}\nа верный вариант\n${task.opts[task.a]}`);
+          task.opts.forEach((o, j) => { if (j !== task.a && o === real) fail(`${t}: неверный вариант ${j + 1} совпадает с настоящим выводом`); });
+        } else if (task.type === "run") {
+          runs++;
+          for (const f of task.forbid ?? []) {
+            if (new RegExp(f.re).test(task.solution)) fail(`${t}: эталон нарушает запрет «${f.msg}»`);
+          }
+          const good = await runTests(task.solution, task.tests);
+          for (const r of good) if (!r.pass) fail(`${t}: эталон: ${r.expr} вернул ${r.got}, а ждали ${r.want}`);
+          const start = await runTests(task.code, task.tests);
+          const forbidden = (task.forbid ?? []).some((f) => new RegExp(f.re).test(task.code));
+          if (start.every((r) => r.pass) && !forbidden) fail(`${t}: стартовый код уже проходит все проверки`);
+        }
+      }
+    }
+  }
+  console.log(`  выполнение кода: вопросов «что выведет» ${outputs}, заданий «напиши код» ${runs}`);
 }
 
 /** Проверка всех курсов без кода. id уроков и карточек не должны повторяться между курсами: прогресс общий. */

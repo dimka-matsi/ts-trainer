@@ -30,7 +30,23 @@ export interface SortTask {
   why: string;
 }
 
-export type WebTask = QuizTask | OrderTask | MatchTask | SortTask;
+/**
+ * Написать код на JavaScript: он выполняется в воркере, каждая проверка — выражение и ожидаемый результат в JSON.
+ * Стартовый код обязан проваливать хотя бы одну проверку, эталон `solution` — проходить все.
+ */
+export interface RunTask {
+  type: "run";
+  goal: string;
+  code: string;
+  /** Пары [выражение, ожидаемый JSON]. В выражении можно `await`. */
+  tests: [string, string][];
+  solution: string;
+  hint: string;
+  /** Запрещённые приёмы: например, встроенный `Promise.all` в задаче «напиши Promise.all». */
+  forbid?: { re: string; msg: string }[];
+}
+
+export type WebTask = QuizTask | OrderTask | MatchTask | SortTask | RunTask;
 
 /** Схема обмена: участники и стрелки между ними, по шагам. */
 export interface Flow {
@@ -84,7 +100,7 @@ export interface WebRegion {
 }
 
 /** Направления с уроками этого формата. id совпадает с началом адреса: `#/web`, `#/perf`. */
-export type CourseId = "web" | "perf" | "sec" | "react";
+export type CourseId = "web" | "perf" | "sec" | "react" | "js";
 
 /** Курс: регионы, уроки по порядку прохождения, карточки и база ключей экзаменов в общем прогрессе. */
 export interface Course {
@@ -98,10 +114,12 @@ export interface Course {
   examBase: number;
   /** В курсе можно показывать код: в теории и в вопросах. В остальных курсах кода нет совсем. */
   withCode: boolean;
+  /** Код курса можно запустить: у примера теории есть кнопка «Запустить», вывод показывает консоль. */
+  runnable: boolean;
 }
 
 /** Собирает курс: уроки идут регион за регионом, индекс массива — индекс региона. */
-export function makeCourse(id: CourseId, name: string, regions: WebRegion[], byRegion: WebLesson[][], extraCards: Flashcard[], cardPrefix: string, examBase: number, opts: { withCode?: boolean } = {}): Course {
+export function makeCourse(id: CourseId, name: string, regions: WebRegion[], byRegion: WebLesson[][], extraCards: Flashcard[], cardPrefix: string, examBase: number, opts: { withCode?: boolean; runnable?: boolean } = {}): Course {
   const lessons = byRegion.flat();
   return {
     id,
@@ -115,5 +133,6 @@ export function makeCourse(id: CourseId, name: string, regions: WebRegion[], byR
     ],
     examBase,
     withCode: opts.withCode ?? false,
+    runnable: opts.runnable ?? false,
   };
 }

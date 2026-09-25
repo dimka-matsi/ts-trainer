@@ -7,6 +7,7 @@ import { CardsView } from "../CardsView";
 import { ExamView, type ExamConfig } from "../ExamView";
 import { InterviewView } from "../InterviewView";
 import { CourseProgressView } from "./CourseProgressView";
+import { JsMapView } from "./JsMapView";
 import { PerfMapView } from "./PerfMapView";
 import { ReactMapView } from "./ReactMapView";
 import { SecMapView } from "./SecMapView";
@@ -73,5 +74,6 @@ export function CourseScreen({ course, route }: { course: Course; route: Route }
   if (course.id === "perf") return <PerfMapView course={course} />;
   if (course.id === "sec") return <SecMapView course={course} />;
   if (course.id === "react") return <ReactMapView course={course} />;
+  if (course.id === "js") return <JsMapView course={course} />;
   return <WebMapView course={course} />;
 }

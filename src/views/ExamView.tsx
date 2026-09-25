@@ -51,6 +51,9 @@ function draw(pool: ExamTask[]): Run {
   return { questions, chosen: [], index: 0, done: false };
 }
 
+/** Варианты — тип или вывод консоли: показываются как есть, моноширинным шрифтом. */
+const monoOpts = (t: ExamTask) => t.type === "predict" || (t.type === "quiz" && !!t.output);
+
 const isRight = (run: Run, j: number) => run.chosen[j] === run.questions[j]!.task.a;
 
 /** Итоговый экзамен по региону: случайные вопросы, одна попытка на вопрос, разбор ошибок в конце. */
@@ -144,9 +147,9 @@ export function ExamView({ cfg }: { cfg: ExamConfig }) {
         <div className="opts">
           {q.order.map((j) => (
             <button key={j} type="button"
-              className={`opt${q.task.type === "predict" ? " mono" : ""}${answered && j === q.task.a ? " right" : ""}${answered && j === chosen && j !== q.task.a ? " wrong" : ""}`}
+              className={`opt${monoOpts(q.task) ? " mono" : ""}${answered && j === q.task.a ? " right" : ""}${answered && j === chosen && j !== q.task.a ? " wrong" : ""}`}
               disabled={answered} onClick={() => choose(j)}>
-              {q.task.type === "predict" ? q.task.opts[j] : <Md text={q.task.opts[j] ?? ""} />}
+              {monoOpts(q.task) ? q.task.opts[j] : <Md text={q.task.opts[j] ?? ""} />}
             </button>
           ))}
         </div>
@@ -172,7 +175,7 @@ export function ExamView({ cfg }: { cfg: ExamConfig }) {
 
 function Opt({ task, i }: { task: ExamTask; i: number }) {
   const text = task.opts[i] ?? "";
-  return task.type === "predict" ? <code>{text}</code> : <Md text={text} />;
+  return monoOpts(task) ? <code className="pre">{text}</code> : <Md text={text} />;
 }
 
 function ExamBar({ run }: { run: Run }) {

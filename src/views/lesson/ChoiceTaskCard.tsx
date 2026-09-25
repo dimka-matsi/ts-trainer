@@ -3,6 +3,7 @@ import { probeType } from "../../engine/check";
 import type { PredictTask, QuizTask } from "../../content/types";
 import { useEngine } from "../../state/engine";
 import { CodeBlock, Md } from "../../ui/Code";
+import { RunnableCode } from "../course/RunTaskCard";
 
 interface Props {
   task: PredictTask | QuizTask;
@@ -16,6 +17,8 @@ export function ChoiceTaskCard({ task, onSolved }: Props) {
   const [solved, setSolved] = useState(false);
   const [compiler, setCompiler] = useState<string | null>(null);
   const predict = task.type === "predict";
+  /** Варианты — код или вывод консоли: моноширинный шрифт, текст как есть. */
+  const mono = predict || (task.type === "quiz" && !!task.output);
 
   const choose = (j: number) => {
     if (j !== task.a) { setWrong((w) => [...w, j]); return; }
@@ -32,9 +35,9 @@ export function ChoiceTaskCard({ task, onSolved }: Props) {
       <div className="opts">
         {task.opts.map((o, j) => (
           <button key={j} type="button"
-            className={`opt${predict ? " mono" : ""}${solved && j === task.a ? " right" : ""}${wrong.includes(j) ? " wrong" : ""}`}
+            className={`opt${mono ? " mono" : ""}${solved && j === task.a ? " right" : ""}${wrong.includes(j) ? " wrong" : ""}`}
             disabled={solved || wrong.includes(j)} onClick={() => choose(j)}>
-            {predict ? o : <Md text={o} />}
+            {mono ? o : <Md text={o} />}
           </button>
         ))}
       </div>
@@ -43,10 +46,13 @@ export function ChoiceTaskCard({ task, onSolved }: Props) {
           <>
             <p className="ok-t"><b>Верно.</b> <Md text={task.why} /></p>
             {task.type === "quiz" && task.example && <CodeBlock code={task.example} />}
+            {task.type === "quiz" && task.output && task.code && <RunnableCode code={task.code} hideCode />}
             {compiler && <><p className="where">Компилятор показывает:</p><CodeBlock code={compiler} className="code ty" /></>}
           </>
         ) : wrong.length > 0 && (
-          <p className="bad-t"><b>Не совсем.</b> {predict ? "Попробуй ещё раз: подумай, что компилятор знает в этой точке." : "Попробуй ещё раз: перечитай вопрос и вспомни главное из урока."}</p>
+          <p className="bad-t"><b>Не совсем.</b> {predict ? "Попробуй ещё раз: подумай, что компилятор знает в этой точке."
+            : mono ? "Попробуй ещё раз: пройди код построчно и запиши, что появится в консоли."
+            : "Попробуй ещё раз: перечитай вопрос и вспомни главное из урока."}</p>
         )}
       </div>
     </>
