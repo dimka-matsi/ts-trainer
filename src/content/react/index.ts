@@ -1,4 +1,5 @@
 import type { Flashcard } from "../flashcards";
+import { FOLLOW_UPS } from "./interview";
 import { makeCourse, type WebLesson, type WebRegion } from "../course/types";
 import { lessons as actions } from "./lessons/actions";
 import { lessons as arch } from "./lessons/arch";
@@ -135,4 +136,4 @@ const EXTRA_CARDS: Flashcard[] = [
 ];
 
 /** Курс «React». Карточки уроков — `react-lesson-<id>`, экзамены — 400 + регион. В курсе есть код. */
-export const REACT = makeCourse("react", "React", REGIONS, REGION_LESSONS, EXTRA_CARDS, "react", 400, { withCode: true });
+export const REACT = makeCourse("react", "React", REGIONS, REGION_LESSONS, EXTRA_CARDS, "react", 400, { withCode: true, followUps: FOLLOW_UPS });
