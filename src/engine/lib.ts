@@ -33,6 +33,8 @@ interface HTMLInputElement extends HTMLElement { value: string; checked: boolean
 interface HTMLCanvasElement extends HTMLElement { width: number; height: number }
 interface Document { getElementById(elementId: string): HTMLElement | null; querySelector(selectors: string): Element | null }
 declare var document: Document;
+interface Window { document: Document; innerWidth: number }
+declare var window: Window;
 `;
 
 /** Склеивает исходники lib-файлов в один lib.d.ts. */

@@ -57,17 +57,50 @@ export function parseFlags(code: string): Record<string, boolean> {
   return out;
 }
 
+/** Кусок кода, который стал отдельным файлом: имя, текст и с какой строки и символа он начинается в общем коде. */
+interface Section {
+  path: string;
+  text: string;
+  line: number;
+  offset: number;
+}
+
+/**
+ * Делит код на файлы по строкам `// @filename: api.ts`, как песочница TypeScript. Строка-маркер остаётся в своём
+ * файле комментарием, поэтому номера строк и позиции совпадают с общим кодом. Всё до первого маркера (например,
+ * строка `// @flags:`) относится к первому файлу. Без маркеров весь код — файл /main.ts.
+ */
+export function splitFiles(code: string): Section[] {
+  const lines = code.split("\n");
+  const starts: { line: number; name: string }[] = [];
+  lines.forEach((l, i) => {
+    const m = /^\/\/ @filename:\s*([\w./-]+)\s*$/.exec(l);
+    if (m) starts.push({ line: i, name: m[1]! });
+  });
+  if (!starts.length) return [{ path: MAIN, text: code, line: 0, offset: 0 }];
+  const offsetOf = (line: number) => lines.slice(0, line).reduce((n, l) => n + l.length + 1, 0);
+  return starts.map((st, i) => {
+    const from = i === 0 ? 0 : st.line;
+    const to = i + 1 < starts.length ? starts[i + 1]!.line : lines.length;
+    return { path: "/" + st.name.replace(/^\.?\//, ""), text: lines.slice(from, to).join("\n"), line: from, offset: offsetOf(from) };
+  });
+}
+
 export function createEngine(ts: TsApi, lib: string): Engine {
   const files = new Map<string, { version: number; text: string }>([
     ["/lib.d.ts", { version: 1, text: lib }],
     ["/prelude.d.ts", { version: 1, text: PRELUDE }],
     [MAIN, { version: 1, text: "" }],
   ]);
+  const FIXED = new Set(["/lib.d.ts", "/prelude.d.ts"]);
+  let sections: Section[] = [{ path: MAIN, text: "", line: 0, offset: 0 }];
+  let version = 1;
   const base: TS.CompilerOptions = {
     strict: true,
     noLib: true,
     target: ts.ScriptTarget.ES2017,
     module: ts.ModuleKind.ESNext,
+    moduleResolution: ts.ModuleResolutionKind.Bundler,
     noEmit: true,
     allowUnreachableCode: true,
     useDefineForClassFields: true,
@@ -91,10 +124,16 @@ export function createEngine(ts: TsApi, lib: string): Engine {
     getDirectories: () => [],
   };
   const service = ts.createLanguageService(host, ts.createDocumentRegistry());
-  const sourceFile = () => {
-    const sf = service.getProgram()?.getSourceFile(MAIN);
-    if (!sf) throw new Error("main.ts не найден в программе");
+  const sourceFile = (path: string) => {
+    const sf = service.getProgram()?.getSourceFile(path);
+    if (!sf) throw new Error(`${path} не найден в программе`);
     return sf;
+  };
+  /** Файл и позиция внутри него для позиции в общем коде. */
+  const locate = (pos: number) => {
+    let sec = sections[0]!;
+    for (const s of sections) if (s.offset <= pos) sec = s;
+    return { sec, at: pos - sec.offset };
   };
 
   const engine: Engine = {
@@ -107,29 +146,41 @@ export function createEngine(ts: TsApi, lib: string): Engine {
         flagsKey = key;
         options = { ...base, ...flags };
       }
-      const main = files.get(MAIN)!;
-      if (main.text !== code) files.set(MAIN, { version: main.version + 1, text: code });
+      const next = splitFiles(code);
+      const same = next.length === sections.length && next.every((s, i) => s.path === sections[i]!.path && s.text === sections[i]!.text);
+      if (same) return;
+      version++;
+      for (const path of [...files.keys()]) if (!FIXED.has(path) && !next.some((s) => s.path === path)) files.delete(path);
+      for (const s of next) {
+        const old = files.get(s.path);
+        if (!old || old.text !== s.text) files.set(s.path, { version, text: s.text });
+      }
+      sections = next;
     },
     diagnostics() {
-      const all = [...service.getSyntacticDiagnostics(MAIN), ...service.getSemanticDiagnostics(MAIN)];
-      const sf = sourceFile();
-      return all.map((d) => {
-        const lc = d.start != null ? sf.getLineAndCharacterOfPosition(d.start) : { line: 0, character: 0 };
-        return {
-          line: lc.line + 1,
-          col: lc.character + 1,
-          len: Math.max(1, d.length ?? 1),
-          code: d.code,
-          msg: ts.flattenDiagnosticMessageText(d.messageText, "\n"),
-        };
+      return sections.flatMap((sec) => {
+        const all = [...service.getSyntacticDiagnostics(sec.path), ...service.getSemanticDiagnostics(sec.path)];
+        const sf = sourceFile(sec.path);
+        return all.map((d) => {
+          const lc = d.start != null ? sf.getLineAndCharacterOfPosition(d.start) : { line: 0, character: 0 };
+          return {
+            line: sec.line + lc.line + 1,
+            col: lc.character + 1,
+            len: Math.max(1, d.length ?? 1),
+            code: d.code,
+            msg: ts.flattenDiagnosticMessageText(d.messageText, "\n"),
+          };
+        });
       });
     },
     quickInfo(pos) {
-      const q = service.getQuickInfoAtPosition(MAIN, pos);
+      const { sec, at } = locate(pos);
+      const q = service.getQuickInfoAtPosition(sec.path, at);
       return q ? ts.displayPartsToString(q.displayParts) : null;
     },
     completions(pos) {
-      const res = service.getCompletionsAtPosition(MAIN, pos, { includeCompletionsWithInsertText: false });
+      const { sec, at } = locate(pos);
+      const res = service.getCompletionsAtPosition(sec.path, at, { includeCompletionsWithInsertText: false });
       if (!res) return [];
       return res.entries
         .filter((e) => !e.name.startsWith("__"))
@@ -137,14 +188,16 @@ export function createEngine(ts: TsApi, lib: string): Engine {
         .map((e) => ({ name: e.name, kind: e.kind }));
     },
     declarations() {
-      const sf = sourceFile();
       const out: Declaration[] = [];
-      const push = (id: TS.Identifier) => out.push({ name: id.text, info: engine.quickInfo(id.getStart(sf)) ?? id.text });
-      for (const st of sf.statements) {
-        if ((ts.isTypeAliasDeclaration(st) || ts.isInterfaceDeclaration(st) || ts.isFunctionDeclaration(st) || ts.isClassDeclaration(st)) && st.name) {
-          push(st.name);
-        } else if (ts.isVariableStatement(st)) {
-          for (const d of st.declarationList.declarations) if (ts.isIdentifier(d.name)) push(d.name);
+      for (const sec of sections) {
+        const sf = sourceFile(sec.path);
+        const push = (id: TS.Identifier) => out.push({ name: id.text, info: engine.quickInfo(sec.offset + id.getStart(sf)) ?? id.text });
+        for (const st of sf.statements) {
+          if ((ts.isTypeAliasDeclaration(st) || ts.isInterfaceDeclaration(st) || ts.isFunctionDeclaration(st) || ts.isClassDeclaration(st)) && st.name) {
+            push(st.name);
+          } else if (ts.isVariableStatement(st)) {
+            for (const d of st.declarationList.declarations) if (ts.isIdentifier(d.name)) push(d.name);
+          }
         }
       }
       return out;
