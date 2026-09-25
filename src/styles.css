@@ -512,8 +512,6 @@ button.brand{background:none; border:0; padding:0; color:inherit; font:inherit; 
 /* Шапка — панель вкладок DevTools */
 .dt-toolbar{position:sticky; top:0; z-index:10; background:var(--dt-bar); border-bottom:1px solid var(--edge); padding-top:env(safe-area-inset-top,0px)}
 .dt-toolbar-in{max-width:1180px; margin:0 auto; padding:0 16px; display:flex; align-items:stretch; gap:14px; min-height:40px; font-size:13px}
-.dt-back{border:0; background:none; color:var(--ink-soft); font:inherit; cursor:pointer; padding:0 4px}
-.dt-back:hover{color:var(--ink)}
 .dt-brand{display:flex; align-items:center; gap:8px; font-weight:600; color:var(--ink)}
 .dt-brand small{font-weight:400; color:var(--ink-soft)}
 .dt-brand small::before{content:"›"; margin-right:6px}
@@ -527,8 +525,7 @@ button.brand{background:none; border:0; padding:0; color:inherit; font:inherit; 
 .dt-theme{border:0; background:none; color:var(--ink-soft); font-size:15px; cursor:pointer; padding:0 6px}
 .dt-search{display:inline-grid; place-items:center}
 .dt-theme:hover,.dt-theme:focus-visible{color:var(--ink)}
-.dt-back-short{display:none}
-@media (max-width:640px){ .dt-back-long{display:none} .dt-back-short{display:inline} .dt-brand small{display:none} .dt-toolbar-in{gap:6px; padding:0 10px} .dt-htab{padding:0 8px} }
+@media (max-width:640px){ .dt-brand small{display:none} .dt-toolbar-in{gap:6px; padding:0 10px} .dt-htab{padding:0 8px} }
 
 /* Карта — вкладка Network */
 .wm .lead{max-width:66ch; color:var(--ink-soft); font-size:16px}
@@ -918,14 +915,33 @@ button.brand{background:none; border:0; padding:0; color:inherit; font:inherit; 
 .hc-sec .hc-bar i{background:#3fb950}
 
 /* Шапка курсов на телефоне: «Карта», «Карточки», «Прогресс», поиск и тема должны поместиться */
-.dt-back{white-space:nowrap}
 .dt-htab{white-space:nowrap}
 @media (max-width:640px){
   .dt-toolbar-in{gap:2px; padding:0 8px}
-  .dt-back-short{display:none}
   .dt-brand{font-size:0; gap:0}
   .dt-brand-icon{margin:0 4px}
   .dt-htabs{min-width:0; overflow-x:auto; scrollbar-width:none}
   .dt-htab{flex:none; padding:0 7px; font-size:13px}
   .dt-theme{padding:0 5px}
 }
+
+/* ══════════════════ Кнопка возврата на хаб: мини-копия главного экрана ══════════════════ */
+.hub-btn{display:inline-flex; align-items:center; gap:5px; align-self:center; height:32px; padding:0 8px 0 6px; border:1px solid transparent; border-radius:6px; background:none; color:var(--ink-soft); cursor:pointer; flex:none}
+.hub-btn:hover,.hub-btn:focus-visible{color:var(--ink); background:rgba(127,127,127,.12)}
+.hub-btn-arrow{transition:transform .18s ease}
+.hub-btn-grid{display:grid; grid-template-columns:repeat(2, 7px); grid-auto-rows:7px; gap:2px; transition:gap .18s ease}
+.hub-btn-grid i{border-radius:2px; background:var(--hb); opacity:.3; transition:opacity .18s ease, transform .18s ease}
+.hub-btn-grid i[data-on]{opacity:1}
+.hb-ts{--hb:#3178C6} .hb-web{--hb:#f9ab00} .hb-sec{--hb:#ff7b72} .hb-perf{--hb:#0cce6b}
+.hub-btn:hover .hub-btn-grid,.hub-btn:focus-visible .hub-btn-grid{gap:3px}
+.hub-btn:hover .hub-btn-grid i,.hub-btn:focus-visible .hub-btn-grid i{opacity:1}
+.hub-btn:hover .hub-btn-grid i[data-on],.hub-btn:focus-visible .hub-btn-grid i[data-on]{transform:scale(1.15)}
+.hub-btn:hover .hub-btn-arrow,.hub-btn:focus-visible .hub-btn-arrow{transform:translateX(-2px)}
+@media (prefers-reduced-motion: reduce){ .hub-btn-arrow,.hub-btn-grid,.hub-btn-grid i{transition:none} }
+
+/* В синей пиксельной шапке TypeScript: рамка как у кнопок, квадратные плитки, своя плитка белая */
+.top-start{display:flex; align-items:center; gap:10px; min-width:0}
+.top .hub-btn{height:34px; color:#fff; border:1px solid rgba(255,255,255,.35); border-radius:var(--r)}
+.top .hub-btn:hover,.top .hub-btn:focus-visible{background:rgba(255,255,255,.12); color:#fff}
+.top .hub-btn-grid i{border-radius:0}
+.top .hb-ts{--hb:#fff}

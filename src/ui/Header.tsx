@@ -7,6 +7,7 @@ import { lessonDone, lessonUnlocked, levelUnlocked } from "../state/path";
 import { cardDue, useProgress } from "../state/progress";
 import { navigate, type Route } from "../state/route";
 import { setTheme, useTheme } from "../state/theme";
+import { HubButton } from "./HubButton";
 import { SearchDialog, type SearchSource } from "./SearchDialog";
 
 /** Поиск TypeScript: уроки, темы «скоро» и карточки. */
@@ -87,10 +88,13 @@ export function Header({ route }: { route: Route }) {
   return (
     <header className="top" ref={headerRef}>
       <div className="top-in">
-        <button type="button" className="brand" onClick={() => navigate({ view: "hub" })} title="Все направления">
-          <span className="logo" aria-hidden="true">TS</span>
-          <span className="brand-t"><b>Тренажёр TypeScript</b><span>{sub}</span></span>
-        </button>
+        <div className="top-start">
+          <HubButton current="ts" />
+          <button type="button" className="brand" onClick={() => navigate({ view: "map" })} title="Карта TypeScript">
+            <span className="logo" aria-hidden="true">TS</span>
+            <span className="brand-t"><b>Тренажёр TypeScript</b><span>{sub}</span></span>
+          </button>
+        </div>
         <nav className="levels" aria-label="Навигация">
           <button type="button" className="lv viewbtn" aria-current={route.view === "map" || undefined} onClick={() => navigate({ view: "map" })}>Карта</button>
           <button type="button" className="lv viewbtn" aria-current={route.view === "cards" || undefined} onClick={() => navigate({ view: "cards" })}>

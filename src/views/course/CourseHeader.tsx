@@ -4,6 +4,7 @@ import { courseLessonUnlocked } from "../../state/coursePath";
 import { cardDue, useProgress } from "../../state/progress";
 import { navigate, type Route } from "../../state/route";
 import { setTheme, useTheme } from "../../state/theme";
+import { HubButton } from "../../ui/HubButton";
 import { SearchDialog, type SearchSource } from "../../ui/SearchDialog";
 
 /** Шапка курса без кода. Вид задаёт стиль направления: у «Браузера» — вкладки DevTools, у «Оптимизации» — отчёт Lighthouse. */
@@ -51,7 +52,7 @@ export function CourseHeader({ course, route }: { course: Course; route: Route }
   return (
     <header className="dt-toolbar">
       <div className="dt-toolbar-in">
-        <button type="button" className="dt-back" onClick={() => navigate({ view: "hub" })} title="Все направления" aria-label="Все направления"><span aria-hidden="true">‹</span><span className="dt-back-long"> Все направления</span><span className="dt-back-short"> Хаб</span></button>
+        <HubButton current={course.id} />
         <span className="dt-brand"><i className="dt-brand-icon" aria-hidden="true" />{course.name}<small>{where}</small></span>
         <nav className="dt-htabs" aria-label="Разделы">
           {tab({ view: "course", course: course.id }, "Карта", route.view === "course" || route.view === "course-lesson")}
