@@ -37,13 +37,33 @@ export interface Engine {
 
 const MAIN = "/main.ts";
 
+/** Флаги, которые пример может включить первой строкой `// @flags: noUncheckedIndexedAccess, strictNullChecks=false`. */
+const FLAG_NAMES = [
+  "strict", "noImplicitAny", "strictNullChecks", "strictFunctionTypes", "strictBindCallApply", "strictPropertyInitialization",
+  "noImplicitThis", "useUnknownInCatchVariables", "noUncheckedIndexedAccess", "exactOptionalPropertyTypes",
+  "noImplicitOverride", "noPropertyAccessFromIndexSignature", "noImplicitReturns", "noFallthroughCasesInSwitch",
+  "verbatimModuleSyntax", "isolatedModules", "erasableSyntaxOnly", "experimentalDecorators",
+] as const;
+
+/** Разбирает строку `// @flags:` в начале кода. Неизвестные имена пропускаются. */
+export function parseFlags(code: string): Record<string, boolean> {
+  const m = /^\/\/ @flags:([^\n]*)/.exec(code);
+  const out: Record<string, boolean> = {};
+  if (!m) return out;
+  for (const part of m[1]!.split(",")) {
+    const [name, value] = part.trim().split("=");
+    if (name && (FLAG_NAMES as readonly string[]).includes(name)) out[name] = value !== "false";
+  }
+  return out;
+}
+
 export function createEngine(ts: TsApi, lib: string): Engine {
   const files = new Map<string, { version: number; text: string }>([
     ["/lib.d.ts", { version: 1, text: lib }],
     ["/prelude.d.ts", { version: 1, text: PRELUDE }],
     [MAIN, { version: 1, text: "" }],
   ]);
-  const options: TS.CompilerOptions = {
+  const base: TS.CompilerOptions = {
     strict: true,
     noLib: true,
     target: ts.ScriptTarget.ES2017,
@@ -52,6 +72,8 @@ export function createEngine(ts: TsApi, lib: string): Engine {
     allowUnreachableCode: true,
     useDefineForClassFields: true,
   };
+  let options: TS.CompilerOptions = base;
+  let flagsKey = "{}";
   const host: TS.LanguageServiceHost = {
     getScriptFileNames: () => [...files.keys()],
     getScriptVersion: (f) => String(files.get(f)?.version ?? 0),
@@ -78,6 +100,13 @@ export function createEngine(ts: TsApi, lib: string): Engine {
   const engine: Engine = {
     version: ts.version,
     set(code) {
+      // Флаги из первой строки `// @flags:` действуют только для этого кода.
+      const flags = parseFlags(code);
+      const key = JSON.stringify(flags);
+      if (key !== flagsKey) {
+        flagsKey = key;
+        options = { ...base, ...flags };
+      }
       const main = files.get(MAIN)!;
       if (main.text !== code) files.set(MAIN, { version: main.version + 1, text: code });
     },
