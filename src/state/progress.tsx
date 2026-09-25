@@ -40,7 +40,13 @@ export interface Progress {
   updatedAt: number;
 }
 
-const KEY = "ts-trainer-v1";
+/**
+ * Тестовый режим: адрес с `?test` (например, `http://localhost:5180/?test#/web`).
+ * Прогресс хранится отдельно и не пишется в файл — проверки не трогают настоящий прогресс.
+ */
+const TEST_MODE = typeof location !== "undefined" && new URLSearchParams(location.search).has("test");
+
+const KEY = TEST_MODE ? "ts-trainer-test" : "ts-trainer-v1";
 
 /** Достижение за все уроки региона. */
 const REGION_ACHIEVEMENT: Partial<Record<number, AchievementId>> = { 0: "basics", 1: "narrow", 2: "funcs", 4: "generics", 5: "utils" };
@@ -88,9 +94,24 @@ function load(): Progress {
   }
 }
 
-function saveToFile(p: Progress, keepalive = false) {
-  return fetch(FILE_URL, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(p), keepalive })
-    .catch(() => { /* сервер остановлен: копия останется в localStorage */ });
+/** Прогресс из файла или null, если файла нет или сервер недоступен. */
+async function loadFromFile(): Promise<Progress | null> {
+  try {
+    const r = await fetch(FILE_URL, { cache: "no-store" });
+    return r.status === 200 ? normalize(await r.json()) : null;
+  } catch {
+    return null;
+  }
+}
+
+/** Пишет прогресс в файл. Если в файле копия новее (ответ 409), возвращает её. */
+async function saveToFile(p: Progress, keepalive = false): Promise<Progress | null> {
+  try {
+    const r = await fetch(FILE_URL, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(p), keepalive });
+    return r.status === 409 ? normalize(await r.json()) : null;
+  } catch {
+    return null; // сервер остановлен: копия останется в localStorage
+  }
 }
 
 // Доступ к шагам решает путь обучения, здесь реэкспорт для старых импортов.
@@ -125,8 +146,16 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
     setProgress(stamped);
   }, []);
 
-  // При старте берём прогресс из файла, если он новее браузерной копии.
+  /** Взять чужую копию, только если она новее своей. */
+  const adopt = useCallback((other: Progress | null) => {
+    if (!other || other.updatedAt <= ref.current.updatedAt) return;
+    ref.current = other;
+    setProgress(other);
+  }, []);
+
+  // При старте берём прогресс из файла, если он новее браузерной копии. В тестовом режиме файл не трогаем.
   useEffect(() => {
+    if (TEST_MODE) return;
     let cancelled = false;
     fetch(FILE_URL, { cache: "no-store" })
       .then(async (r) => {
@@ -134,25 +163,41 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
         if (r.status === 200) {
           const fromFile = normalize(await r.json());
           if (cancelled) return;
-          if (fromFile.updatedAt > ref.current.updatedAt) {
-            ref.current = fromFile;
-            setProgress(fromFile);
-          }
+          adopt(fromFile);
         }
         setFileReady(true);
       })
       .catch(() => { /* статическая сборка без сервера: остаёмся на localStorage */ });
     return () => { cancelled = true; };
-  }, []);
+  }, [adopt]);
 
   useEffect(() => {
     try { localStorage.setItem(KEY, JSON.stringify(progress)); } catch { /* приватный режим */ }
     if (!fileReady) return;
-    const t = setTimeout(() => void saveToFile(progress), 300);
+    const t = setTimeout(() => void saveToFile(progress).then(adopt), 300);
     return () => clearTimeout(t);
-  }, [progress, fileReady]);
+  }, [progress, fileReady, adopt]);
 
-  // Закрыли вкладку раньше, чем сработал таймер: дописываем с keepalive.
+  // Вкладка долго висела открытой: при возвращении подтягиваем более новый прогресс из файла,
+  // а из соседних вкладок того же браузера — через событие storage.
+  useEffect(() => {
+    if (!fileReady) return;
+    const refresh = () => { if (document.visibilityState === "visible") void loadFromFile().then(adopt); };
+    const onStorage = (e: StorageEvent) => {
+      if (e.key !== KEY || !e.newValue) return;
+      try { adopt(normalize(JSON.parse(e.newValue))); } catch { /* битые данные */ }
+    };
+    document.addEventListener("visibilitychange", refresh);
+    window.addEventListener("focus", refresh);
+    window.addEventListener("storage", onStorage);
+    return () => {
+      document.removeEventListener("visibilitychange", refresh);
+      window.removeEventListener("focus", refresh);
+      window.removeEventListener("storage", onStorage);
+    };
+  }, [fileReady, adopt]);
+
+  // Закрыли вкладку раньше, чем сработал таймер: дописываем с keepalive. Старую копию сервер отклонит.
   useEffect(() => {
     if (!fileReady) return;
     const flush = () => void saveToFile(ref.current, true);
