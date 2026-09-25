@@ -4,8 +4,16 @@ import { REGIONS } from "../content/regions";
 import { lessonDone, PATH, regionDone } from "../state/path";
 import { useProgress, type Progress } from "../state/progress";
 import { shuffle } from "../state/random";
-import { navigate } from "../state/route";
+import { navigate, type Route } from "../state/route";
 import { CodeBlock, Md } from "../ui/Code";
+
+/** Откуда брать вопросы и куда возвращаться: у каждого направления своё. */
+export interface InterviewConfig {
+  poolFor(p: Progress): Flashcard[];
+  regionNames: string[];
+  map: Route;
+  cards: Route;
+}
 
 const QUESTIONS = 5;
 const SECONDS = 60;
@@ -13,8 +21,8 @@ const SECONDS = 60;
 type Grade = "full" | "part" | "none";
 const GRADE_TEXT: Record<Grade, string> = { full: "Ответил", part: "Частично", none: "Не ответил" };
 
-/** Вопросы только по пройденному: карточки пройденных регионов и уроков. */
-function poolFor(p: Progress): Flashcard[] {
+/** TypeScript: вопросы только по пройденному — карточки пройденных регионов и уроков. */
+function tsPoolFor(p: Progress): Flashcard[] {
   const doneLessons = new Set(PATH.flatMap((s) => (s.kind === "lesson" && lessonDone(p, s.lesson) ? [s.lesson.id] : [])));
   return FLASHCARDS.filter((c) => {
     if (c.id.startsWith("lesson-")) return doneLessons.has(c.id.slice("lesson-".length));
@@ -23,9 +31,16 @@ function poolFor(p: Progress): Flashcard[] {
 }
 
 /** Пробное собеседование: случайные вопросы из пройденного, минута на ответ вслух, самооценка. */
-export function InterviewView() {
+export const tsInterview: InterviewConfig = {
+  poolFor: tsPoolFor,
+  regionNames: REGIONS.map((r) => r.name),
+  map: { view: "map" },
+  cards: { view: "cards" },
+};
+
+export function InterviewView({ cfg }: { cfg: InterviewConfig }) {
   const { progress, reviewCard } = useProgress();
-  const pool = poolFor(progress);
+  const pool = cfg.poolFor(progress);
   const [questions, setQuestions] = useState<Flashcard[] | null>(null);
   const [index, setIndex] = useState(0);
   const [grades, setGrades] = useState<Grade[]>([]);
@@ -46,7 +61,7 @@ export function InterviewView() {
         ) : (
           <>
             <p className="how">Вопросы берутся только из пройденного, а сейчас их {pool.length}. Пройди ещё несколько уроков, и режим откроется.</p>
-            <div className="actions"><button type="button" className="btn ghost" onClick={() => navigate({ view: "map" })}>К карте</button></div>
+            <div className="actions"><button type="button" className="btn ghost" onClick={() => navigate(cfg.map)}>К карте</button></div>
           </>
         )}
       </section>
@@ -67,7 +82,7 @@ export function InterviewView() {
         <p className="how">Вопросы с оценкой «Частично» и «Не ответил» добавлены в колоду карточек на сегодня.</p>
         <div className="actions">
           <button type="button" className="btn" onClick={start}>Ещё раз</button>
-          <button type="button" className="btn ghost" onClick={() => navigate({ view: "cards" })}>К карточкам</button>
+          <button type="button" className="btn ghost" onClick={() => navigate(cfg.cards)}>К карточкам</button>
         </div>
       </section>
     );
@@ -80,10 +95,10 @@ export function InterviewView() {
     setIndex(index + 1);
   };
 
-  return <Question key={index} card={questions[index]!} n={index + 1} total={questions.length} onGrade={grade} />;
+  return <Question key={index} card={questions[index]!} n={index + 1} total={questions.length} regionName={cfg.regionNames[questions[index]!.region] ?? ""} onGrade={grade} />;
 }
 
-function Question({ card, n, total, onGrade }: { card: Flashcard; n: number; total: number; onGrade(g: Grade): void }) {
+function Question({ card, n, total, regionName, onGrade }: { card: Flashcard; n: number; total: number; regionName: string; onGrade(g: Grade): void }) {
   const [left, setLeft] = useState(SECONDS);
   const [open, setOpen] = useState(false);
 
@@ -96,7 +111,7 @@ function Question({ card, n, total, onGrade }: { card: Flashcard; n: number; tot
 
   return (
     <section className="intro interview">
-      <p className="crumb">Вопрос {n} из {total} · {REGIONS[card.region]!.name} · {LEVEL_NAME[card.level]}</p>
+      <p className="crumb">Вопрос {n} из {total} · {regionName} · {LEVEL_NAME[card.level]}</p>
       <div className="iv-timer" aria-label={`Осталось ${left} секунд`}>
         <i style={{ width: `${(left / SECONDS) * 100}%` }} />
         <span>{!open ? `${left} с` : left > 0 ? `Ответ за ${SECONDS - left} с` : "Время ответа вышло"}</span>

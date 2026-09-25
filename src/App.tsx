@@ -13,7 +13,7 @@ import { LessonView } from "./views/lesson/LessonView";
 import { LockedView } from "./views/LockedView";
 import { CardsView, tsCards } from "./views/CardsView";
 import { ExamView, tsExam } from "./views/ExamView";
-import { InterviewView } from "./views/InterviewView";
+import { InterviewView, tsInterview } from "./views/InterviewView";
 import { ProgressView } from "./views/ProgressView";
 import { MapView } from "./views/MapView";
 import { SorterView } from "./views/SorterView";
@@ -38,7 +38,7 @@ function Screen({ route }: { route: Route }) {
       : <LockedView what={`Экзамен «${REGIONS[route.region]!.name}»`} />;
   }
   if (route.view === "cards") return <CardsView {...tsCards} />;
-  if (route.view === "interview") return <InterviewView />;
+  if (route.view === "interview") return <InterviewView cfg={tsInterview} />;
   if (route.view === "progress") return <ProgressView />;
   if (route.view === "level" && LEVELS[route.index]) {
     return levelUnlocked(progress, route.index)

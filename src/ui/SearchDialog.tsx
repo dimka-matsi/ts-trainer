@@ -1,17 +1,25 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { FLASHCARDS } from "../content/flashcards";
-import { LESSONS } from "../content/lessons";
-import { REGIONS } from "../content/regions";
-import { lessonUnlocked } from "../state/path";
-import { useProgress } from "../state/progress";
-import { navigate } from "../state/route";
+import type { Flashcard } from "../content/flashcards";
+import { useProgress, type Progress } from "../state/progress";
 import { CodeBlock, Md } from "./Code";
+
+/** Что искать: уроки, темы «скоро» и карточки направления. */
+export interface SearchSource {
+  lessons: { id: string; title: string; q: string; answer: string; region: number }[];
+  regionNames: string[];
+  /** Темы регионов, где уроков ещё нет. */
+  topics: { t: string; q: string; ri: number }[];
+  cards: Flashcard[];
+  unlocked(p: Progress, id: string): boolean;
+  go(id: string): void;
+  placeholder: string;
+}
 
 const norm = (s: string) => s.toLowerCase().replace(/`/g, "").replace(/ё/g, "е");
 const LIMIT = 8;
 
 /** Поиск по урокам, темам и карточкам. Открывается кнопкой в шапке и клавишей «/». */
-export function SearchDialog({ open, onClose }: { open: boolean; onClose(): void }) {
+export function SearchDialog({ open, onClose, source }: { open: boolean; onClose(): void; source: SearchSource }) {
   const { progress } = useProgress();
   const ref = useRef<HTMLDialogElement>(null);
   const input = useRef<HTMLInputElement>(null);
@@ -28,14 +36,13 @@ export function SearchDialog({ open, onClose }: { open: boolean; onClose(): void
   const results = useMemo(() => {
     if (q.length < 2) return null;
     const hit = (...texts: string[]) => texts.some((t) => norm(t).includes(q));
-    const lessons = LESSONS.filter((l) => hit(l.title, l.q, l.answer)).slice(0, LIMIT);
-    const topics = REGIONS.flatMap((r, ri) => (r.kind === "soon" ? (r.topics ?? []).map((t) => ({ ...t, ri })) : []))
-      .filter((t) => hit(t.t, t.q)).slice(0, LIMIT);
-    const cards = FLASHCARDS.filter((c) => hit(c.q, c.a)).slice(0, LIMIT);
+    const lessons = source.lessons.filter((l) => hit(l.title, l.q, l.answer)).slice(0, LIMIT);
+    const topics = source.topics.filter((t) => hit(t.t, t.q)).slice(0, LIMIT);
+    const cards = source.cards.filter((c) => hit(c.q, c.a)).slice(0, LIMIT);
     return { lessons, topics, cards };
-  }, [q]);
+  }, [q, source]);
 
-  const go = (id: string) => { onClose(); navigate({ view: "lesson", id }); };
+  const go = (id: string) => { onClose(); source.go(id); };
   const empty = results && !results.lessons.length && !results.topics.length && !results.cards.length;
 
   return (
@@ -43,7 +50,7 @@ export function SearchDialog({ open, onClose }: { open: boolean; onClose(): void
       <div className="dlg-in">
         <button type="button" className="x" aria-label="Закрыть" onClick={onClose}>×</button>
         <input ref={input} className="search-input" type="search" value={query} onChange={(e) => setQuery(e.target.value)}
-          placeholder="Например: satisfies, keyof, never" aria-label="Что найти" />
+          placeholder={source.placeholder} aria-label="Что найти" />
         {!results && <p className="muted">Введите хотя бы две буквы. Ищу по урокам, темам и карточкам с вопросами.</p>}
         {empty && <p className="muted">Ничего не нашлось.</p>}
         {results && results.lessons.length > 0 && (
@@ -51,12 +58,12 @@ export function SearchDialog({ open, onClose }: { open: boolean; onClose(): void
             <h3>Уроки</h3>
             <ul>
               {results.lessons.map((l) => {
-                const open = lessonUnlocked(progress, l);
+                const open = source.unlocked(progress, l.id);
                 return (
                   <li key={l.id}>
                     <button type="button" className="search-hit" onClick={() => go(l.id)}>
                       <b>{!open && <i className="lock" aria-label="закрыто" />}{l.title}</b>
-                      <span>{REGIONS[l.region]!.name} · <Md text={l.q} /></span>
+                      <span>{source.regionNames[l.region]} · <Md text={l.q} /></span>
                     </button>
                   </li>
                 );
@@ -69,7 +76,7 @@ export function SearchDialog({ open, onClose }: { open: boolean; onClose(): void
             <h3>Темы в разработке</h3>
             <ul>
               {results.topics.map((t) => (
-                <li key={`${t.ri}-${t.t}`} className="search-static"><b>{t.t}</b><span>{REGIONS[t.ri]!.name} · <Md text={t.q} /></span></li>
+                <li key={`${t.ri}-${t.t}`} className="search-static"><b>{t.t}</b><span>{source.regionNames[t.ri]} · <Md text={t.q} /></span></li>
               ))}
             </ul>
           </div>

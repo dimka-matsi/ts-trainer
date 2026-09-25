@@ -914,3 +914,16 @@ button.brand{background:none; border:0; padding:0; color:inherit; font:inherit; 
 .hc-sec .hc-art{width:30px; height:34px; background:#ff7b72; clip-path:polygon(50% 0, 100% 18%, 100% 55%, 50% 100%, 0 55%, 0 18%)}
 .hc-sec .hc-bar{background:#30363d}
 .hc-sec .hc-bar i{background:#3fb950}
+
+/* Шапка курсов на телефоне: «Карта», «Карточки», «Прогресс», поиск и тема должны поместиться */
+.dt-back{white-space:nowrap}
+.dt-htab{white-space:nowrap}
+@media (max-width:640px){
+  .dt-toolbar-in{gap:2px; padding:0 8px}
+  .dt-back-short{display:none}
+  .dt-brand{font-size:0; gap:0}
+  .dt-brand-icon{margin:0 4px}
+  .dt-htabs{min-width:0; overflow-x:auto; scrollbar-width:none}
+  .dt-htab{flex:none; padding:0 7px; font-size:13px}
+  .dt-theme{padding:0 5px}
+}

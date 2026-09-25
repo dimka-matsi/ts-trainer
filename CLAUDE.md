@@ -50,7 +50,7 @@ src/
 scripts/verify-lessons.ts   проверка контента в Node
 ```
 
-Маршруты: `#/` хаб, `#/ts` карта TypeScript, `#/lesson/<id>` урок, `#/level/<n>` уровень сортировщика (с 1), `#/exam/<n>` итоговый экзамен региона (с 1), `#/cards` флеш-карточки. Курсы без кода: `#/<курс>` карта, `#/<курс>/lesson/<id>`, `#/<курс>/exam/<n>`, `#/<курс>/cards`, где курс — `web`, `sec` или `perf`.
+Маршруты: `#/` хаб, `#/ts` карта TypeScript, `#/lesson/<id>` урок, `#/level/<n>` уровень сортировщика (с 1), `#/exam/<n>` итоговый экзамен региона (с 1), `#/cards` флеш-карточки. Курсы без кода: `#/<курс>` карта, `#/<курс>/lesson/<id>`, `#/<курс>/exam/<n>`, `#/<курс>/cards`, `#/<курс>/progress`, `#/<курс>/interview`, где курс — `web`, `sec` или `perf`. У каждого направления в шапке одинаковый набор: «Карта», «Карточки», «Прогресс», поиск (кнопка и клавиша `/`) и тема. Поиск (`ui/SearchDialog.tsx`) и пробное собеседование (`views/InterviewView.tsx`) общие: данные им передаёт направление (`SearchSource`, `InterviewConfig`).
 
 Курсы без кода («Браузер», «Безопасность», «Оптимизация»):
 
@@ -61,7 +61,7 @@ src/content/sec/     курс «Безопасность»: lessons/<регио�
 src/content/perf/    курс «Оптимизация»: lessons/<регион>/ (metrics, network, bundle, server, ui, react, engine, cases), index.ts
 src/content/courses.ts   COURSES: все курсы по id
 src/state/coursePath.ts  порядок уроков курса
-src/views/course/    CourseHeader, CourseScreen, CourseLessonView, WebMapView (карта «Браузера»), SecMapView (карта «Безопасности»), PerfMapView (карта «Оптимизации»), NetVisuals, WebTasks
+src/views/course/    CourseHeader, CourseScreen, CourseLessonView, CourseProgressView, WebMapView (карта «Браузера»), SecMapView (карта «Безопасности»), PerfMapView (карта «Оптимизации»), NetVisuals, WebTasks
 scripts/verify-web.ts    проверка всех курсов без кода
 ```
 

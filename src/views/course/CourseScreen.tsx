@@ -2,9 +2,11 @@ import type { Course } from "../../content/course/types";
 import type { ExamTask } from "../../content/exams";
 import { useProgress } from "../../state/progress";
 import { navigate, type Route } from "../../state/route";
-import { courseCurrent, courseLessonUnlocked, courseRegionDone } from "../../state/coursePath";
+import { courseCurrent, courseInterviewPool, courseLessonUnlocked, courseRegionDone } from "../../state/coursePath";
 import { CardsView } from "../CardsView";
 import { ExamView, type ExamConfig } from "../ExamView";
+import { InterviewView } from "../InterviewView";
+import { CourseProgressView } from "./CourseProgressView";
 import { PerfMapView } from "./PerfMapView";
 import { SecMapView } from "./SecMapView";
 import { CourseLessonView } from "./CourseLessonView";
@@ -53,7 +55,20 @@ export function CourseScreen({ course, route }: { course: Course; route: Route }
       ? <ExamView key={route.region} cfg={courseExam(course, route.region)} />
       : <CourseLocked course={course} what={`Экзамен «${course.regions[route.region]!.name}»`} />;
   }
-  if (route.view === "course-cards") return <CardsView cards={course.flashcards} regionNames={course.regions.map((r) => r.name)} />;
+  if (route.view === "course-cards") {
+    return <CardsView cards={course.flashcards} regionNames={course.regions.map((r) => r.name)} interview={{ view: "course-interview", course: course.id }} />;
+  }
+  if (route.view === "course-progress") return <CourseProgressView course={course} />;
+  if (route.view === "course-interview") {
+    return (
+      <InterviewView cfg={{
+        poolFor: (p) => courseInterviewPool(course, p),
+        regionNames: course.regions.map((r) => r.name),
+        map: { view: "course", course: course.id },
+        cards: { view: "course-cards", course: course.id },
+      }} />
+    );
+  }
   if (course.id === "perf") return <PerfMapView course={course} />;
   if (course.id === "sec") return <SecMapView course={course} />;
   return <WebMapView course={course} />;

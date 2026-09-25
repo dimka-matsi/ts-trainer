@@ -18,16 +18,20 @@ export type Route =
   | { view: "course"; course: CourseId }
   | { view: "course-lesson"; course: CourseId; id: string }
   | { view: "course-exam"; course: CourseId; region: number }
-  | { view: "course-cards"; course: CourseId };
+  | { view: "course-cards"; course: CourseId }
+  | { view: "course-progress"; course: CourseId }
+  | { view: "course-interview"; course: CourseId };
 
 function parse(hash: string): Route {
   if (hash === "" || hash === "#" || hash === "#/") return { view: "hub" };
   if (hash === "#/ts") return { view: "map" };
-  const c = /^#\/(\w+)(?:\/(lesson|exam|cards)(?:\/([\w-]+))?)?$/.exec(hash);
+  const c = /^#\/(\w+)(?:\/(lesson|exam|cards|progress|interview)(?:\/([\w-]+))?)?$/.exec(hash);
   const course = COURSE_IDS.find((id) => id === c?.[1]);
   if (c && course) {
     if (!c[2]) return { view: "course", course };
     if (c[2] === "cards") return { view: "course-cards", course };
+    if (c[2] === "progress") return { view: "course-progress", course };
+    if (c[2] === "interview") return { view: "course-interview", course };
     if (c[2] === "lesson" && c[3]) return { view: "course-lesson", course, id: c[3] };
     if (c[2] === "exam" && /^\d+$/.test(c[3] ?? "")) return { view: "course-exam", course, region: Number(c[3]) - 1 };
   }
@@ -59,6 +63,8 @@ export function routeHref(route: Route): string {
   if (route.view === "course-lesson") return `#/${route.course}/lesson/${route.id}`;
   if (route.view === "course-exam") return `#/${route.course}/exam/${route.region + 1}`;
   if (route.view === "course-cards") return `#/${route.course}/cards`;
+  if (route.view === "course-progress") return `#/${route.course}/progress`;
+  if (route.view === "course-interview") return `#/${route.course}/interview`;
   return "#/";
 }
 

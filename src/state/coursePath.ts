@@ -1,4 +1,5 @@
 import type { Course, WebLesson } from "../content/course/types";
+import type { Flashcard } from "../content/flashcards";
 import type { Progress } from "./progress";
 
 /** Путь обучения курсов «Браузер» и «Оптимизация»: уроки открываются по порядку, как в TypeScript. */
@@ -20,3 +21,12 @@ export function courseRegionDone(c: Course, p: Progress, region: number): boolea
 }
 
 export const courseLessonAfter = (c: Course, l: WebLesson) => c.lessons[c.lessons.indexOf(l) + 1];
+
+/** Вопросы для пробного собеседования: карточки пройденных уроков и карточки пройденных регионов. */
+export function courseInterviewPool(c: Course, p: Progress): Flashcard[] {
+  return c.flashcards.filter((card) => {
+    const lessonId = /-lesson-(.+)$/.exec(card.id)?.[1];
+    const lesson = lessonId ? c.byId[lessonId] : undefined;
+    return lesson ? courseLessonDone(p, lesson) : courseRegionDone(c, p, card.region);
+  });
+}

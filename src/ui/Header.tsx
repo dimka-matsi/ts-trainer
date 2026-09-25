@@ -7,7 +7,18 @@ import { lessonDone, lessonUnlocked, levelUnlocked } from "../state/path";
 import { cardDue, useProgress } from "../state/progress";
 import { navigate, type Route } from "../state/route";
 import { setTheme, useTheme } from "../state/theme";
-import { SearchDialog } from "./SearchDialog";
+import { SearchDialog, type SearchSource } from "./SearchDialog";
+
+/** Поиск TypeScript: уроки, темы «скоро» и карточки. */
+const TS_SEARCH: SearchSource = {
+  lessons: LESSONS,
+  regionNames: REGIONS.map((r) => r.name),
+  topics: REGIONS.flatMap((r, ri) => (r.kind === "soon" ? (r.topics ?? []).map((t) => ({ ...t, ri })) : [])),
+  cards: FLASHCARDS,
+  unlocked: (p, id) => { const l = LESSON_BY_ID[id]; return !!l && lessonUnlocked(p, l); },
+  go: (id) => navigate({ view: "lesson", id }),
+  placeholder: "Например: satisfies, keyof, never",
+};
 
 export const starStr = (n: number) => "★".repeat(n) + "☆".repeat(3 - n);
 
@@ -117,7 +128,7 @@ export function Header({ route }: { route: Route }) {
           </>
         )}
       </div>
-      <SearchDialog open={search} onClose={() => setSearch(false)} />
+      <SearchDialog open={search} onClose={() => setSearch(false)} source={TS_SEARCH} />
     </header>
   );
 }
